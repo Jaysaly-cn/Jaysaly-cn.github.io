@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="俞凯杰 AI 工具交互 Demo：节肢动物检测、夜蛾识别与蛋白序列分析。"
+    />
+    <meta name="theme-color" content="#0f172a" />
+    <title>AI Demo Lab｜俞凯杰</title>
+    <style>
+      :root {
+        --bg: #f4f7fb;
+        --surface: #ffffff;
+        --surface-soft: #f8fafc;
+        --text: #172033;
+        --muted: #64748b;
+        --line: #dfe7f1;
+        --blue: #2563eb;
+        --blue-dark: #1d4ed8;
+        --green: #0f9f6e;
+        --amber: #d97706;
+        --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 85% 5%, rgba(37, 99, 235, 0.12), transparent 28rem),
+          var(--bg);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+        line-height: 1.65;
+      }
+
+      button,
+      textarea {
+        font: inherit;
+      }
+
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      a {
+        color: var(--blue);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      :focus-visible {
+        outline: 3px solid #93c5fd;
+        outline-offset: 3px;
+      }
+
+      .container {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid rgba(223, 231, 241, 0.85);
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(14px);
+      }
+
+      .nav {
+        min-height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .brand {
+        color: var(--text);
+        font-weight: 850;
+        letter-spacing: -0.02em;
+      }
+
+      .back-link {
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .hero {
+        padding: 70px 0 32px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 28px;
+        align-items: end;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 14px;
+        color: var(--blue-dark);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 0 5px rgba(15, 159, 110, 0.12);
+        content: "";
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 760px;
+        font-size: clamp(36px, 6vw, 62px);
+        line-height: 1.08;
+        letter-spacing: -0.045em;
+      }
+
+      .hero p {
+        max-width: 760px;
+        margin: 20px 0 0;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .safe-note {
+        max-width: 280px;
+        padding: 16px 18px;
+        border: 1px solid #bae6d4;
+        border-radius: 16px;
+        background: #ecfdf5;
+        color: #0b694b;
+        font-size: 13px;
+      }
+
+      .tabs {
+        margin: 30px 0 18px;
+        padding: 6px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface);
+        box-shadow: 0 8px 28px rgba(15, 23, 42, 0.05);
+      }
+
+      .tab {
+        min-height: 48px;
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 11px;
+        color: var(--muted);
+        background: transparent;
+        font-weight: 750;
+        cursor: pointer;
+      }
+
+      .tab[aria-selected="true"] {
+        color: #fff;
+        background: var(--text);
+      }
+
+      .panel {
+        display: none;
+        margin-bottom: 70px;
+      }
+
+      .panel.active {
+        display: block;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+        gap: 20px;
+      }
+
+      .card {
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .card-head {
+        margin-bottom: 18px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h2 {
+        margin-bottom: 4px;
+        font-size: 23px;
+        letter-spacing: -0.02em;
+      }
+
+      h3 {
+        margin-bottom: 12px;
+        font-size: 16px;
+      }
+
+      .muted {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .button {
+        min-height: 42px;
+        padding: 10px 17px;
+        border: 0;
+        border-radius: 11px;
+        color: #fff;
+        background: var(--blue);
+        font-weight: 800;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+
+      .button:hover {
+        background: var(--blue-dark);
+      }
+
+      .button.secondary {
+        color: var(--blue-dark);
+        background: #eff6ff;
+      }
+
+      .stage {
+        position: relative;
+        min-height: 360px;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #eef2f7;
+      }
+
+      .stage img {
+        width: 100%;
+        height: 100%;
+        max-height: 560px;
+        object-fit: contain;
+        display: block;
+      }
+
+      .detect-box {
+        position: absolute;
+        left: 12.8%;
+        top: 18.45%;
+        width: 63%;
+        height: 64.94%;
+        border: 3px solid #ef4444;
+        border-radius: 4px;
+        opacity: 0;
+        transform: scale(0.96);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+      }
+
+      .detect-box span {
+        position: absolute;
+        left: -3px;
+        top: -33px;
+        padding: 5px 9px;
+        border-radius: 6px 6px 6px 0;
+        color: #fff;
+        background: #ef4444;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .revealed .detect-box,
+      .revealed .moth-result {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .moth-result {
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        bottom: 18px;
+        padding: 14px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        border-radius: 14px;
+        color: #fff;
+        background: rgba(15, 23, 42, 0.88);
+        backdrop-filter: blur(9px);
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+      }
+
+      .moth-result strong,
+      .moth-result em {
+        display: block;
+      }
+
+      .moth-result em {
+        color: #cbd5e1;
+        font-size: 13px;
+      }
+
+      .pipeline {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .pipeline li {
+        position: relative;
+        padding: 0 0 22px 30px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .pipeline li::before {
+        position: absolute;
+        left: 0;
+        top: 3px;
+        width: 16px;
+        height: 16px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        color: #fff;
+        background: #cbd5e1;
+        content: "";
+      }
+
+      .pipeline li:not(:last-child)::after {
+        position: absolute;
+        left: 7px;
+        top: 21px;
+        width: 2px;
+        height: 19px;
+        background: #dbe4ee;
+        content: "";
+      }
+
+      .revealed .pipeline li::before {
+        background: var(--green);
+        content: "✓";
+        font-size: 10px;
+      }
+
+      .pipeline strong {
+        display: block;
+        color: var(--text);
+      }
+
+      .stats {
+        margin-top: 6px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .stat {
+        padding: 13px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--surface-soft);
+      }
+
+      .stat span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .stat strong {
+        font-size: 17px;
+      }
+
+      .taxonomy {
+        margin-top: 14px;
+        padding: 14px;
+        border-radius: 13px;
+        background: #f8fafc;
+        font-size: 14px;
+      }
+
+      .taxonomy span {
+        color: var(--muted);
+      }
+
+      .fasta-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+        gap: 20px;
+      }
+
+      .sample-actions {
+        margin-bottom: 12px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .sample-button {
+        padding: 7px 11px;
+        border: 1px solid #bfdbfe;
+        border-radius: 999px;
+        color: var(--blue-dark);
+        background: #eff6ff;
+        font-size: 12px;
+        font-weight: 750;
+        cursor: pointer;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 280px;
+        padding: 16px;
+        resize: vertical;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        color: #dbeafe;
+        background: #111827;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .form-actions {
+        margin-top: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .privacy {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .result-empty {
+        min-height: 330px;
+        display: grid;
+        place-items: center;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .sequence-result[hidden],
+      .error[hidden] {
+        display: none;
+      }
+
+      .sequence-label {
+        display: inline-flex;
+        margin-bottom: 18px;
+        padding: 7px 11px;
+        border-radius: 999px;
+        color: #065f46;
+        background: #d1fae5;
+        font-size: 12px;
+        font-weight: 850;
+      }
+
+      .sequence-label.pending {
+        color: #92400e;
+        background: #fef3c7;
+      }
+
+      .feature {
+        margin-top: 16px;
+      }
+
+      .feature-head {
+        margin-bottom: 6px;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .bar {
+        height: 9px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #e2e8f0;
+      }
+
+      .bar span {
+        height: 100%;
+        display: block;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--blue), #38bdf8);
+      }
+
+      .error {
+        margin-top: 12px;
+        padding: 11px 13px;
+        border: 1px solid #fecaca;
+        border-radius: 10px;
+        color: #991b1b;
+        background: #fef2f2;
+        font-size: 13px;
+      }
+
+      .disclaimer {
+        margin-top: 20px;
+        padding: 16px 18px;
+        border: 1px solid #fde68a;
+        border-radius: 14px;
+        color: #854d0e;
+        background: #fffbeb;
+        font-size: 13px;
+      }
+
+      footer {
+        padding: 28px 0 46px;
+        color: var(--muted);
+        text-align: center;
+        font-size: 13px;
+      }
+
+      @media (max-width: 820px) {
+        .hero,
+        .workspace,
+        .fasta-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .safe-note {
+          max-width: none;
+        }
+
+        .tabs {
+          grid-template-columns: 1fr;
+        }
+
+        .stage {
+          min-height: 260px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .container {
+          width: min(100% - 24px, 1120px);
+        }
+
+        .hero {
+          padding-top: 44px;
+        }
+
+        .card {
+          padding: 18px;
+          border-radius: 18px;
+        }
+
+        .card-head,
+        .form-actions {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .button {
+          width: 100%;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <a class="brand" href="../">俞凯杰｜AI Demo Lab</a>
+        <a class="back-link" href="../#demos">← 返回个人主页</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Interactive product prototypes</div>
+          <h1>把模型能力，变成看得见的产品体验</h1>
+          <p>
+            选择一个真实业务场景，体验从输入、处理到结果解释的完整链路。所有交互均在浏览器本地完成。
+          </p>
+        </div>
+        <aside class="safe-note">
+          <strong>隐私说明</strong><br />
+          本页不会上传你输入的图片或序列，也不调用生产数据库。
+        </aside>
+      </section>
+
+      <div class="tabs" role="tablist" aria-label="AI Demo 类型">
+        <button class="tab" id="tab-soybean" role="tab" aria-selected="true" aria-controls="soybean">
+          节肢动物检测
+        </button>
+        <button class="tab" id="tab-moth" role="tab" aria-selected="false" aria-controls="moth">
+          夜蛾智能识别
+        </button>
+        <button class="tab" id="tab-protein" role="tab" aria-selected="false" aria-controls="protein">
+          蛋白序列分析
+        </button>
+      </div>
+
+      <section class="panel active" id="soybean" role="tabpanel" aria-labelledby="tab-soybean">
+        <div class="workspace demo-workspace">
+          <article class="card">
+            <div class="card-head">
+              <div>
+                <h2>豆田节肢动物目标检测</h2>
+                <p class="muted">真实训练样例与 YOLO 格式标注，可视化目标定位链路。</p>
+              </div>
+              <button class="button run-demo" type="button">运行示例</button>
+            </div>
+            <div class="stage">
+              <img src="../assets/demo-soybean.jpg" alt="豆田节肢动物显微图像样例" />
+              <div class="detect-box" aria-hidden="true"><span>FS55 · 示例标注</span></div>
+            </div>
+          </article>
+          <aside class="card result-card">
+            <h3>处理流程</h3>
+            <ol class="pipeline">
+              <li><strong>图像标准化</strong>缩放并对齐到模型输入尺寸</li>
+              <li><strong>目标检测</strong>定位候选节肢动物区域</li>
+              <li><strong>结果解释</strong>输出类别与边界框</li>
+            </ol>
+            <div class="stats">
+              <div class="stat"><span>目标数量</span><strong>1</strong></div>
+              <div class="stat"><span>数据集标签</span><strong>FS55</strong></div>
+            </div>
+            <p class="disclaimer">红框来自仓库中的真实 YOLO 标注；本页不在浏览器中运行模型权重。</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="panel" id="moth" role="tabpanel" aria-labelledby="tab-moth" hidden>
+        <div class="workspace demo-workspace">
+          <article class="card">
+            <div class="card-head">
+              <div>
+                <h2>夜蛾科昆虫智能识别</h2>
+                <p class="muted">从标本图像到物种名称与分类信息的产品化展示。</p>
+              </div>
+              <button class="button run-demo" type="button">运行示例</button>
+            </div>
+            <div class="stage">
+              <img src="../assets/demo-moth.jpg" alt="斜纹夜蛾标本图像样例" />
+              <div class="moth-result">
+                <strong>Top-1：斜纹夜蛾</strong>
+                <em>Spodoptera litura</em>
+              </div>
+            </div>
+          </article>
+          <aside class="card result-card">
+            <h3>处理流程</h3>
+            <ol class="pipeline">
+              <li><strong>标本质检</strong>检查主体、背景与清晰度</li>
+              <li><strong>视觉分类</strong>提取细粒度形态特征</li>
+              <li><strong>物种映射</strong>关联分类与业务知识</li>
+            </ol>
+            <div class="taxonomy">
+              <span>分类路径</span><br />
+              鳞翅目 → 夜蛾科 → 灰翅夜蛾属 → <strong>Spodoptera litura</strong>
+            </div>
+            <p class="disclaimer">图片与物种信息来自项目数据库；结果为已知样例记录，而非实时模型推理。</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="panel" id="protein" role="tabpanel" aria-labelledby="tab-protein" hidden>
+        <div class="fasta-layout">
+          <article class="card">
+            <div class="card-head">
+              <div>
+                <h2>蛋白 FASTA 序列分析</h2>
+                <p class="muted">在浏览器中解析序列并生成模型输入前的质量与组成概览。</p>
+              </div>
+            </div>
+            <div class="sample-actions" aria-label="加载内置样例">
+              <button class="sample-button" type="button" data-sample="allergen">加载致敏样例</button>
+              <button class="sample-button" type="button" data-sample="non-allergen">加载非致敏样例</button>
+            </div>
+            <label for="fasta"><strong>FASTA 输入</strong></label>
+            <textarea id="fasta" spellcheck="false" aria-describedby="fasta-privacy"></textarea>
+            <div class="form-actions">
+              <span class="privacy" id="fasta-privacy">输入只在当前浏览器标签页中处理。</span>
+              <button class="button" id="analyze-fasta" type="button">分析序列</button>
+            </div>
+            <div class="error" id="fasta-error" role="alert" hidden></div>
+          </article>
+
+          <aside class="card">
+            <div class="result-empty" id="protein-empty">
+              <p>加载样例或粘贴 FASTA，<br />查看序列特征与推理状态。</p>
+            </div>
+            <div class="sequence-result" id="protein-result" hidden>
+              <span class="sequence-label" id="sequence-label"></span>
+              <h3 id="sequence-id"></h3>
+              <div class="stats">
+                <div class="stat"><span>序列长度</span><strong id="sequence-length"></strong></div>
+                <div class="stat"><span>氨基酸种类</span><strong id="sequence-kinds"></strong></div>
+              </div>
+              <div class="feature">
+                <div class="feature-head">
+                  <span>疏水性残基占比</span><strong id="hydrophobic-value"></strong>
+                </div>
+                <div class="bar"><span id="hydrophobic-bar"></span></div>
+              </div>
+              <div class="feature">
+                <div class="feature-head">
+                  <span>带电残基占比</span><strong id="charged-value"></strong>
+                </div>
+                <div class="bar"><span id="charged-bar"></span></div>
+              </div>
+              <p class="disclaimer" id="protein-note"></p>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container">
+      静态交互原型 · 样例来自生物多样性综合数据平台 · © 2026 俞凯杰
+    </footer>
+
+    <script>
+      const samples = {
+        allergen:
+          ">allergen_829\nVQGMVYCDTCRSANALGFMR",
+        "non-allergen":
+          ">non-allergen_20342\nMKYRYFAKKSFLFISMLAAFKTFAFELPSVPFPAPGSDEILFVVRDTTFNTNAPVNVEVSDFWTNRNVKRKPYKDVYGQSVFTTSGTKWLTSYMTVNINDKDYTMAAVSGYKHGHSAVFVKSDQVQLQHSYDSVANFVGEDEDSIPSKMYLDETPEYFVNVEAYESGSGNILVMCISNKESFFECKHQQ",
+      };
+
+      const tabs = [...document.querySelectorAll('[role="tab"]')];
+      const panels = [...document.querySelectorAll('[role="tabpanel"]')];
+
+      function activatePanel(id, updateHash = true) {
+        const safeId = panels.some((panel) => panel.id === id) ? id : "soybean";
+        tabs.forEach((tab) => {
+          const selected = tab.getAttribute("aria-controls") === safeId;
+          tab.setAttribute("aria-selected", String(selected));
+          tab.tabIndex = selected ? 0 : -1;
+        });
+        panels.forEach((panel) => {
+          const active = panel.id === safeId;
+          panel.classList.toggle("active", active);
+          panel.hidden = !active;
+        });
+        if (updateHash) history.replaceState(null, "", `#${safeId}`);
+      }
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => activatePanel(tab.getAttribute("aria-controls")));
+        tab.addEventListener("keydown", (event) => {
+          if (!["ArrowLeft", "ArrowRight"].includes(event.key)) return;
+          event.preventDefault();
+          const offset = event.key === "ArrowRight" ? 1 : -1;
+          const next = tabs[(index + offset + tabs.length) % tabs.length];
+          activatePanel(next.getAttribute("aria-controls"));
+          next.focus();
+        });
+      });
+
+      document.querySelectorAll(".run-demo").forEach((button) => {
+        button.addEventListener("click", () => {
+          const workspace = button.closest(".demo-workspace");
+          workspace.classList.remove("revealed");
+          button.disabled = true;
+          button.textContent = "处理中…";
+          window.setTimeout(() => {
+            workspace.classList.add("revealed");
+            button.disabled = false;
+            button.textContent = "重新运行";
+          }, 650);
+        });
+      });
+
+      const fasta = document.querySelector("#fasta");
+      const error = document.querySelector("#fasta-error");
+      const empty = document.querySelector("#protein-empty");
+      const result = document.querySelector("#protein-result");
+
+      document.querySelectorAll("[data-sample]").forEach((button) => {
+        button.addEventListener("click", () => {
+          fasta.value = samples[button.dataset.sample];
+          error.hidden = true;
+          fasta.focus();
+        });
+      });
+
+      document.querySelector("#analyze-fasta").addEventListener("click", () => {
+        const lines = fasta.value.trim().split(/\r?\n/).filter(Boolean);
+        const id = lines[0]?.startsWith(">") ? lines[0].slice(1).split(/\s+/)[0] : "";
+        const sequence = lines.slice(1).join("").toUpperCase();
+        const invalid = [...new Set(sequence.replace(/[ACDEFGHIKLMNPQRSTVWY]/g, ""))];
+
+        if (!id || !sequence) {
+          showError("请输入包含序列标识和氨基酸序列的 FASTA 内容。");
+          return;
+        }
+        if (invalid.length) {
+          showError(`检测到不支持的字符：${invalid.join("、")}`);
+          return;
+        }
+
+        const percent = (characters) =>
+          Math.round(([...sequence].filter((aa) => characters.includes(aa)).length / sequence.length) * 100);
+        const hydrophobic = percent("AILMFWVY");
+        const charged = percent("DEKRH");
+        const knownLabel = id.startsWith("allergen_")
+          ? "已知样例标签：致敏性蛋白"
+          : id.startsWith("non-allergen_")
+            ? "已知样例标签：非致敏性蛋白"
+            : "推理状态：需要模型服务";
+
+        document.querySelector("#sequence-id").textContent = id;
+        document.querySelector("#sequence-length").textContent = sequence.length;
+        document.querySelector("#sequence-kinds").textContent = new Set(sequence).size;
+        document.querySelector("#hydrophobic-value").textContent = `${hydrophobic}%`;
+        document.querySelector("#charged-value").textContent = `${charged}%`;
+        document.querySelector("#hydrophobic-bar").style.width = `${hydrophobic}%`;
+        document.querySelector("#charged-bar").style.width = `${charged}%`;
+
+        const label = document.querySelector("#sequence-label");
+        label.textContent = knownLabel;
+        label.classList.toggle("pending", !id.startsWith("allergen_") && !id.startsWith("non-allergen_"));
+
+        document.querySelector("#protein-note").textContent =
+          label.classList.contains("pending")
+            ? "序列特征已在本地计算。要获得 DeepAlgPro 预测结果，需要接入独立部署的模型 API。"
+            : "标签来自项目测试集；本页展示序列解析与结果呈现，不把测试标签当作实时预测。";
+
+        error.hidden = true;
+        empty.hidden = true;
+        result.hidden = false;
+      });
+
+      function showError(message) {
+        error.textContent = message;
+        error.hidden = false;
+        empty.hidden = false;
+        result.hidden = true;
+      }
+
+      activatePanel(location.hash.slice(1), false);
+      fasta.value = samples.allergen;
+    </script>
+  </body>
+</html>
