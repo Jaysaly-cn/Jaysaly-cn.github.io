@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+  <html lang="zh-CN">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="description" content="俞凯杰的个人主页：AI 应用产品、Agent 工作流、多模态 AI 与全栈 MVP 项目经历。" />
+      <meta name="theme-color" content="#2563eb" />
+      <title>
+        俞凯杰｜AI Product Manager & AI Native Builder
+      </title>
+      <style>
+        :root {
+      --bg: #f7f8fa;
+      --card: #ffffff;
+      --text: #1f2937;
+      --subtext: #6b7280;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --border: #e5e7eb;
+      --tag-bg: #eff6ff;
+      --tag-text: #1d4ed8;
+      --shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    section {
+      scroll-margin-top: 80px;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    a:focus-visible {
+      outline: 3px solid #93c5fd;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    .skip-link {
+      position: fixed;
+      left: 16px;
+      top: -60px;
+      z-index: 100;
+      padding: 10px 14px;
+      color: #fff;
+      background: var(--primary);
+      border-radius: 8px;
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      color: var(--subtext);
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 72px 0 56px;
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 5px 12px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: 44px;
+      line-height: 1.18;
+      margin: 0 0 18px;
+      letter-spacing: -0.8px;
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero-desc {
+      font-size: 18px;
+      color: var(--subtext);
+      margin-bottom: 26px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .profile-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .avatar {
+      width: 132px;
+      height: 132px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      border: 2px solid #93c5fd;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-card h2 {
+      margin: 0 0 6px;
+      font-size: 22px;
+    }
+
+    .profile-card p {
+      margin: 4px 0;
+      color: var(--subtext);
+      font-size: 14px;
+    }
+
+    .socials {
+      margin-top: 16px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .socials a {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: var(--tag-bg);
+    }
+
+    /* Sections */
+    section {
+      padding: 34px 0;
+    }
+
+    .section-title {
+      font-size: 28px;
+      margin: 0 0 8px;
+      letter-spacing: -0.4px;
+    }
+
+    .section-subtitle {
+      color: var(--subtext);
+      margin: 0 0 24px;
+      font-size: 15px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .metric {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 26px;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .metric span {
+      font-size: 13px;
+      color: var(--subtext);
+    }
+
+    /* Experience */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .exp-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .exp-time {
+      color: var(--subtext);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .exp-role {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .card ul {
+      margin: 8px 0 0 20px;
+      padding: 0;
+    }
+
+    .card li {
+      margin: 6px 0;
+    }
+
+    /* Project */
+    .project-card h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+    }
+
+    .project-card p {
+      color: var(--subtext);
+      margin: 0 0 12px;
+    }
+
+    .project-image {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+      margin: 4px 0 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #f0f0f5;
+    }
+
+    .project-links {
+      margin-top: 14px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* Skills */
+    .skill-group h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .skill-group p {
+      margin: 0;
+      color: var(--subtext);
+      font-size: 14px;
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0 56px;
+      text-align: center;
+      color: var(--subtext);
+      font-size: 14px;
+    }
+
+    .contact-card {
+      text-align: center;
+      padding: 34px;
+      background: linear-gradient(135deg, #eff6ff, #ffffff);
+    }
+
+    .contact-card h2 {
+      margin-top: 0;
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-2,
+      .grid-3,
+      .metric-row {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        height: auto;
+        min-height: 64px;
+        gap: 16px;
+        flex-wrap: wrap;
+        padding-top: 10px;
+      }
+
+      .logo {
+        flex-basis: 100%;
+      }
+
+      .nav-links {
+        width: 100%;
+        gap: 10px;
+        justify-content: space-between;
+        padding-bottom: 10px;
+        font-size: 12px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .exp-header {
+        flex-direction: column;
+        gap: 4px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+      </style>
+    </head>
+    <body>
+      <a class="skip-link" href="#main-content">跳到主要内容</a>
+      <!-- Header -->
+        <header>
+          <div class="container nav">
+            <div class="logo">
+              俞凯杰｜AI Product
+            </div>
+            <nav class="nav-links" aria-label="页面导航">
+              <a href="#about">
+                关于我
+              </a>
+              <a href="#experience">
+                经历
+              </a>
+              <a href="#projects">
+                项目
+              </a>
+              <a href="#skills">
+                技能
+              </a>
+              <a href="#publications">
+                论文/专利
+              </a>
+              <a href="#contact">
+                联系
+              </a>
+            </nav>
+          </div>
+        </header>
+        <!-- Hero -->
+          <main id="main-content" class="container">
+            <section class="hero">
+              <div>
+                <div class="eyebrow">
+                  AI Application PM · AI Native Builder · 浙江大学
+                </div>
+                <h1>
+                  将复杂业务问题，转化为
+                  <br />
+                  <span>
+                    可落地的 AI 产品
+                  </span>
+                </h1>
+                <p class="hero-desc">
+                  我是俞凯杰，浙江大学硕士在读。关注 AI 应用产品、Agent 工作流、多模态识别与 AI 工具化落地。
+          具备从业务调研、策略文档、模型评估、全栈 MVP 开发到生产交付的闭环经验。
+                </p>
+                <div class="hero-actions">
+                  <a class="btn btn-primary" href="#projects">
+                    查看项目作品
+                  </a>
+                  <a class="btn btn-secondary" href="mailto:jaysaly@zju.edu.cn">
+                    联系我
+                  </a>
+                </div>
+              </div>
+              <aside class="profile-card">
+                <div class="avatar">
+                  <img src="assets/avatar.jpg" alt="俞凯杰" width="132" height="132" />
+                </div>
+                <h2>
+                  俞凯杰
+                </h2>
+                <p>
+                  浙江大学｜工程师学院｜硕士在读
+                </p>
+                <p>
+                  AI 产品 / 多模态 AI / 全栈 MVP
+                </p>
+                <p>
+                  杭州 / 远程
+                </p>
+                <div class="socials">
+                  <a href="https://github.com/Jaysaly-cn" target="_blank" rel="noopener noreferrer">
+                    GitHub
+                  </a>
+                  <a href="http://www.agroinvertebr.cn/" target="_blank" rel="noopener noreferrer">
+                    作品站
+                  </a>
+                </div>
+              </aside>
+            </section>
+            <!-- About -->
+              <section id="about">
+                <h2 class="section-title">
+                  关于我
+                </h2>
+                <p class="section-subtitle">
+                  我的定位不是单纯产品经理，也不是纯算法工程师，而是能把 AI 能力落到真实业务流程中的应用型产品候选人。
+                </p>
+                <div class="card">
+                  <p>
+                    我理解 AI 应用产品经理的核心价值，不是简单把模型接入产品，而是判断真实业务中哪些问题值得 AI 化，
+          能否被数据和模型表达，模型能力如何转化为用户可用的产品流程，并最终通过效率、准确率、留存、转化等指标验证价值。
+                  </p>
+                  <p>
+                    我的经历覆盖 AI 工具全栈落地、C 端增长、多模态 AI 科研与数据基建。
+          曾独立负责多款生产侧 AI 工具从 0 到 1 落地，也参与过四模态联合识别大模型、细粒度害虫识别系统和 30 万级视觉数据流水线建设。
+                  </p>
+                  <div class="tag-list">
+                    <span class="tag">
+                      AI 产品
+                    </span>
+                    <span class="tag">
+                      Agent
+                    </span>
+                    <span class="tag">
+                      Function Call
+                    </span>
+                    <span class="tag">
+                      Prompt Engineering
+                    </span>
+                    <span class="tag">
+                      多模态 AI
+                    </span>
+                    <span class="tag">
+                      全栈 MVP
+                    </span>
+                    <span class="tag">
+                      数据分析
+                    </span>
+                    <span class="tag">
+                      用户增长
+                    </span>
+                  </div>
+                </div>
+                <div class="metric-row">
+                  <div class="metric">
+                    <strong>
+                      3+
+                    </strong>
+                    <span>
+                      AI 工具独立交付
+                    </span>
+                  </div>
+                  <div class="metric">
+                    <strong>
+                      90%+
+                    </strong>
+                    <span>
+                      模型识别准确率
+                    </span>
+                  </div>
+                  <div class="metric">
+                    <strong>
+                      5s
+                    </strong>
+                    <span>
+                      单次识别耗时
+                    </span>
+                  </div>
+                  <div class="metric">
+                    <strong>
+                      30万+
+                    </strong>
+                    <span>
+                      视觉数据流水线样本
+                    </span>
+                  </div>
+                </div>
+              </section>
+              <!-- Experience -->
+                <section id="experience">
+                  <h2 class="section-title">
+                    实习经历
+                  </h2>
+                  <p class="section-subtitle">
+                    围绕 AI 应用落地、用户增长和服务产品 0-1 的实践经历。
+                  </p>
+                  <div class="timeline">
+                    <div class="card">
+                      <div class="exp-header">
+                        <div>
+                          <h3 class="exp-title">
+                            北京大北农生物技术有限公司
+                          </h3>
+                          <div class="exp-role">
+                            AI 产品经理实习生｜AI 应用落地 / 独立全栈开发
+                          </div>
+                        </div>
+                        <div class="exp-time">
+                          2025.09 - 2026.05
+                        </div>
+                      </div>
+                      <ul>
+                        <li>
+                          独立负责多款生产侧 AI 工具从需求调研、策略文档、产品设计、全栈开发、模型部署到生产交付的完整闭环。
+                        </li>
+                        <li>
+                          深入生产一线调研，梳理用户意图、典型场景、异常样本和人工判断标准，将非标业务需求转化为 PRD、Roadmap 和验收指标。
+                        </li>
+                        <li>
+                          规划昆虫识别、植物性状识别、生信分析三类 AI 工具，设计数据输入、模型推理、结果展示、人工复核和反馈迭代链路。
+                        </li>
+                        <li>
+                          独立完成前端、后端、模型推理接口封装、API 调用与部署联调，实现 AI 应用从需求到交付的单人闭环。
+                        </li>
+                        <li>
+                          工具上线后，虫害鉴定 / 性状识别单次耗时降至 5 秒内，识别准确率达 90%+。
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="card">
+                      <div class="exp-header">
+                        <div>
+                          <h3 class="exp-title">
+                            北京乐信圣文科技有限公司
+                          </h3>
+                          <div class="exp-role">
+                            产品经理实习生｜海外小游戏 / 用户增长 / IAA 商业化
+                          </div>
+                        </div>
+                        <div class="exp-time">
+                          2023.07 - 2023.10
+                        </div>
+                      </div>
+                      <ul>
+                        <li>
+                          参与海外拼图休闲小游戏产品迭代与增长，负责竞品分析、用户行为数据分析、需求文档撰写和跨部门推进。
+                        </li>
+                        <li>
+                          基于用户画像、行为路径和留存数据，识别真实高黏性用户为海外中老年群体，推动 V2 定位调整为适老化陪伴型游戏。
+                        </li>
+                        <li>
+                          设计互动陪伴宠物、壁纸解锁和图库浏览等机制，将激励视频入口调整为“奖励驱动 + 情感反馈 + 内容解锁”。
+                        </li>
+                        <li>
+                          V2 上线后首周留存率提升 15%，平均在线时长延长 12 分钟，IAA 广告观看时长增长 25%。
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="card">
+                      <div class="exp-header">
+                        <div>
+                          <h3 class="exp-title">
+                            杭州辅考思教育科技有限公司
+                          </h3>
+                          <div class="exp-role">
+                            商业化产品经理｜服务产品 0-1 / GTM / IP 增长
+                          </div>
+                        </div>
+                        <div class="exp-time">
+                          2022.09 - 2023.03
+                        </div>
+                      </div>
+                      <ul>
+                        <li>
+                          参与公司从单一学科辅导向综合升学服务转型，负责用户访谈、市场调研、服务产品设计和线下转化闭环搭建。
+                        </li>
+                        <li>
+                          将非标准化教育咨询服务产品化，设计生涯规划、面试辅导、升学路径诊断等服务包。
+                        </li>
+                        <li>
+                          孵化垂直升学 IP「锐哥说升学」，构建内容获客、私域沉淀、线下讲座、咨询转化闭环。
+                        </li>
+                        <li>
+                          新业务上线周期控制在 4 周内，讲座单场私域线索转化率达到 18%，意愿客单价由约 5000 元提升至约 20000 元。
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </section>
+                <!-- Projects -->
+                  <section id="projects">
+                    <h2 class="section-title">
+                      精选项目
+                    </h2>
+                    <p class="section-subtitle">
+                      从 AI 工具、Agent 工作流、多模态模型到数据流水线的代表项目。
+                    </p>
+                    <div class="grid-2">
+                      <div class="card project-card">
+                        <h3>
+                          AI 生产力工具矩阵
+                        </h3>
+                        <p>
+                          面向农业生产中的虫害鉴定、植物性状识别和生信分析任务，独立完成 AI 工具从需求调研、产品设计、全栈开发到部署交付。
+                        </p>
+                        <img class="project-image" src="assets/ai-matrix.png" alt="AI 生产力工具矩阵界面" loading="lazy" />
+                        <div class="tag-list">
+                          <span class="tag">
+                            AI Tool
+                          </span>
+                          <span class="tag">
+                            Full-stack MVP
+                          </span>
+                          <span class="tag">
+                            Model API
+                          </span>
+                          <span class="tag">
+                            Badcase Analysis
+                          </span>
+                        </div>
+                        <div class="project-links">
+                          <a href="http://www.agroinvertebr.cn/">
+                            项目详情
+                          </a>
+                          <a href="https://github.com/Jaysaly-cn/DeepPlantPI">
+                            GitHub
+                          </a>
+                        </div>
+                      </div>
+                      <div class="card project-card">
+                        <h3>
+                          SABridge 四模态联合识别大模型
+                        </h3>
+                        <p>
+                          整合图像、DNA 序列、形态文本和分类标签，构建农业垂直领域多模态识别系统，支持图搜图、文搜图、图文联合检索。
+                        </p>
+                        <img class="project-image" src="assets/SAbridge.png" alt="SABridge 多模态识别系统界面" loading="lazy" />
+                        <div class="tag-list">
+                          <span class="tag">
+                            Multimodal AI
+                          </span>
+                          <span class="tag">
+                            Prompt Engineering
+                          </span>
+                          <span class="tag">
+                            Zero-shot
+                          </span>
+                          <span class="tag">
+                            Cross-modal Retrieval
+                          </span>
+                        </div>
+                        <div class="project-links">
+                          <a href="https://github.com/Jaysaly-cn/SABridge">
+                            项目详情
+                          </a>
+                        </div>
+                      </div>
+                      <div class="card project-card">
+                        <h3>
+                          水稻田间害虫细粒度识别系统
+                        </h3>
+                        <p>
+                          构建近 10 万张害虫图像数据集，设计细粒度识别模型与端云协同链路，为自动化巡田机器人提供识别与预警能力。
+                        </p>
+                        <img class="project-image" src="assets/AMDnet.png" alt="水稻田间害虫细粒度识别系统界面" loading="lazy" />
+                        <div class="tag-list">
+                          <span class="tag">
+                            CV
+                          </span>
+                          <span class="tag">
+                            Fine-grained Recognition
+                          </span>
+                          <span class="tag">
+                            MaxViT
+                          </span>
+                          <span class="tag">
+                            Edge-Cloud
+                          </span>
+                        </div>
+                        <div class="project-links">
+                          <a href="https://github.com/Jaysaly-cn/rice_2path">
+                            项目详情
+                          </a>
+                        </div>
+                      </div>
+                      <div class="card project-card">
+                        <h3>
+                          生物多样性综合数据平台
+                        </h3>
+                        <p>
+                          独立全栈开发的数据展示与分析平台，用于生物多样性相关数据的可视化展示、查询与管理。
+                        </p>
+                        <img class="project-image" src="assets/wiki.png" alt="生物多样性综合数据平台界面" loading="lazy" />
+                        <div class="tag-list">
+                          <span class="tag">
+                            Full-stack
+                          </span>
+                          <span class="tag">
+                            Data Platform
+                          </span>
+                          <span class="tag">
+                            Visualization
+                          </span>
+                          <span class="tag">
+                            Web App
+                          </span>
+                        </div>
+                        <div class="project-links">
+                          <a href="http://www.agroinvertebr.cn/" target="_blank" rel="noopener noreferrer">
+                            在线访问
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                  <!-- Skills -->
+                    <section id="skills">
+                      <h2 class="section-title">
+                        技能栈
+                      </h2>
+                      <p class="section-subtitle">
+                        覆盖 AI 产品、模型评估、数据分析、全栈 MVP 与跨团队协作。
+                      </p>
+                      <div class="grid-3">
+                        <div class="card skill-group">
+                          <h3>
+                            AI 产品能力
+                          </h3>
+                          <p>
+                            场景梳理、用户意图分类、理想态定义、Skill 定义、工具调用链路设计、AI 能力评估、Badcase 归因、策略文档输出。
+                          </p>
+                        </div>
+                        <div class="card skill-group">
+                          <h3>
+                            LLM / Agent
+                          </h3>
+                          <p>
+                            理解 LLM、Agent、Function Call、Tool Use、RAG、多轮对话、工作流编排、Prompt Engineering 与模型能力边界。
+                          </p>
+                        </div>
+                        <div class="card skill-group">
+                          <h3>
+                            Coding Agent / 全栈 MVP
+                          </h3>
+                          <p>
+                            熟悉 Cursor、Claude、ChatGPT 等工具，能独立完成前端页面、后端接口、模型推理封装、API 调用与部署上线。
+                          </p>
+                        </div>
+                        <div class="card skill-group">
+                          <h3>
+                            数据分析
+                          </h3>
+                          <p>
+                            熟练使用 Python 进行数据清洗、统计分析和可视化；掌握 SQL 基础，可进行分类占比、漏斗、留存与用户分层分析。
+                          </p>
+                        </div>
+                        <div class="card skill-group">
+                          <h3>
+                            多模态 / CV
+                          </h3>
+                          <p>
+                            具备多模态对齐、图搜图、文搜图、细粒度识别、CLIP、YOLOv10、DINOv2、MaxViT 等相关项目经验。
+                          </p>
+                        </div>
+                        <div class="card skill-group">
+                          <h3>
+                            产品基本功
+                          </h3>
+                          <p>
+                            用户访谈、竞品分析、PRD 撰写、需求评审、项目推进、跨团队沟通、上线验收、数据复盘与商业化设计。
+                          </p>
+                        </div>
+                      </div>
+                    </section>
+                    <!-- Publications -->
+                      <section id="publications">
+                        <h2 class="section-title">
+                          论文 / 专利
+                        </h2>
+                        <p class="section-subtitle">
+                          AI+垂直领域方向的科研产出。
+                        </p>
+                        <div class="grid-2">
+                          <div class="card">
+                            <h3>
+                              SABridge: 四模态联合识别大模型
+                            </h3>
+                            <p>
+                              第一作者投稿至
+                              <em>
+                                Computers and Electronics in Agriculture
+                              </em>
+                              ，当前状态：Under Review。
+                            </p>
+                            <p>
+                              关键词：Multimodal Learning, Cross-modal Retrieval, Prompt Engineering, Zero-shot Recognition
+                            </p>
+                            <a href="https://github.com/Jaysaly-cn/SABridge">
+                              查看论文 / 摘要
+                            </a>
+                          </div>
+                          <div class="card">
+                            <h3>
+                              全球表型组学高通量分析系统
+                            </h3>
+                            <p>
+                              第一作者投稿至
+                              <em>
+                                Nature Ecology & Evolution
+                              </em>
+                              ，当前状态：Under Review。
+                            </p>
+                            <p>
+                              关键词：DINOv2, CLIP, YOLOv10, High-throughput Phenotyping, AI Metric
+                            </p>
+                            <a href="https://github.com/Jaysaly-cn/Global-of-Noctuidae-Phenotypes">
+                              查看论文 / 摘要
+                            </a>
+                          </div>
+                          <div class="card">
+                            <h3>
+                              水稻田间害虫细粒度识别系统
+                            </h3>
+                            <p>
+                              国家发明专利 1 项，支撑自动化巡田机器人害虫识别与预警能力。
+                            </p>
+                            <a href="https://patents.google.com/patent/CN120913167A">
+                              查看专利
+                            </a>
+                          </div>
+                        </div>
+                      </section>
+                      <!-- Contact -->
+                        <section id="contact">
+                          <div class="card contact-card">
+                            <h2 class="section-title">
+                              联系我
+                            </h2>
+                            <p class="section-subtitle">
+                              如果你正在寻找一个既理解 AI 技术边界，又能推进产品落地的 AI 应用产品实习生，欢迎联系我。
+                            </p>
+                            <div class="hero-actions" style="justify-content: center;">
+                              <a class="btn btn-primary" href="mailto:kaijie.yu@zju.edu.cn">
+                                kaijie.yu@zju.edu.cn
+                              </a>
+                              <a class="btn btn-secondary" href="https://github.com/Jaysaly-cn" target="_blank" rel="noopener noreferrer">
+                                GitHub
+                              </a>
+                              <a class="btn btn-secondary" href="http://www.agroinvertebr.cn/" target="_blank" rel="noopener noreferrer">
+                                作品站
+                              </a>
+                            </div>
+                          </div>
+                        </section>
+                      </main>
+                      <footer>
+                        © 2026 俞凯杰. Built with AI Native Workflow.
+                      </footer>
+                    </body>
+                  </html>
