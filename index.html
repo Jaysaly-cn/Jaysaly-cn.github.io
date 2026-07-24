@@ -780,7 +780,7 @@
                       AI Demo Lab
                     </h2>
                     <p class="section-subtitle">
-                      用真实项目样例体验模型输入、处理流程与结果解释；无需登录，不上传个人数据。
+                      用真实项目样例体验模型输入、处理流程与结果解释；新增农业世界模型与植保智能体研究原型。
                     </p>
                     <div class="grid-3">
                       <article class="card demo-card">
@@ -803,6 +803,20 @@
                           <p>粘贴 FASTA 序列，在浏览器本地完成格式校验与组成特征可视化。</p>
                         </div>
                         <a class="demo-link" href="demos/#protein">分析 FASTA →</a>
+                      </article>
+                      <article class="card demo-card">
+                        <div>
+                          <h3>农业世界模型</h3>
+                          <p>调节水分、氮素与气象胁迫，观察玉米/大豆生长轨迹和反事实结果。</p>
+                        </div>
+                        <a class="demo-link" href="demos/world-model.html">运行场景推演 →</a>
+                      </article>
+                      <article class="card demo-card">
+                        <div>
+                          <h3>植保智能体</h3>
+                          <p>体验从田间描述到证据检索、诊断仲裁、主动追问和安全校验的完整链路。</p>
+                        </div>
+                        <a class="demo-link" href="demos/pest-agent.html">启动智能体 →</a>
                       </article>
                     </div>
                   </section>
@@ -930,6 +944,62 @@
                         <div class="project-links">
                           <a href="http://www.agroinvertebr.cn/" target="_blank" rel="noopener noreferrer">
                             在线访问
+                          </a>
+                        </div>
+                      </div>
+                      <div class="card project-card">
+                        <h3>
+                          AgriWorld 农业世界模型
+                        </h3>
+                        <p>
+                          物理机理引导的可微分农业世界模型，融合水分、氮素、辐射、物候与阶段胁迫专家，支持玉米和大豆的县域生长模拟与反事实因子分析。
+                        </p>
+                        <img class="project-image" src="assets/agriworld-preview.svg" alt="AgriWorld 农业世界模型反事实推演界面" loading="lazy" />
+                        <div class="tag-list">
+                          <span class="tag">
+                            World Model
+                          </span>
+                          <span class="tag">
+                            Differentiable ODE
+                          </span>
+                          <span class="tag">
+                            Physics-guided
+                          </span>
+                          <span class="tag">
+                            Counterfactual
+                          </span>
+                        </div>
+                        <div class="project-links">
+                          <a href="demos/world-model.html">
+                            交互可视化
+                          </a>
+                        </div>
+                      </div>
+                      <div class="card project-card">
+                        <h3>
+                          Plant Protection Agent 植保智能体
+                        </h3>
+                        <p>
+                          面向虫害、病害、药害、营养等多意图场景的农业智能体，以多 Skill 编排、RAG 证据检索、诊断仲裁和安全护栏构建可追问的专业工作流。
+                        </p>
+                        <img class="project-image" src="assets/pest-agent-preview.svg" alt="植保智能体证据诊断与安全校验界面" loading="lazy" />
+                        <div class="tag-list">
+                          <span class="tag">
+                            AI Agent
+                          </span>
+                          <span class="tag">
+                            Multi-Skill
+                          </span>
+                          <span class="tag">
+                            RAG
+                          </span>
+                          <span class="tag">
+                            Safety Guard
+                          </span>
+                        </div>
+                        <div class="project-links">
+                          <a href="demos/pest-agent.html">
+                            交互可视化
                           </a>
                         </div>
                       </div>

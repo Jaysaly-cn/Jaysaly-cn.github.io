@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="俞凯杰 AI 工具交互 Demo：节肢动物检测、夜蛾识别与蛋白序列分析。"
+      content="俞凯杰 AI 工具交互 Demo：节肢动物检测、夜蛾识别、蛋白序列分析、农业世界模型与植保智能体。"
     />
     <meta name="theme-color" content="#0f172a" />
     <title>AI Demo Lab｜俞凯杰</title>
@@ -151,6 +151,51 @@
         background: #ecfdf5;
         color: #0b694b;
         font-size: 13px;
+      }
+
+      .research-grid {
+        margin: 28px 0 8px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .research-link {
+        min-height: 128px;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        color: var(--text);
+        background: var(--surface);
+        box-shadow: 0 10px 32px rgba(15, 23, 42, 0.06);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .research-link:hover {
+        transform: translateY(-2px);
+        text-decoration: none;
+        box-shadow: var(--shadow);
+      }
+
+      .research-link strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 17px;
+      }
+
+      .research-link p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .research-arrow {
+        color: var(--green);
+        font-size: 24px;
+        font-weight: 800;
       }
 
       .tabs {
@@ -565,6 +610,10 @@
           grid-template-columns: 1fr;
         }
 
+        .research-grid {
+          grid-template-columns: 1fr;
+        }
+
         .stage {
           min-height: 260px;
         }
@@ -626,6 +675,23 @@
           <strong>隐私说明</strong><br />
           本页不会上传你输入的图片或序列，也不调用生产数据库。
         </aside>
+      </section>
+
+      <section class="research-grid" aria-label="农业 AI 研究原型">
+        <a class="research-link" href="world-model.html">
+          <div>
+            <strong>AgriWorld 农业世界模型</strong>
+            <p>调节环境因子，比较玉米/大豆在同一初始状态下的反事实生长轨迹。</p>
+          </div>
+          <span class="research-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="research-link" href="pest-agent.html">
+          <div>
+            <strong>Plant Protection Agent</strong>
+            <p>查看多 Skill、证据检索、诊断仲裁与用药安全护栏如何协同工作。</p>
+          </div>
+          <span class="research-arrow" aria-hidden="true">↗</span>
+        </a>
       </section>
 
       <div class="tabs" role="tablist" aria-label="AI Demo 类型">
@@ -758,7 +824,7 @@
     </main>
 
     <footer class="container">
-      静态交互原型 · 样例来自生物多样性综合数据平台 · © 2026 俞凯杰
+      静态交互原型 · 浏览器本地运行 · 不加载模型权重或生产数据库 · © 2026 俞凯杰
     </footer>
 
     <script>

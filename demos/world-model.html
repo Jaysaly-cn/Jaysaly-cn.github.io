@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AgriWorld 农业世界模型交互原型：调节环境因子，观察玉米与大豆生长轨迹和反事实结果。"
+    />
+    <meta name="theme-color" content="#155b39" />
+    <title>AgriWorld 农业世界模型｜俞凯杰</title>
+    <link rel="stylesheet" href="research.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <a class="brand" href="../">俞凯杰｜AgriWorld</a>
+        <nav class="nav-links" aria-label="页面导航">
+          <a href="./">AI Demo Lab</a>
+          <a href="../#projects">返回个人主页</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Physics-guided world model</div>
+          <h1>让农业系统的未来，变得可以推演</h1>
+          <p>
+            AgriWorld 将作物生长机理与可学习参数结合，模拟水分、氮素、辐射和气象胁迫如何共同影响玉米与大豆。调节场景，观察同一初始状态下的反事实轨迹。
+          </p>
+        </div>
+        <aside class="prototype-note">
+          <strong>演示边界</strong>
+          本页是基于项目机制设计的浏览器端可视化，不加载模型权重，不输出真实地块的产量预测。
+        </aside>
+      </section>
+
+      <section class="app-grid" aria-label="农业世界模型交互工作台">
+        <aside class="card control-card">
+          <h2>环境场景</h2>
+          <p class="muted">以适宜环境为基线，构造一条可解释的反事实轨迹。</p>
+
+          <div class="field">
+            <label for="crop">作物</label>
+            <select id="crop">
+              <option value="corn">玉米 · Corn</option>
+              <option value="soybean">大豆 · Soybean</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="field-head"><label for="water">土壤水分供给</label><output id="water-value">72%</output></div>
+            <input id="water" type="range" min="20" max="100" value="72" />
+          </div>
+          <div class="field">
+            <div class="field-head"><label for="nitrogen">氮素供给</label><output id="nitrogen-value">68%</output></div>
+            <input id="nitrogen" type="range" min="20" max="100" value="68" />
+          </div>
+          <div class="field">
+            <div class="field-head"><label for="heat">高温胁迫</label><output id="heat-value">24%</output></div>
+            <input id="heat" type="range" min="0" max="100" value="24" />
+          </div>
+          <div class="field">
+            <div class="field-head"><label for="vpd">大气干旱（VPD）</label><output id="vpd-value">32%</output></div>
+            <input id="vpd" type="range" min="0" max="100" value="32" />
+          </div>
+
+          <button class="button full-button" id="simulate" type="button">运行反事实推演</button>
+          <button class="button secondary full-button" id="reset" type="button">恢复适宜环境</button>
+        </aside>
+
+        <div>
+          <section class="metrics" aria-label="场景摘要">
+            <article class="metric">
+              <span>相对产量指数</span>
+              <strong id="yield-index">78</strong>
+              <small>适宜环境 = 100</small>
+            </article>
+            <article class="metric">
+              <span>综合胁迫</span>
+              <strong id="stress-index">中</strong>
+              <small id="stress-detail">水分为主要限制因子</small>
+            </article>
+            <article class="metric">
+              <span>敏感窗口</span>
+              <strong id="risk-window">生殖期</strong>
+              <small>模型阶段性压力响应</small>
+            </article>
+          </section>
+
+          <section class="card chart-card">
+            <div class="chart-head">
+              <div>
+                <h2>生物量形成轨迹</h2>
+                <p class="muted">展示场景相对变化，而非真实单位产量。</p>
+              </div>
+              <div class="legend" aria-label="图例">
+                <span class="baseline">适宜环境</span>
+                <span>当前场景</span>
+              </div>
+            </div>
+            <svg class="chart" viewBox="0 0 720 320" role="img" aria-labelledby="chart-title chart-desc">
+              <title id="chart-title">作物生物量形成轨迹</title>
+              <desc id="chart-desc">适宜环境基线与当前环境场景的相对生物量曲线。</desc>
+              <defs>
+                <linearGradient id="area-gradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#5fb787" stop-opacity="0.3" />
+                  <stop offset="100%" stop-color="#5fb787" stop-opacity="0.02" />
+                </linearGradient>
+              </defs>
+              <g class="chart-grid">
+                <line x1="52" y1="36" x2="700" y2="36" />
+                <line x1="52" y1="102" x2="700" y2="102" />
+                <line x1="52" y1="168" x2="700" y2="168" />
+                <line x1="52" y1="234" x2="700" y2="234" />
+                <line x1="52" y1="286" x2="700" y2="286" />
+              </g>
+              <text class="chart-label" x="8" y="40">100</text>
+              <text class="chart-label" x="17" y="106">75</text>
+              <text class="chart-label" x="17" y="172">50</text>
+              <text class="chart-label" x="17" y="238">25</text>
+              <text class="chart-label" x="52" y="310">出苗</text>
+              <text class="chart-label" x="244" y="310">营养生长</text>
+              <text class="chart-label" x="460" y="310">生殖生长</text>
+              <text class="chart-label" x="660" y="310">成熟</text>
+              <path class="model-area" id="model-area" />
+              <polyline class="baseline-line" id="baseline-line" />
+              <polyline class="model-line" id="model-line" />
+            </svg>
+
+            <div class="pipeline" aria-label="模型处理流程">
+              <div class="node active">环境与作物输入</div>
+              <div class="node active">水氮辐射专家</div>
+              <div class="node active">可微分 ODE</div>
+              <div class="node active">阶段胁迫耦合</div>
+              <div class="node active">产量形成</div>
+            </div>
+
+            <p class="technical-note" id="interpretation">
+              当前场景中，水分与氮素共同限制生物量积累；生殖期的高温和 VPD 会进一步放大产量损失。
+            </p>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container">
+      AgriWorld V3.39 交互可视化 · 物理引导的玉米/大豆县域作物世界模型 · © 2026 俞凯杰
+    </footer>
+
+    <script>
+      const controls = {
+        crop: document.querySelector("#crop"),
+        water: document.querySelector("#water"),
+        nitrogen: document.querySelector("#nitrogen"),
+        heat: document.querySelector("#heat"),
+        vpd: document.querySelector("#vpd"),
+      };
+      const outputIds = ["water", "nitrogen", "heat", "vpd"];
+      const baseline = Array.from({ length: 17 }, (_, index) => growthCurve(index / 16) * 100);
+
+      function growthCurve(time) {
+        const logistic = 1 / (1 + Math.exp(-8 * (time - 0.53)));
+        const start = 1 / (1 + Math.exp(4.24));
+        return (logistic - start) / (1 - start);
+      }
+
+      function scenario() {
+        const crop = controls.crop.value;
+        const water = Number(controls.water.value) / 100;
+        const nitrogen = Number(controls.nitrogen.value) / 100;
+        const heat = Number(controls.heat.value) / 100;
+        const vpd = Number(controls.vpd.value) / 100;
+        const cropHeat = crop === "corn" ? 1.08 : 0.92;
+        const waterFactor = 0.7 + 0.3 * Math.pow(water, 0.7);
+        const nitrogenFactor = 0.76 + 0.24 * Math.sqrt(nitrogen);
+        const atmosphereFactor = 1 - cropHeat * (0.17 * heat + 0.12 * Math.pow(vpd, 1.25));
+        const yieldIndex = Math.round(100 * waterFactor * nitrogenFactor * atmosphereFactor);
+        return { crop, water, nitrogen, heat, vpd, yieldIndex };
+      }
+
+      function makeSeries(state) {
+        return baseline.map((value, index) => {
+          const time = index / 16;
+          const earlyWater = 1 - (1 - state.water) * 0.18 * Math.min(1, time * 2.4);
+          const nitrogen = 1 - (1 - state.nitrogen) * 0.2 * Math.min(1, time * 1.8);
+          const reproductiveStress = time < 0.48
+            ? 1
+            : 1 - ((state.heat * 0.17) + (state.vpd * 0.12)) * ((time - 0.48) / 0.52);
+          return value * earlyWater * nitrogen * reproductiveStress;
+        });
+      }
+
+      function points(values) {
+        return values.map((value, index) => {
+          const x = 52 + (648 * index) / (values.length - 1);
+          const y = 286 - value * 2.5;
+          return `${x.toFixed(1)},${y.toFixed(1)}`;
+        }).join(" ");
+      }
+
+      function render() {
+        const state = scenario();
+        const values = makeSeries(state);
+        const modelPoints = points(values);
+        document.querySelector("#baseline-line").setAttribute("points", points(baseline));
+        document.querySelector("#model-line").setAttribute("points", modelPoints);
+        document.querySelector("#model-area").setAttribute(
+          "d",
+          `M ${modelPoints.replaceAll(" ", " L ")} L 700,286 L 52,286 Z`,
+        );
+
+        outputIds.forEach((id) => {
+          document.querySelector(`#${id}-value`).textContent = `${controls[id].value}%`;
+        });
+
+        const limitations = [
+          ["水分", 1 - state.water],
+          ["氮素", 1 - state.nitrogen],
+          ["高温", state.heat],
+          ["VPD", state.vpd],
+        ].sort((a, b) => b[1] - a[1]);
+        const stress = state.yieldIndex >= 88 ? "低" : state.yieldIndex >= 72 ? "中" : "高";
+        const cropName = state.crop === "corn" ? "玉米" : "大豆";
+        const riskWindow = (state.heat + state.vpd) > ((1 - state.water) + (1 - state.nitrogen))
+          ? "生殖期"
+          : "营养期";
+
+        document.querySelector("#yield-index").textContent = state.yieldIndex;
+        document.querySelector("#stress-index").textContent = stress;
+        document.querySelector("#stress-detail").textContent = `${limitations[0][0]}为主要限制因子`;
+        document.querySelector("#risk-window").textContent = riskWindow;
+        document.querySelector("#interpretation").textContent =
+          `${cropName}场景的首要限制来自${limitations[0][0]}。模型结构将水分、氮素与气象压力分别建模，再通过可微分 ODE 和阶段胁迫专家耦合到产量形成过程。`;
+      }
+
+      Object.values(controls).forEach((control) => control.addEventListener("input", render));
+      document.querySelector("#simulate").addEventListener("click", () => {
+        document.querySelector(".chart-card").animate(
+          [{ transform: "translateY(4px)", opacity: 0.82 }, { transform: "translateY(0)", opacity: 1 }],
+          { duration: 360, easing: "ease-out" },
+        );
+        render();
+      });
+      document.querySelector("#reset").addEventListener("click", () => {
+        controls.water.value = 92;
+        controls.nitrogen.value = 90;
+        controls.heat.value = 8;
+        controls.vpd.value = 12;
+        render();
+      });
+
+      render();
+    </script>
+  </body>
+</html>

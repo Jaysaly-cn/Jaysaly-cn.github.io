@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="植保智能体交互原型：体验多意图路由、RAG 证据检索、诊断仲裁、主动追问和农药安全护栏。"
+    />
+    <meta name="theme-color" content="#155b39" />
+    <title>植保智能体｜俞凯杰</title>
+    <link rel="stylesheet" href="research.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <a class="brand" href="../">俞凯杰｜植保智能体</a>
+        <nav class="nav-links" aria-label="页面导航">
+          <a href="./">AI Demo Lab</a>
+          <a href="../#projects">返回个人主页</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Evidence-grounded agricultural agent</div>
+          <h1>先找证据，再给诊断</h1>
+          <p>
+            这个植保智能体把农业问答拆成可检查的工作流：提取田间信息、判断是否足够、检索知识卡、交叉仲裁候选结论，并在每次回答前执行安全校验。
+          </p>
+        </div>
+        <aside class="prototype-note">
+          <strong>安全说明</strong>
+          本页不调用大模型或外部 API，不提供农药剂量。真实生产决策应核对当地登记标签并咨询植保人员。
+        </aside>
+      </section>
+
+      <section class="app-grid" aria-label="植保智能体交互工作台">
+        <aside class="card control-card">
+          <h2>田间描述</h2>
+          <p class="muted">选择样例或修改文本，观察智能体如何决定“诊断、追问或拦截”。</p>
+
+          <div class="field">
+            <div class="field-head">快速样例</div>
+            <div class="sample-chips">
+              <button class="chip" type="button" data-case="diagnosis" aria-pressed="true">完整虫害线索</button>
+              <button class="chip" type="button" data-case="followup" aria-pressed="false">信息不足</button>
+              <button class="chip" type="button" data-case="safety" aria-pressed="false">用药剂量请求</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="query">用户输入</label>
+            <textarea id="query" spellcheck="false"></textarea>
+          </div>
+
+          <button class="button full-button" id="analyze" type="button">启动智能体</button>
+          <p class="source">输入仅在当前浏览器标签页中处理。</p>
+        </aside>
+
+        <div>
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <h2>可解释执行链</h2>
+                <p class="muted" id="run-status">等待输入</p>
+              </div>
+            </div>
+            <div class="pipeline" aria-label="智能体处理流程">
+              <div class="node" data-node="0">输入与槽位提取</div>
+              <div class="node" data-node="1">意图路由</div>
+              <div class="node" data-node="2">证据检索</div>
+              <div class="node" data-node="3">诊断仲裁</div>
+              <div class="node" data-node="4">安全校验与回答</div>
+            </div>
+          </section>
+
+          <section class="card chart-card result-shell" aria-live="polite">
+            <div class="result-empty" id="result-empty">
+              <p>点击“启动智能体”，查看工作流与结构化结果。</p>
+            </div>
+            <div id="result" hidden>
+              <div class="result-badge" id="result-badge"></div>
+              <h2 class="diagnosis-title" id="result-title"></h2>
+              <p class="latin" id="result-latin"></p>
+              <p id="result-summary"></p>
+
+              <div class="evidence-grid">
+                <article class="evidence-box">
+                  <h3 id="evidence-title">关键证据</h3>
+                  <ul id="evidence-list"></ul>
+                </article>
+                <article class="evidence-box">
+                  <h3 id="action-title">下一步</h3>
+                  <ul id="action-list"></ul>
+                </article>
+              </div>
+
+              <div class="safety" id="safety-note"></div>
+              <p class="source" id="source-note"></p>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container">
+      Plant Protection Agent 交互可视化 · 多 Skill + RAG + EvidenceMatrix + Safety Guard · © 2026 俞凯杰
+    </footer>
+
+    <script>
+      const cases = {
+        diagnosis: {
+          query: "浙江水稻分蘖期出现枯鞘和枯心苗，剥开稻茎能看到蛀道和虫粪，请帮助判断。",
+          badge: "中等置信度 · 证据支持",
+          badgeClass: "",
+          title: "疑似二化螟为害",
+          latin: "Chilo suppressalis (Walker)",
+          summary: "现有症状、作物和生育期与二化螟幼虫蛀茎为害相符；仍需观察幼虫体色、背线和蛀孔特征，以排除三化螟与大螟。",
+          evidenceTitle: "关键证据",
+          evidence: [
+            "寄主为水稻，且处于分蘖期",
+            "枯鞘、枯心苗符合典型蛀茎症状",
+            "稻茎内可见蛀道与虫粪",
+          ],
+          actionTitle: "建议核查",
+          actions: [
+            "剥查幼虫体色、背线与虫体大小",
+            "记录枯鞘率/枯心率和田间分布",
+            "结合当地虫情测报确认发生期",
+          ],
+          safety: "优先采用农业、物理和生物防治。若涉及用药，请核对当地登记、作物与防治对象、采收间隔期，并遵循产品标签。",
+          source: "知识依据：项目中的 reviewed 二化螟知识卡；页面展示确定性工作流，不是实时大模型推理。",
+          stopAt: 4,
+        },
+        followup: {
+          query: "田里的水稻叶子发黄了，是什么问题？",
+          badge: "需要追问 · 暂不诊断",
+          badgeClass: "followup",
+          title: "信息不足，无法可靠区分原因",
+          latin: "",
+          summary: "叶片发黄可能来自虫害、病害、营养、土壤或药害。智能体不会在关键槽位缺失时强行给出物种级结论。",
+          evidenceTitle: "当前缺失",
+          evidence: [
+            "受害部位与具体症状",
+            "作物生育期和发生时间",
+            "田间分布及近期施肥/用药记录",
+          ],
+          actionTitle: "定向追问",
+          actions: [
+            "黄化发生在新叶、老叶还是整株？",
+            "叶片是否有斑点、孔洞或虫体？",
+            "请补充所在地、生育期和清晰照片。",
+          ],
+          safety: "在原因未明确前，不建议仅凭“叶片发黄”直接施药或追加肥料。",
+          source: "策略依据：Sufficiency Checker 与不确定性处理协议。",
+          stopAt: 1,
+        },
+        safety: {
+          query: "水稻有虫，直接告诉我某种农药每亩要用多少毫升，浓一点行不行？",
+          badge: "Safety Guard · 已拦截",
+          badgeClass: "blocked",
+          title: "不提供脱离标签的具体剂量",
+          latin: "",
+          summary: "请求缺少害虫种类、地区登记、产品有效成分与标签信息。浓度加大可能带来药害、残留、环境风险和抗药性，智能体在回答生成前执行安全拦截。",
+          evidenceTitle: "拦截原因",
+          evidence: [
+            "未确认防治对象和发生程度",
+            "未提供产品标签及有效成分",
+            "要求提高浓度，存在明显安全风险",
+          ],
+          actionTitle: "安全路径",
+          actions: [
+            "先鉴定害虫并评估是否达到防治阈值",
+            "查询当地登记产品和作物适用范围",
+            "严格按标签并咨询当地植保人员",
+          ],
+          safety: "不建议自行提高浓度、混配或改变施用方式。遵循农药标签、个人防护、采收间隔期和抗性管理要求。",
+          source: "策略依据：Pesticide Safety Policy 与 Safety Guard。",
+          stopAt: 4,
+          blocked: true,
+        },
+      };
+
+      const query = document.querySelector("#query");
+      const nodes = [...document.querySelectorAll("[data-node]")];
+      let activeCase = "diagnosis";
+      let timers = [];
+
+      function selectCase(id) {
+        activeCase = id;
+        query.value = cases[id].query;
+        document.querySelectorAll("[data-case]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.case === id));
+        });
+        resetRun();
+      }
+
+      function inferCase() {
+        const text = query.value;
+        if (/多少|剂量|毫升|浓一点|加量/.test(text)) return "safety";
+        if (text.length < 24 || !/分蘖|苗期|穗期|生育期|蛀|虫|斑|枯心/.test(text)) return "followup";
+        return "diagnosis";
+      }
+
+      function resetRun() {
+        timers.forEach(window.clearTimeout);
+        timers = [];
+        nodes.forEach((node) => node.classList.remove("active", "blocked"));
+        document.querySelector("#run-status").textContent = "等待输入";
+        document.querySelector("#result-empty").hidden = false;
+        document.querySelector("#result").hidden = true;
+      }
+
+      function renderResult(data) {
+        const badge = document.querySelector("#result-badge");
+        badge.textContent = data.badge;
+        badge.className = `result-badge ${data.badgeClass}`;
+        document.querySelector("#result-title").textContent = data.title;
+        document.querySelector("#result-latin").textContent = data.latin;
+        document.querySelector("#result-summary").textContent = data.summary;
+        document.querySelector("#evidence-title").textContent = data.evidenceTitle;
+        document.querySelector("#action-title").textContent = data.actionTitle;
+        document.querySelector("#evidence-list").innerHTML = data.evidence.map((item) => `<li>${item}</li>`).join("");
+        document.querySelector("#action-list").innerHTML = data.actions.map((item) => `<li>${item}</li>`).join("");
+        document.querySelector("#safety-note").textContent = data.safety;
+        document.querySelector("#source-note").textContent = data.source;
+        document.querySelector("#result-empty").hidden = true;
+        document.querySelector("#result").hidden = false;
+      }
+
+      function runAgent() {
+        resetRun();
+        const id = inferCase();
+        activeCase = id;
+        const data = cases[id];
+        document.querySelectorAll("[data-case]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.case === id));
+        });
+        document.querySelector("#run-status").textContent = "正在解析田间信息…";
+
+        const path = id === "followup" ? [0, 1, 4] : [0, 1, 2, 3, 4];
+        path.forEach((nodeIndex, index) => {
+          timers.push(window.setTimeout(() => {
+            nodes[nodeIndex].classList.add(data.blocked && nodeIndex === 4 ? "blocked" : "active");
+            document.querySelector("#run-status").textContent =
+              index === path.length - 1 ? "执行完成" : "正在沿工作流处理…";
+            if (index === path.length - 1) renderResult(data);
+          }, 260 + index * 330));
+        });
+      }
+
+      document.querySelectorAll("[data-case]").forEach((button) => {
+        button.addEventListener("click", () => selectCase(button.dataset.case));
+      });
+      document.querySelector("#analyze").addEventListener("click", runAgent);
+      query.addEventListener("input", () => {
+        document.querySelectorAll("[data-case]").forEach((button) => button.setAttribute("aria-pressed", "false"));
+      });
+
+      selectCase(activeCase);
+    </script>
+  </body>
+</html>
