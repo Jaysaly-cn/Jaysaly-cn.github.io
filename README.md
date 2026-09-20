@@ -7,7 +7,7 @@
 首页按三个主案例组织：
 
 - `cases/field-ai.html`：农业 AI 工具的业务流程、个人职责与公开样例。
-- `demos/coagents.html`：CoAgents 对象关系、四项产品取舍、交互演示与状态测试。
+- `demos/coagents.html`：CoAgents 对象关系、四项产品取舍、实际操作录屏、交互演示与状态测试。
 - `cases/research.html`：SABridge 四模态方法、公开实现与复现条件。
 
 案例区分工作经历、可核查的公开实现和合成演示。尚无完整测试口径的业务数字不作为成果展示；研究原型不宣称已复现实验或生产部署。
