@@ -13,82 +13,33 @@
     <title>农业识别工具｜俞凯杰</title>
   </head>
   <body class="case-page">
-    <a class="skip-link" href="#case-content">跳到案例内容</a>
-    <header>
-      <nav class="case-container case-nav" aria-label="主导航">
-        <a class="case-brand" href="../">俞凯杰 <span>· Case notes</span></a>
-        <a class="case-home-link" href="../#projects">返回项目</a>
-      </nav>
-    </header>
+    <a class="skip-link" href="#case-content">跳到正文</a>
+    <header><div class="case-container case-nav">
+      <a class="case-brand" href="../">俞凯杰<span>AI PRODUCT · BUILDER</span></a>
+      <nav aria-label="主导航"><a href="../#projects">精选案例</a><a href="../#experience">经历</a><a href="../#contact">联系</a></nav>
+    </div></header>
 
-    <main id="case-content">
+    <main id="case-content" tabindex="-1">
       <section class="case-container case-hero" aria-labelledby="case-title">
         <div>
-          <p class="case-kicker">AI 工具案例 · 农业识别</p>
-          <h1 id="case-title">把模型结果<br />交到使用者手上</h1>
+          <p class="case-kicker">01 / 业务交付 · 农业 AI 工具</p>
+          <h1 id="case-title">让识别结果<br />可理解、可复核。</h1>
           <p class="case-lead">
-            一个面向农业识别任务的产品案例：将图像输入、识别结果、人工复核与后续反馈组织成一条工作链，帮助使用者在不确定时知道下一步该做什么。
+            围绕虫害鉴定等农业任务，我承担需求调研、产品流程设计、开发集成与交付工作，将图像输入、模型结果和人工判断组织成可操作的工具。
           </p>
         </div>
-        <aside class="case-scope" aria-label="案例范围">
-          <strong>案例范围</strong>
-          <p>基于农业 AI 工具交付经历整理，使用公开样例说明产品流程。线上演示在浏览器本地运行，展示输入和结果的组织方式。</p>
-        </aside>
-        <div class="case-meta" aria-label="案例概览">
-          <span>场景：虫害与田间图像识别</span>
-          <span>职责：AI 工具产品与全栈交付</span>
-          <span>重点：结果解释与人工复核</span>
-        </div>
+        <dl class="case-brief">
+          <div><dt>项目背景</dt><dd>农业 AI 应用 · 实习工作经历</dd></div>
+          <div><dt>我的职责</dt><dd>产品设计、前后端与推理接口集成</dd></div>
+          <div><dt>本页材料</dt><dd>识别界面、公开样例与流程拆解</dd></div>
+        </dl>
+        <div class="case-actions"><a class="case-button" href="../demos/#soybean">体验识别样例 ↗</a><a class="case-button secondary" href="#work">查看本人工作 ↓</a></div>
+        <p class="case-caption">基于既有交付经历整理；公开 Demo 使用浏览器本地样例，展示输入与结果的组织方式。</p>
       </section>
+      <div class="case-container"><nav class="case-toc" aria-label="本页目录"><span>本页内容</span><a href="#work">本人工作</a><a href="#challenge">业务问题</a><a href="#flow">产品流程</a><a href="#decisions">设计判断</a><a href="#evidence">公开材料</a></nav></div>
 
-      <section class="case-container case-section" aria-labelledby="challenge-title">
-        <p class="section-label">问题</p>
-        <h2 id="challenge-title">识别不是终点，使用者还要据此判断和行动</h2>
-        <div class="case-grid two-up">
-          <article>
-            <h3>输入来自真实场景</h3>
-            <p>农业图像可能有遮挡、角度差异和信息缺失。系统需要先把输入转换为可处理的任务，而不是把一张图片直接包装成确定答案。</p>
-          </article>
-          <article>
-            <h3>输出必须能被检查</h3>
-            <p>类别或框选结果应与图像、输入时间和处理状态一起呈现；当证据不足时，使用者应能复核、补充信息或重新提交。</p>
-          </article>
-          <article>
-            <h3>异常需要进入迭代</h3>
-            <p>无法判断、错误识别和用户反馈不是页面末尾的提示，而是后续标注、分析和产品改进的候选材料。</p>
-          </article>
-          <article>
-            <h3>工具要匹配现场节奏</h3>
-            <p>界面优先回答“看到了什么、依据是什么、还需要什么”，让结果可用于下一轮检查，而非只展示一个模型标签。</p>
-          </article>
-        </div>
-      </section>
 
-      <section class="case-container case-section case-flow-section" aria-labelledby="flow-title">
-        <p class="section-label">产品拆解</p>
-        <h2 id="flow-title">从一次输入，到一条可复核的记录</h2>
-        <ol class="case-flow">
-          <li>
-            <span>01</span>
-            <div><h3>提交图像</h3><p>保留原始输入与任务上下文，明确这次识别处理的对象。</p></div>
-          </li>
-          <li>
-            <span>02</span>
-            <div><h3>展示可理解的结果</h3><p>将候选类别、目标位置或分类路径与图像并列呈现，避免只留下一个黑箱结论。</p></div>
-          </li>
-          <li>
-            <span>03</span>
-            <div><h3>交给人工核对</h3><p>信息不足或低把握场景进入复核、补充材料或重新识别路径；不把模型输出写成现场确认。</p></div>
-          </li>
-          <li>
-            <span>04</span>
-            <div><h3>回收反馈</h3><p>把复核结论和异常原因收集为后续分析线索，为数据与规则迭代建立入口。</p></div>
-          </li>
-        </ol>
-        <p class="case-note">这是本案例的产品流程说明，不表示当前公开页面已连接生产数据库、实时模型服务或人工审核系统。</p>
-      </section>
-
-      <section class="case-container case-section" aria-labelledby="work-title">
+      <section class="case-container case-section" id="work" aria-labelledby="work-title">
         <p class="section-label">本人工作</p>
         <h2 id="work-title">把非标准的识别需求落到产品和交付边界</h2>
         <div class="case-grid two-up">
@@ -111,7 +62,61 @@
         </div>
       </section>
 
-      <section class="case-container case-section" aria-labelledby="decisions-title">
+      <section class="case-container case-section" id="challenge" aria-labelledby="challenge-title">
+        <p class="section-label">问题</p>
+        <h2 id="challenge-title">识别不是终点，使用者还要据此判断和行动</h2>
+        <div class="case-grid two-up">
+          <article>
+            <h3>输入来自真实场景</h3>
+            <p>农业图像可能有遮挡、角度差异和信息缺失。系统需要先把输入转换为可处理的任务，而不是把一张图片直接包装成确定答案。</p>
+          </article>
+          <article>
+            <h3>输出必须能被检查</h3>
+            <p>类别或框选结果应与图像、输入时间和处理状态一起呈现；当证据不足时，使用者应能复核、补充信息或重新提交。</p>
+          </article>
+          <article>
+            <h3>异常需要进入迭代</h3>
+            <p>无法判断、错误识别和用户反馈不是页面末尾的提示，而是后续标注、分析和产品改进的候选材料。</p>
+          </article>
+          <article>
+            <h3>工具要匹配现场节奏</h3>
+            <p>界面优先回答“看到了什么、依据是什么、还需要什么”，让结果可用于下一轮检查，而非只展示一个模型标签。</p>
+          </article>
+        </div>
+      </section>
+
+      <figure class="case-container case-artifact">
+        <img src="../assets/ai-matrix.png" width="746" height="952" loading="lazy" alt="农业识别工具既有移动端界面材料">
+        <figcaption><strong>从界面看产品流程</strong><p>既有识别界面材料，与下方的输入、结果和复核流程对应阅读。点击公开样例，可以检查图像与检测标注如何呈现。</p><a href="../demos/#soybean">打开检测标注样例 ↗</a></figcaption>
+      </figure>
+
+      <section class="case-container case-section case-flow-section" id="flow" aria-labelledby="flow-title">
+        <p class="section-label">产品拆解</p>
+        <h2 id="flow-title">从一次输入，到一条可复核的记录</h2>
+        <ol class="case-flow">
+          <li>
+            <span>01</span>
+            <div><h3>提交图像</h3><p>保留原始输入与任务上下文，明确这次识别处理的对象。</p></div>
+          </li>
+          <li>
+            <span>02</span>
+            <div><h3>展示可理解的结果</h3><p>将候选类别、目标位置或分类路径与图像并列呈现，避免只留下一个黑箱结论。</p></div>
+          </li>
+          <li>
+            <span>03</span>
+            <div><h3>交给人工核对</h3><p>信息不足或低把握场景进入复核、补充材料或重新识别路径；不把模型输出写成现场确认。</p></div>
+          </li>
+          <li>
+            <span>04</span>
+            <div><h3>回收反馈</h3><p>把复核结论和异常原因收集为后续分析线索，为数据与规则迭代建立入口。</p></div>
+          </li>
+        </ol>
+
+      </section>
+
+
+
+      <section class="case-container case-section" id="decisions" aria-labelledby="decisions-title">
         <p class="section-label">设计判断</p>
         <h2 id="decisions-title">三个让识别工具更可用的选择</h2>
         <div class="case-grid decisions">
@@ -130,7 +135,7 @@
         </div>
       </section>
 
-      <section class="case-container case-section" aria-labelledby="evidence-title">
+      <section class="case-container case-section" id="evidence" aria-labelledby="evidence-title">
         <p class="section-label">证据与边界</p>
         <h2 id="evidence-title">哪些材料可被复查，哪些结论仍待验证</h2>
         <p class="table-scroll-hint">横向滑动可查看完整表格。</p>
@@ -164,7 +169,7 @@
         <p class="case-note">公开材料用于查看产品流程与实现样例。识别效果和处理时延需要结合固定测试集、运行环境与人工复核记录评估，本页不报告缺少这些口径的数字。</p>
       </section>
 
-      <section class="case-container case-section case-outcome" aria-labelledby="outcome-title">
+      <section class="case-container case-section case-outcome" id="outcome" aria-labelledby="outcome-title">
         <p class="section-label">结论</p>
         <h2 id="outcome-title">这项工作展示的，是把识别能力落入业务判断的能力</h2>
         <p>我将需求梳理、界面流程与接口集成串联起来，让识别任务有明确的输入、结果和人工判断节点。公开样例提供了查看这些设计的入口；后续评估应持续跟踪错误类型、复核成本与反馈处理情况。</p>
@@ -174,6 +179,7 @@
           <a class="case-button secondary" href="../#projects">返回项目列表</a>
         </div>
       </section>
+      <nav class="case-container case-next" aria-label="继续阅读"><a href="../#projects"><span>精选案例</span><strong>返回作品集 ←</strong></a><a href="../demos/coagents.html"><span>Agent 产品设计</span><strong>CoAgents →</strong></a></nav>
     </main>
 
     <footer class="case-container case-footer">

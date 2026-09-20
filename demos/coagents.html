@@ -10,148 +10,80 @@
     <meta name="theme-color" content="#6952d7" />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <title>CoAgents｜Agent 运营闭环案例</title>
-    <link rel="stylesheet" href="research.css" />
     <link rel="stylesheet" href="../cases/case-study.css" />
   </head>
-  <body class="coagents-page">
-    <header>
-      <div class="container nav">
-        <a class="brand" href="../">俞凯杰｜CoAgents</a>
-        <nav class="nav-links" aria-label="页面导航">
-          <a href="./">AI Demo Lab</a>
-          <a href="../#coagents">返回个人主页</a>
-        </nav>
-      </div>
-    </header>
 
-    <main class="container">
-      <section class="hero">
-        <div>
-          <div class="eyebrow">Agent operations case study</div>
-          <h1>从 Agent 能力，<br />到可验收的交付。</h1>
-          <p>
-            CoAgents 用一条连贯的工作链解释 Agent 如何被选用、部署、触发、授权和验收。重点不在一次对话，而在每次执行的版本、运行位置、交付证据和最终决策都能被追溯。
-          </p>
-          <div class="case-hero-actions"><a class="button" href="https://jaysaly-cn.github.io/coagents-demo/">打开交互 Demo ↗</a><a class="button secondary" href="#case-flow">查看设计流程 ↓</a></div>
+  <body class="case-page coagents-page">
+    <a class="skip-link" href="#case-content">跳到正文</a>
+    <header><div class="case-container case-nav">
+      <a class="case-brand" href="../">俞凯杰<span>AI PRODUCT · BUILDER</span></a>
+      <nav aria-label="主导航"><a href="../#projects">精选案例</a><a href="../#experience">经历</a><a href="../#contact">联系</a></nav>
+    </div></header>
+    <main id="case-content" class="case-container" tabindex="-1">
+      <section class="case-hero" aria-labelledby="page-title">
+        <p class="case-kicker">02 / AGENT 产品设计 · COAGENTS</p>
+        <h1 id="page-title">Agent 交付了结果，<br>谁来确认任务完成？</h1>
+        <p class="case-lead">CoAgents 将能力、运行实例和任务交付串成一条可追溯的工作链。我用这个原型探索：当 Agent 被反复使用时，产品如何保留版本、授权与验收的依据。</p>
+        <dl class="case-brief">
+          <div><dt>我的角色</dt><dd>定义产品方向、对象关系与演示约束</dd></div>
+          <div><dt>协作方式</dt><dd>借助 AI 编程工具实现界面与代码</dd></div>
+          <div><dt>交付内容</dt><dd>交互 Demo、状态测试、包定义校验器</dd></div>
+        </dl>
+        <div class="case-actions"><a class="case-button" href="https://jaysaly-cn.github.io/coagents-demo/">亲自体验 Demo ↗</a><a class="case-button secondary" href="#walkthrough">观看 2 分 14 秒录屏 ↓</a></div>
+        <p class="case-caption">产品设计原型 · 合成预设场景 · 浏览器本地运行，无需账号或 API Key；不连接真实模型、设备或后端。</p>
+      </section>
+      <nav class="case-toc" aria-label="本页目录"><span>本页内容</span><a href="#context">产品问题</a><a href="#acceptance-story">验收设计</a><a href="#decisions">四项取舍</a><a href="#walkthrough">操作录屏</a><a href="#case-flow">交互拆解</a><a href="#evidence">验证材料</a></nav>
+
+      <section id="context" class="case-section" aria-labelledby="context-title">
+        <p class="section-label">01 / 产品问题</p>
+        <h2 id="context-title">一次输出背后，还有版本、权限和责任。</h2>
+        <p>我将目标使用者设定为需要把重复性知识工作交给 Agent 的团队负责人和执行者。以原型中的例行简报任务为例：选择能力只是开始，使用者还需要知道这次由哪个版本执行、读取了哪些资料，以及产物是否可以使用。</p>
+        <div class="case-grid">
+          <article><h3>执行之前：明确上下文</h3><p>从市场选择已发布能力，将固定版本部署为设备上的实例；任务创建时保存对应实例、设备与版本。</p></article>
+          <article><h3>执行之后：保留判断</h3><p>生成交付物后，展示检查快照并等待验收。拒绝、重试和最终接受都留在同一条任务历史中。</p></article>
         </div>
-        <aside class="prototype-note">
-          <strong>演示边界</strong>
-          所有场景使用合成预设数据和浏览器本地状态。页面不连接真实设备、后端、模型服务或外部凭据。
-        </aside>
+        <figure class="case-screenshot"><img src="../assets/coagents-workspace.png" width="1440" height="1000" loading="lazy" alt="CoAgents 工作台实际截图，展示任务概览、设备与实例入口"><figcaption>实际 Demo 工作台：从同一个入口查看任务与运行上下文。图中数据为合成样例。</figcaption></figure>
+      </section>
+
+      <section id="acceptance-story" class="case-section" aria-labelledby="acceptance-title">
+        <p class="section-label">02 / 关键决策展开</p>
+        <h2 id="acceptance-title">把“生成完毕”和“接受交付”分成两步。</h2>
+        <p>如果工作流停止时就将任务标记为完成，使用者很难区分“系统已经产出”和“结果已经被接受”。因此，我将人工验收设为独立节点，并让每次重试产生自己的交付记录。</p>
+        <ol class="decision-sequence" aria-label="交付拒绝后重试并验收的示例路径">
+          <li><span>01 / 待验收</span><h3>先看产物与依据</h3><p>执行结束后，交付物和本次检查快照一并保存，等待使用者判断。</p></li>
+          <li><span>02 / 验收不通过</span><h3>保留这次判断</h3><p>拒绝结果后，原交付、检查快照和验收决定仍可回看。</p></li>
+          <li><span>03 / 重试</span><h3>开始新的尝试</h3><p>任务重新排队，保存新一轮交付；需要资料授权时重新请求。</p></li>
+          <li><span>04 / 接受交付</span><h3>由人工确认完成</h3><p>新结果通过验收后完成任务，前一次被拒绝的记录继续保留。</p></li>
+        </ol>
+        <div class="decision-tradeoff"><strong>选择与代价</strong><p>多一次验收操作，也需要维护每轮交付的历史。换来的是明确的完成标准，以及比较各次结果的依据。预设 Demo 的重试会重复同样的内容，这条流程验证的是状态和记录保留。</p></div>
+        <div class="case-actions"><a class="case-button secondary" href="https://jaysaly-cn.github.io/coagents-demo/#tasks">在任务页查看交付与验收 ↗</a><a class="case-source-link" href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.test.js">查看拒绝、重试与历史保留测试 ↗</a></div>
+      </section>
+
+      <section id="decisions" class="case-section" aria-labelledby="decisions-title">
+        <p class="section-label">03 / 设计取舍</p>
+        <h2 id="decisions-title">四项决策，贯穿同一条任务链。</h2>
+        <div class="case-grid decision-grid">
+          <article><span class="decision-number">01 / 版本</span><h3>任务创建时固定版本</h3><p><strong>可选方案：</strong>每次执行都读取实例的最新版本。</p><p><strong>选择：</strong>任务保留创建时的具体版本，实例升级不会改写历史任务。</p><p><strong>代价：</strong>维护发布版本与升级限制，让交付来源可以追溯。</p></article>
+          <article><span class="decision-number">02 / 自动化</span><h3>自动化触发普通任务</h3><p><strong>可选方案：</strong>为自动化单独维护一套运行与结果记录。</p><p><strong>选择：</strong>触发后复用任务队列、设备约束、授权与验收流程。</p><p><strong>代价：</strong>自动化也要等待设备与人工决定，异常处理保持一致。</p></article>
+          <article><span class="decision-number">03 / 授权</span><h3>每次尝试明确访问范围</h3><p><strong>可选方案：</strong>将能力包的权限声明视为已经获得授权。</p><p><strong>选择：</strong>读取资料前请求允许或拒绝，重试重新授权。</p><p><strong>代价：</strong>增加等待节点，让访问用途与决定对使用者可见。</p></article>
+          <article><span class="decision-number">04 / 验收</span><h3>交付与接受分别记录</h3><p><strong>可选方案：</strong>执行结束后直接标为完成。</p><p><strong>选择：</strong>交付先待验收；被拒绝的结果与新尝试分别保存。</p><p><strong>代价：</strong>增加人工判断和历史存储，保留结果被接受的依据。</p></article>
+        </div>
+        <p class="case-caption">以上为原型设计取舍；目标使用者与价值判断仍需真实使用验证。<a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.js">查看状态实现 ↗</a></p>
       </section>
 
       <section id="walkthrough" class="case-section" aria-labelledby="walkthrough-title">
-        <p class="eyebrow">WATCH THE WORKFLOW</p>
-        <h2 id="walkthrough-title">2 分 14 秒，看一次任务走到验收</h2>
-        <p>实际界面录屏：浏览 Agent 市场，模拟自动化触发，完成资料授权、交付预览与人工验收。无旁白，附中文字幕。</p>
+        <p class="section-label">04 / 实际操作</p>
+        <h2 id="walkthrough-title">2 分 14 秒，看一次任务走到验收。</h2>
+        <p>录屏展示成功路径：浏览 Agent 市场 → 模拟自动化触发 → 资料授权 → 交付预览 → 人工接受。无旁白，附中文字幕。</p>
         <video class="case-video" controls playsinline preload="metadata" poster="../assets/coagents-workspace.png" aria-label="CoAgents 实际操作导览，附中文字幕">
           <source src="../assets/coagents-walkthrough.webm" type="video/webm">
           <track kind="captions" src="../assets/coagents-walkthrough.vtt" srclang="zh" label="简体中文" default>
           你的浏览器暂不支持此视频。<a href="../assets/coagents-walkthrough.webm">下载录屏</a>，或<a href="https://jaysaly-cn.github.io/coagents-demo/">直接体验 Demo</a>。
         </video>
-        <details class="video-transcript"><summary>查看文字导览</summary><ol>
-          <li>从工作台进入 Agent 市场，查看可复用的能力与固定版本。</li>
-          <li>进入自动化，手动模拟预设触发，生成一条关联实例的任务。</li>
-          <li>任务在读取资料前请求授权；允许限定访问后继续执行。</li>
-          <li>打开交付预览，返回任务检查交付证据，再由人工接受结果。</li>
-        </ol><p>演示使用专门编写的合成场景和本地状态，不连接真实设备或模型服务。</p></details>
+        <details class="video-transcript"><summary>查看文字导览</summary><ol><li>从工作台进入 Agent 市场，查看可复用的能力与固定版本。</li><li>进入自动化，手动模拟预设触发，生成一条关联实例的任务。</li><li>任务在读取资料前请求授权；允许限定访问后继续执行。</li><li>打开交付预览，检查交付证据，再由人工接受结果。</li></ol></details>
       </section>
 
-      <section class="case-section" aria-labelledby="case-context-title">
-        <div class="case-section-heading">
-          <p class="eyebrow">产品案例 · 设计假设</p>
-          <h2 id="case-context-title">让 Agent 工作从“能回答”走到“能交付”</h2>
-        </div>
-        <div class="case-grid">
-          <article>
-            <h3>问题</h3>
-            <p>当多个 Agent 被复用到不同工作中，仅靠一次对话很难回答：本次任务由哪个版本完成、在哪里运行、是否获准访问资料，以及谁接受了结果。</p>
-          </article>
-          <article>
-            <h3>目标使用者假设</h3>
-            <p>面向需要把重复性知识工作交给 Agent 的团队负责人和执行者：他们需要先选择能力，再把它部署到可见的运行实例，并在每次交付前保留责任和判断记录。</p>
-          </article>
-          <article>
-            <h3>产品方向</h3>
-            <p>以 <strong>Agent 市场 → 设备 → 实例 → 任务 → 授权 → 验收</strong> 为一条连续工作链，展示能力、运行环境与业务交付之间的关系。</p>
-          </article>
-        </div>
-        <p class="case-note">这是产品假设和可执行的静态原型，并非已完成的用户研究或生产效果结论。所有组织、人员、设备、资料和输出均为专门编写的合成样例。</p>
-      </section>
-
-      <section class="case-section" aria-labelledby="decisions-title">
-        <div class="case-section-heading">
-          <p class="eyebrow">关键产品决策</p>
-          <h2 id="decisions-title">四个状态边界，让流程可以被检查</h2>
-        </div>
-        <p class="table-scroll-hint">横向滑动可查看完整表格。</p>
-        <div class="evidence-table-wrap" role="region" aria-label="产品决策表格，可横向滚动" tabindex="0">
-          <table class="evidence-table">
-            <thead>
-              <tr>
-                <th scope="col">决策</th>
-                <th scope="col">可选方案对比</th>
-                <th scope="col">选择与代价</th>
-                <th scope="col">原型中的验证</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">版本属于任务上下文</th>
-                <td>每次运行直接使用 Agent 的最新版本。</td>
-                <td>创建任务时固定已发布版本，实例升级不改写历史任务。代价是需要维护版本和升级限制，但可追溯交付来源。</td>
-                <td><a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.js" target="_blank" rel="noopener noreferrer">状态实现</a> 与 <a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.test.js" target="_blank" rel="noopener noreferrer">版本冻结测试</a>。</td>
-              </tr>
-              <tr>
-                <th scope="row">自动化仍创建普通任务</th>
-                <td>为自动化单独维护运行记录与结果存储。</td>
-                <td>触发后进入同一任务队列，并保留实例、版本和执行记录。代价是自动化需要遵守任务状态约束，收益是异常、暂停和验收使用同一规则。</td>
-                <td><a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.js" target="_blank" rel="noopener noreferrer">自动化状态实现</a> 与 <a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.test.js" target="_blank" rel="noopener noreferrer">关联任务测试</a>。</td>
-              </tr>
-              <tr>
-                <th scope="row">能力声明不等于资源授权</th>
-                <td>将 Agent 的能力或实例配置视为已获得全部资源访问权。</td>
-                <td>访问合成资料时停在一次明确的允许或拒绝决定；重试时重新请求。代价是多一个等待节点，但不会把用途和范围藏在系统内部。</td>
-                <td><a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.test.js" target="_blank" rel="noopener noreferrer">允许、拒绝与重试历史测试</a>。</td>
-              </tr>
-              <tr>
-                <th scope="row">完成执行不等于接受交付</th>
-                <td>模型或工作流停止后直接将任务标记为完成。</td>
-                <td>将交付、检查快照和人工接受拆成独立状态；拒绝后保留已有证据，再开始新尝试。代价是增加验收动作，但能比较各次交付。</td>
-                <td><a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.test.js" target="_blank" rel="noopener noreferrer">交付历史与证据快照测试</a>。</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="case-section" aria-labelledby="evidence-title">
-        <div class="case-section-heading">
-          <p class="eyebrow">交付与证据</p>
-          <h2 id="evidence-title">可体验的原型，也清楚标出边界</h2>
-        </div>
-        <div class="case-grid">
-          <article>
-            <h3>作者的角色</h3>
-            <p>产品方向与约束由作者定义，界面和代码借助 AI 编程工具协作实现；以状态测试与浏览器流程检查验证。</p>
-          </article>
-          <article>
-            <h3>已验证</h3>
-            <p>这是一个可部署到 GitHub Pages 的静态原型，记录有 26 项软件测试，覆盖状态约束、包定义检查与核心流程。</p>
-          </article>
-          <article>
-            <h3>尚未测量</h3>
-            <p>未测量真实模型表现、生产可靠性、真实用户使用结果或业务收益；原型不连接设备、模型、后端或外部凭据。</p>
-          </article>
-        </div>
-        <div class="case-hero-actions">
-          <a class="button" href="https://jaysaly-cn.github.io/coagents-demo/" target="_blank" rel="noopener noreferrer">体验在线原型 ↗</a>
-          <a class="button secondary" href="https://github.com/Jaysaly-cn/coagents-demo/tree/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3" target="_blank" rel="noopener noreferrer">查看原型源码与测试</a>
-          <a class="button secondary" href="https://github.com/Jaysaly-cn/coagents-package-validator" target="_blank" rel="noopener noreferrer">MIT Manifest 校验器</a>
-        </div>
-        <p class="case-note">案例材料：<a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/README.md" target="_blank" rel="noopener noreferrer">原型说明与运行边界</a>、<a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.test.js" target="_blank" rel="noopener noreferrer">状态测试</a>、<a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/package-validator.test.js" target="_blank" rel="noopener noreferrer">包定义测试</a>。</p>
-      </section>
-
+      <section class="case-section" aria-labelledby="explore-title"><p class="section-label">05 / 交互拆解</p><h2 id="explore-title">选择一个节点，看系统保留了什么。</h2><p>下方切换用于解释设计；通过对应入口可进入完整 Demo 操作。</p>
       <section id="case-flow" class="coagents-layout" aria-label="CoAgents 交互案例">
         <aside class="card case-control">
           <h2>选择一个工作时刻</h2>
@@ -215,12 +147,24 @@
           </section>
         </div>
       </section>
+      </section>
+
+      <section id="evidence" class="case-section" aria-labelledby="evidence-title">
+        <p class="section-label">06 / 验证与下一步</p>
+        <h2 id="evidence-title">已完成流程验证，下一步验证使用价值。</h2>
+        <div class="case-grid">
+          <article><h3>可以检查的交付</h3><p>八个视图组成的静态交互 Demo；26 项软件测试覆盖任务状态约束与包定义检查；浏览器流程与桌面、手机布局有交接验证记录。</p><p><a href="https://github.com/Jaysaly-cn/coagents-demo/tree/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3">原型源码与测试 ↗</a></p></article>
+          <article><h3>下一步如何评估</h3><p>计划让首次使用者完成一项交办任务，观察是否理解授权范围、能否找到交付依据，以及能否解释拒绝后的重试结果。记录完成情况、误操作和需要帮助的节点。</p><p class="case-caption">这是后续验证计划，尚未形成用户测试结果。</p></article>
+        </div>
+        <details class="evidence-details"><summary>查看演示范围与验证材料</summary><div>
+          <p>所有组织、人员、设备、资料与产物均为合成样例。执行由浏览器中的预设场景驱动，自动化通过手动模拟触发，关闭页面后不会运行后台调度。</p>
+          <p>软件规则测试支持状态逻辑的检查，真实模型表现、生产可靠性和业务收益尚未测量。独立 JSON 校验器只检查包定义，不检查 ZIP、文件存在或 Agent 执行效果。</p>
+          <ul><li><a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/README.md">原型说明与运行边界</a></li><li><a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.test.js">版本、授权、交付历史的状态测试</a></li><li><a href="https://github.com/Jaysaly-cn/coagents-package-validator">独立 MIT 包定义校验器</a></li></ul>
+        </div></details>
+      </section>
+      <nav class="case-next" aria-label="继续阅读"><a href="../cases/field-ai.html"><span>业务交付</span><strong>农业 AI 工具 ←</strong></a><a href="../cases/research.html"><span>技术研究</span><strong>SABridge →</strong></a></nav>
     </main>
-
-    <footer class="container">
-      CoAgents 静态交互案例 · 合成预设场景 · 浏览器本地运行 · © 2026 俞凯杰
-    </footer>
-
+    <footer class="case-container case-footer"><span>俞凯杰 · CoAgents 产品案例</span><a href="../#contact">联系我 →</a></footer>
     <script>
       const cases = {
         automation: {

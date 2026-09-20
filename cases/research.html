@@ -10,42 +10,39 @@
     <title>SABridge｜四模态研究案例</title>
   </head>
   <body class="case-page">
-    <header>
-      <div class="case-container">
-        <a href="../#projects">俞凯杰｜作品集</a>
-        <nav aria-label="页面导航">
-          <a href="#question">研究问题</a>
-          <a href="#method">方法与证据</a>
-          <a href="#scope">贡献与边界</a>
-        </nav>
-      </div>
-    </header>
+    <a class="skip-link" href="#case-content">跳到正文</a>
+    <header><div class="case-container case-nav">
+      <a class="case-brand" href="../">俞凯杰<span>AI PRODUCT · BUILDER</span></a>
+      <nav aria-label="主导航"><a href="../#projects">精选案例</a><a href="../#experience">经历</a><a href="../#contact">联系</a></nav>
+    </div></header>
 
-    <main class="case-container">
+    <main id="case-content" class="case-container" tabindex="-1">
       <section class="case-hero" aria-labelledby="case-title">
-        <span class="case-kicker">RESEARCH CASE · PUBLIC PROTOTYPE</span>
-        <h1 id="case-title">SABridge：让图像、描述、DNA 与分类信息进入同一条研究链路</h1>
+        <span class="case-kicker">03 / 数据与模型研究 · SABRIDGE</span>
+        <h1 id="case-title">SABridge：连接四类信息，<br>探索多模态物种识别。</h1>
         <p>
           昆虫物种识别的证据往往分散在不同载体中：图像记录外观，文字补充形态，DNA 条形码提供分子线索，分类层级提供关系约束。这个案例将问题收敛为一件可检查的事：如何先保证四类资料指向同一样本，再学习可比较的多模态表示。
         </p>
-        <div class="case-meta" aria-label="案例范围">
-          <span>主题：四模态表征与对齐</span>
-          <span>证据：公开代码与既有作品材料</span>
-          <span>状态：研究原型</span>
-        </div>
+        <dl class="case-brief">
+          <div><dt>研究问题</dt><dd>多源资料如何配对并共同表征物种</dd></div>
+          <div><dt>技术路径</dt><dd>四模态编码、跨模态融合与评估</dd></div>
+          <div><dt>项目阶段</dt><dd>研究原型 · 可审阅公开实现</dd></div>
+        </dl>
         <div class="case-actions">
           <a class="case-button" href="https://github.com/Jaysaly-cn/SABridge" target="_blank" rel="noopener noreferrer">查看公开代码 ↗</a>
-          <a class="case-button secondary" href="#evidence">查看证据边界 ↓</a>
+          <a class="case-button secondary" href="#method">查看方法与材料 ↓</a>
         </div>
       </section>
+      <nav class="case-toc" aria-label="本页目录"><span>本页内容</span><a href="#question">研究问题</a><a href="#method">方法拆解</a><a href="#evidence">公开材料</a><a href="#scope">验证计划</a></nav>
+
 
       <figure>
-        <img src="../assets/SAbridge.png" alt="SABridge 四模态编码与融合方法示意图，包含图像、文字、DNA 序列与分类信息四类输入" width="1014" height="938" />
-        <figcaption>既有作品材料中的方法示意图，用于说明研究设计，不代表实时系统界面或已复现实验结果。</figcaption>
+        <img loading="lazy" src="../assets/SAbridge.png" alt="SABridge 四模态编码与融合方法示意图，包含图像、文字、DNA 序列与分类信息四类输入" width="1014" height="938" />
+        <figcaption>SABridge 方法示意图：图像、形态描述、DNA 与分类信息分别编码，再进入融合与对齐路径。</figcaption>
       </figure>
 
       <section id="question" class="case-section" aria-labelledby="question-title">
-        <h2 id="question-title">研究问题：多源资料如何成为一个可信的样本，而不是四份互不相干的输入？</h2>
+        <h2 id="question-title">先确认：四类资料是否指向同一个样本？</h2>
         <div class="case-grid">
           <article>
             <h3>领域约束</h3>
@@ -54,7 +51,7 @@
             </p>
           </article>
           <article>
-            <h3>首先解决配对，而非追逐模型规模</h3>
+            <h3>先定义样本配对规则</h3>
             <p>
               公开数据加载逻辑按物种目录读取，并取图像、描述与 COI 文件的同名交集；分类信息按物种关联。这明确了样本配对规则；文件名一致仍需要结合数据质量检查，才能确认资料属于同一个体。
             </p>
@@ -96,7 +93,7 @@
       </section>
 
       <section id="evidence" class="case-section" aria-labelledby="evidence-title">
-        <h2 id="evidence-title">公开证据：能确认什么，也保留什么判断</h2>
+        <h2 id="evidence-title">公开实现与复现条件</h2>
         <p class="table-scroll-hint">横向滑动可查看完整表格。</p>
         <div class="evidence-table-wrap" role="region" aria-label="公开证据表格，可横向滚动" tabindex="0">
         <table class="evidence-table">
@@ -162,6 +159,7 @@
           <a class="case-button secondary" href="../#publications">返回论文与项目列表</a>
         </div>
       </section>
+      <nav class="case-next" aria-label="继续阅读"><a href="../demos/coagents.html"><span>Agent 产品设计</span><strong>CoAgents ←</strong></a><a href="../#contact"><span>交流与联系</span><strong>联系我 →</strong></a></nav>
     </main>
 
     <footer class="case-container">SABridge 研究案例 · 基于公开仓库与既有作品材料编写 · 2026</footer>
