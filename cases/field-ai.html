@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="case-study.css" />
     <title>农业识别工具｜俞凯杰</title>
   </head>
-  <body class="case-page">
+  <body class="case-page field-case">
     <a class="skip-link" href="#case-content">跳到正文</a>
     <header><div class="case-container case-nav">
       <a class="case-brand" href="../">俞凯杰<span>AI PRODUCT · BUILDER</span></a>
@@ -25,16 +25,16 @@
           <p class="case-kicker">01 / 业务交付 · 农业 AI 工具</p>
           <h1 id="case-title">让识别结果<br />可理解、可复核。</h1>
           <p class="case-lead">
-            围绕虫害鉴定等农业任务，我承担需求调研、产品流程设计、开发集成与交付工作，将图像输入、模型结果和人工判断组织成可操作的工具。
+            在大北农担任 AI 管培生期间，我独立完成昆虫识别、植物性状识别和生信分析三类 AI 工具，从一线跟岗调研、产品定义到全栈开发、推理部署与生产团队交付，把专业判断转化为可操作的工作流程。
           </p>
         </div>
         <dl class="case-brief">
-          <div><dt>项目背景</dt><dd>农业 AI 应用 · 实习工作经历</dd></div>
+          <div><dt>项目背景</dt><dd>大北农 · AI 管培生 · 2025.09—2026.06</dd></div>
           <div><dt>我的职责</dt><dd>产品设计、前后端与推理接口集成</dd></div>
           <div><dt>本页材料</dt><dd>识别界面、公开样例与流程拆解</dd></div>
         </dl>
         <div class="case-actions"><a class="case-button" href="../demos/#soybean">体验识别样例 ↗</a><a class="case-button secondary" href="#work">查看本人工作 ↓</a></div>
-        <p class="case-caption">基于既有交付经历整理；公开 Demo 使用浏览器本地样例，展示输入与结果的组织方式。</p>
+        <p class="case-caption">三类工具已交付生产团队使用；下方公开 Demo 以浏览器本地样例展示交互，不连接企业生产系统。</p>
       </section>
       <div class="case-container"><nav class="case-toc" aria-label="本页目录"><span>本页内容</span><a href="#work">本人工作</a><a href="#challenge">业务问题</a><a href="#flow">产品流程</a><a href="#decisions">设计判断</a><a href="#evidence">公开材料</a></nav></div>
 
@@ -45,7 +45,7 @@
         <div class="case-grid two-up">
           <article>
             <h3>梳理任务与判断标准</h3>
-            <p>负责需求调研、场景梳理与验收指标设计，将虫害鉴定、植物性状识别和生信分析等任务拆成输入、处理、结果与复核环节。</p>
+            <p>深入一线跟岗，访谈业务、研发与使用者，梳理人工判断标准、输入数据和验收要求；输出 PRD、功能优先级与迭代规划。</p>
           </article>
           <article>
             <h3>设计结果呈现与复核入口</h3>
@@ -53,7 +53,7 @@
           </article>
           <article>
             <h3>推进可运行的 MVP</h3>
-            <p>承担前后端开发、模型推理接口封装、API 调用与部署联调，将识别能力接入可供使用者操作的工具。</p>
+            <p>独立完成前后端开发、模型推理接口封装与部署联调，将三类工具交付生产团队，并跟进使用反馈与后续迭代。</p>
           </article>
           <article>
             <h3>以异常驱动改进</h3>
@@ -63,25 +63,12 @@
       </section>
 
       <section class="case-container case-section" id="challenge" aria-labelledby="challenge-title">
-        <p class="section-label">问题</p>
-        <h2 id="challenge-title">识别不是终点，使用者还要据此判断和行动</h2>
-        <div class="case-grid two-up">
-          <article>
-            <h3>输入来自真实场景</h3>
-            <p>农业图像可能有遮挡、角度差异和信息缺失。系统需要先把输入转换为可处理的任务，而不是把一张图片直接包装成确定答案。</p>
-          </article>
-          <article>
-            <h3>输出必须能被检查</h3>
-            <p>类别或框选结果应与图像、输入时间和处理状态一起呈现；当证据不足时，使用者应能复核、补充信息或重新提交。</p>
-          </article>
-          <article>
-            <h3>异常需要进入迭代</h3>
-            <p>无法判断、错误识别和用户反馈不是页面末尾的提示，而是后续标注、分析和产品改进的候选材料。</p>
-          </article>
-          <article>
-            <h3>工具要匹配现场节奏</h3>
-            <p>界面优先回答“看到了什么、依据是什么、还需要什么”，让结果可用于下一轮检查，而非只展示一个模型标签。</p>
-          </article>
+        <p class="section-label">三类工具</p>
+        <h2 id="challenge-title">不同的专业任务，对应不同的产品流程</h2>
+        <div class="case-editorial-list">
+          <article><span>01</span><div><h3>昆虫识别：辅助鉴定与复核</h3><p>围绕图像输入组织 Top-K 候选、置信度和人工复核，保留任务记录。设计重点是让使用者看见候选及其依据，并在信息不足时继续补充和判断。</p></div></article>
+          <article><span>02</span><div><h3>植物性状：从图像到结构化记录</h3><p>将植物性状观察转为明确的字段与结果展示，围绕输入规范、性状提取、人工核对和结果记录组织流程，支持后续汇总与分析。</p></div></article>
+          <article><span>03</span><div><h3>生信分析：把专业分析组织为可操作任务</h3><p>梳理参数配置、任务提交、运行状态与报告查看，让业务使用者可以沿着清晰的操作路径完成分析，并查看对应结果。</p></div></article>
         </div>
       </section>
 
