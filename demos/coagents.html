@@ -11,6 +11,7 @@
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <title>CoAgents｜Agent 运营闭环案例</title>
     <link rel="stylesheet" href="research.css" />
+    <link rel="stylesheet" href="../cases/case-study.css" />
   </head>
   <body class="coagents-page">
     <header>
@@ -43,6 +44,101 @@
         <img src="../assets/coagents-workspace.png" width="1440" height="1000" alt="CoAgents 实际 Demo 的任务、设备与实例总览界面" />
         <figcaption>实际 Demo 界面，所示任务与设备均为合成样例。</figcaption>
       </figure>
+
+      <section class="case-section" aria-labelledby="case-context-title">
+        <div class="case-section-heading">
+          <p class="eyebrow">产品案例 · 设计假设</p>
+          <h2 id="case-context-title">让 Agent 工作从“能回答”走到“能交付”</h2>
+        </div>
+        <div class="case-grid">
+          <article>
+            <h3>问题</h3>
+            <p>当多个 Agent 被复用到不同工作中，仅靠一次对话很难回答：本次任务由哪个版本完成、在哪里运行、是否获准访问资料，以及谁接受了结果。</p>
+          </article>
+          <article>
+            <h3>目标使用者假设</h3>
+            <p>面向需要把重复性知识工作交给 Agent 的团队负责人和执行者：他们需要先选择能力，再把它部署到可见的运行实例，并在每次交付前保留责任和判断记录。</p>
+          </article>
+          <article>
+            <h3>产品方向</h3>
+            <p>以 <strong>Agent 市场 → 设备 → 实例 → 任务 → 授权 → 验收</strong> 为一条连续工作链，展示能力、运行环境与业务交付之间的关系。</p>
+          </article>
+        </div>
+        <p class="case-note">这是产品假设和可执行的静态原型，并非已完成的用户研究或生产效果结论。所有组织、人员、设备、资料和输出均为专门编写的合成样例。</p>
+      </section>
+
+      <section class="case-section" aria-labelledby="decisions-title">
+        <div class="case-section-heading">
+          <p class="eyebrow">关键产品决策</p>
+          <h2 id="decisions-title">四个状态边界，让流程可以被检查</h2>
+        </div>
+        <p class="table-scroll-hint">横向滑动可查看完整表格。</p>
+        <div class="evidence-table-wrap" role="region" aria-label="产品决策表格，可横向滚动" tabindex="0">
+          <table class="evidence-table">
+            <thead>
+              <tr>
+                <th scope="col">决策</th>
+                <th scope="col">可选方案对比</th>
+                <th scope="col">选择与代价</th>
+                <th scope="col">原型中的验证</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">版本属于任务上下文</th>
+                <td>每次运行直接使用 Agent 的最新版本。</td>
+                <td>创建任务时固定已发布版本，实例升级不改写历史任务。代价是需要维护版本和升级限制，但可追溯交付来源。</td>
+                <td><a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.js" target="_blank" rel="noopener noreferrer">状态实现</a> 与 <a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.test.js" target="_blank" rel="noopener noreferrer">版本冻结测试</a>。</td>
+              </tr>
+              <tr>
+                <th scope="row">自动化仍创建普通任务</th>
+                <td>为自动化单独维护运行记录与结果存储。</td>
+                <td>触发后进入同一任务队列，并保留实例、版本和执行记录。代价是自动化需要遵守任务状态约束，收益是异常、暂停和验收使用同一规则。</td>
+                <td><a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.js" target="_blank" rel="noopener noreferrer">自动化状态实现</a> 与 <a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.test.js" target="_blank" rel="noopener noreferrer">关联任务测试</a>。</td>
+              </tr>
+              <tr>
+                <th scope="row">能力声明不等于资源授权</th>
+                <td>将 Agent 的能力或实例配置视为已获得全部资源访问权。</td>
+                <td>访问合成资料时停在一次明确的允许或拒绝决定；重试时重新请求。代价是多一个等待节点，但不会把用途和范围藏在系统内部。</td>
+                <td><a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.test.js" target="_blank" rel="noopener noreferrer">允许、拒绝与重试历史测试</a>。</td>
+              </tr>
+              <tr>
+                <th scope="row">完成执行不等于接受交付</th>
+                <td>模型或工作流停止后直接将任务标记为完成。</td>
+                <td>将交付、检查快照和人工接受拆成独立状态；拒绝后保留已有证据，再开始新尝试。代价是增加验收动作，但能比较各次交付。</td>
+                <td><a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.test.js" target="_blank" rel="noopener noreferrer">交付历史与证据快照测试</a>。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="case-section" aria-labelledby="evidence-title">
+        <div class="case-section-heading">
+          <p class="eyebrow">交付与证据</p>
+          <h2 id="evidence-title">可体验的原型，也清楚标出边界</h2>
+        </div>
+        <div class="case-grid">
+          <article>
+            <h3>作者的角色</h3>
+            <p>产品方向与约束由作者定义，界面和代码借助 AI 编程工具协作实现；以状态测试与浏览器流程检查验证。</p>
+          </article>
+          <article>
+            <h3>已验证</h3>
+            <p>这是一个可部署到 GitHub Pages 的静态原型，记录有 26 项软件测试，覆盖状态约束、包定义检查与核心流程。</p>
+          </article>
+          <article>
+            <h3>尚未测量</h3>
+            <p>未测量真实模型表现、生产可靠性、真实用户使用结果或业务收益；原型不连接设备、模型、后端或外部凭据。</p>
+          </article>
+        </div>
+        <div class="case-hero-actions">
+          <a class="button" href="https://jaysaly-cn.github.io/coagents-demo/" target="_blank" rel="noopener noreferrer">体验在线原型 ↗</a>
+          <a class="button secondary" href="https://github.com/Jaysaly-cn/coagents-demo/tree/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3" target="_blank" rel="noopener noreferrer">查看原型源码与测试</a>
+          <a class="button secondary" href="https://github.com/Jaysaly-cn/coagents-package-validator" target="_blank" rel="noopener noreferrer">MIT Manifest 校验器</a>
+        </div>
+        <p class="case-note">案例材料：<a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/README.md" target="_blank" rel="noopener noreferrer">原型说明与运行边界</a>、<a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/platform-store.test.js" target="_blank" rel="noopener noreferrer">状态测试</a>、<a href="https://github.com/Jaysaly-cn/coagents-demo/blob/0dd034b7ae8ddf331b356193d56bd9bb4603f7d3/package-validator.test.js" target="_blank" rel="noopener noreferrer">包定义测试</a>。</p>
+      </section>
 
       <section id="case-flow" class="coagents-layout" aria-label="CoAgents 交互案例">
         <aside class="card case-control">

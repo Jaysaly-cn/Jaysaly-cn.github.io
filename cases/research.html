@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SABridge 四模态昆虫识别研究原型的作品集案例：问题、方法、公开证据与复现边界。" />
+    <meta name="theme-color" content="#2459c4" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="case-study.css" />
+    <title>SABridge｜四模态研究案例</title>
+  </head>
+  <body class="case-page">
+    <header>
+      <div class="case-container">
+        <a href="../#projects">俞凯杰｜作品集</a>
+        <nav aria-label="页面导航">
+          <a href="#question">研究问题</a>
+          <a href="#method">方法与证据</a>
+          <a href="#scope">贡献与边界</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="case-container">
+      <section class="case-hero" aria-labelledby="case-title">
+        <span class="case-kicker">RESEARCH CASE · PUBLIC PROTOTYPE</span>
+        <h1 id="case-title">SABridge：让图像、描述、DNA 与分类信息进入同一条研究链路</h1>
+        <p>
+          昆虫物种识别的证据往往分散在不同载体中：图像记录外观，文字补充形态，DNA 条形码提供分子线索，分类层级提供关系约束。这个案例将问题收敛为一件可检查的事：如何先保证四类资料指向同一样本，再学习可比较的多模态表示。
+        </p>
+        <div class="case-meta" aria-label="案例范围">
+          <span>主题：四模态表征与对齐</span>
+          <span>证据：公开代码与既有作品材料</span>
+          <span>状态：研究原型</span>
+        </div>
+        <div class="case-actions">
+          <a class="case-button" href="https://github.com/Jaysaly-cn/SABridge" target="_blank" rel="noopener noreferrer">查看公开代码 ↗</a>
+          <a class="case-button secondary" href="#evidence">查看证据边界 ↓</a>
+        </div>
+      </section>
+
+      <figure>
+        <img src="../assets/SAbridge.png" alt="SABridge 四模态编码与融合方法示意图，包含图像、文字、DNA 序列与分类信息四类输入" width="1014" height="938" />
+        <figcaption>既有作品材料中的方法示意图，用于说明研究设计，不代表实时系统界面或已复现实验结果。</figcaption>
+      </figure>
+
+      <section id="question" class="case-section" aria-labelledby="question-title">
+        <h2 id="question-title">研究问题：多源资料如何成为一个可信的样本，而不是四份互不相干的输入？</h2>
+        <div class="case-grid">
+          <article>
+            <h3>领域约束</h3>
+            <p>
+              单张图像容易受拍摄角度、生命阶段和细粒度差异影响；单一描述或条形码也各有缺口。研究原型把图像、形态描述、COI 序列和分类信息并列为四个模态，以共同表征为目标，而不是把它们简单拼接。
+            </p>
+          </article>
+          <article>
+            <h3>首先解决配对，而非追逐模型规模</h3>
+            <p>
+              公开数据加载逻辑按物种目录读取，并取图像、描述与 COI 文件的同名交集；分类信息按物种关联。这明确了样本配对规则；文件名一致仍需要结合数据质量检查，才能确认资料属于同一个体。
+            </p>
+          </article>
+        </div>
+        <aside class="case-note">
+          <p>从产品视角看，这一步相当于先定义输入合同：每个样本需要哪些字段、如何关联、缺失时如何处理。模型结构只有建立在这个合同之上，检索或识别结果才有解释基础。</p>
+        </aside>
+      </section>
+
+      <section id="method" class="case-section" aria-labelledby="method-title">
+        <h2 id="method-title">方法：分别编码，再在统一表示空间中对齐</h2>
+        <div class="case-grid">
+          <article>
+            <h3>四个专用编码器</h3>
+            <p>
+              公开模型代码实例化 ViT、BERT、BarcodeBERT 与 SmallBERT，分别处理图像、描述、序列和分类文本。其前向输出是四组归一化特征，而不是一个已展示性能的最终分类器。
+            </p>
+          </article>
+          <article>
+            <h3>模态之间的交互</h3>
+            <p>
+              代码中的交叉注意力层为四个模态的成对方向建立注意力模块；之后可选深层融合网络继续处理可用模态。这个设计把“形态—分子—语义—分类”的互补关系明确为模型接口。
+            </p>
+          </article>
+          <article>
+            <h3>训练入口与记录</h3>
+            <p>
+              <code>main.py</code> 从配置读取数据目录，构建数据集并按 80/20 随机切分训练与验证集；训练器实现了多模态对比损失，并接入实验记录依赖。它说明了可运行的训练路径，不等同于这里已经复现过一次训练。
+            </p>
+          </article>
+          <article>
+            <h3>评估应回答什么</h3>
+            <p>
+              仓库提供分类指标和批内对比匹配准确率的计算函数。对作品集而言，更重要的是将它们与数据切分、样本覆盖和失败样例一起呈现；目前公开材料没有提供一组可在本页独立核验的汇总结果。
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="evidence" class="case-section" aria-labelledby="evidence-title">
+        <h2 id="evidence-title">公开证据：能确认什么，也保留什么判断</h2>
+        <p class="table-scroll-hint">横向滑动可查看完整表格。</p>
+        <div class="evidence-table-wrap" role="region" aria-label="公开证据表格，可横向滚动" tabindex="0">
+        <table class="evidence-table">
+          <thead>
+            <tr>
+              <th scope="col">可核查对象</th>
+              <th scope="col">公开来源</th>
+              <th scope="col">本案例采用的表述</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>研究意图与四模态范围</td>
+              <td><a href="https://github.com/Jaysaly-cn/SABridge/blob/main/README.md" target="_blank" rel="noopener noreferrer">README</a></td>
+              <td>公开说明将项目定位为图像、文字、DNA 与分类信息的四模态昆虫识别框架。</td>
+            </tr>
+            <tr>
+              <td>样本配对规则</td>
+              <td><a href="https://github.com/Jaysaly-cn/SABridge/blob/main/data/dataset.py" target="_blank" rel="noopener noreferrer">数据集索引代码</a></td>
+              <td>代码以图像、描述与 COI 文件的同名交集构建样本，并附加同物种分类文件。</td>
+            </tr>
+            <tr>
+              <td>模型与训练原型</td>
+              <td><a href="https://github.com/Jaysaly-cn/SABridge/blob/main/models/multimodal_model.py" target="_blank" rel="noopener noreferrer">模型定义</a> · <a href="https://github.com/Jaysaly-cn/SABridge/blob/main/main.py" target="_blank" rel="noopener noreferrer">训练入口</a></td>
+              <td>可看到四类编码器、可选融合与训练初始化；本页不据此推断任何准确率或实际部署表现。</td>
+            </tr>
+            <tr>
+              <td>评估函数</td>
+              <td><a href="https://github.com/Jaysaly-cn/SABridge/blob/main/utils/evaluation.py" target="_blank" rel="noopener noreferrer">指标工具</a></td>
+              <td>代码定义了 F1、准确率等计算与对比匹配计算；公开仓库中未提供本案例可独立复验的最终结果表。</td>
+            </tr>
+            <tr>
+              <td>复现条件</td>
+              <td><a href="https://github.com/Jaysaly-cn/SABridge/blob/main/configs/model_config.yaml" target="_blank" rel="noopener noreferrer">示例配置</a> · <a href="https://github.com/Jaysaly-cn/SABridge/blob/main/requirements.txt" target="_blank" rel="noopener noreferrer">依赖清单</a></td>
+              <td>配置含本地数据路径，README 写明配套数据集将提供；因此当前公开代码适合审阅方法，完整复现仍需要可获取数据与环境整理。</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <aside class="case-note">
+          <p>公开代码支持方法与实现层面的审阅。完整复现还需要可获取的配对数据、固定环境与实验结果记录。</p>
+        </aside>
+      </section>
+
+      <section id="scope" class="case-section" aria-labelledby="scope-title">
+        <h2 id="scope-title">研究范围与下一步验证</h2>
+        <div class="case-grid">
+          <article>
+            <h3>我的研究方向</h3>
+            <p>
+              这项研究围绕四模态昆虫识别展开，重点是如何组织不同来源的生物信息，并建立编码、融合和评估路径。这里以公开仓库为依据呈现方法与实现，不报告尚缺完整实验记录的性能结论。
+            </p>
+          </article>
+          <article>
+            <h3>后续验证重点</h3>
+            <p>
+              优先补齐小型配对样本、固定数据切分和评测脚本，再比较各模态缺失时的退化表现与代表性失败案例。验证目标是让他人能够复跑关键链路，并判断多模态融合是否带来有效增益。
+            </p>
+          </article>
+        </div>
+        <div class="case-actions">
+          <a class="case-button" href="https://github.com/Jaysaly-cn/SABridge" target="_blank" rel="noopener noreferrer">审阅 SABridge 代码 ↗</a>
+          <a class="case-button secondary" href="../#publications">返回论文与项目列表</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="case-container">SABridge 研究案例 · 基于公开仓库与既有作品材料编写 · 2026</footer>
+  </body>
+</html>

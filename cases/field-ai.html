@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="农业识别工具案例：将图像识别结果组织为可查看、可复核、可持续改进的工作流。"
+    />
+    <meta name="theme-color" content="#155e4b" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="case-study.css" />
+    <title>农业识别工具｜俞凯杰</title>
+  </head>
+  <body class="case-page">
+    <a class="skip-link" href="#case-content">跳到案例内容</a>
+    <header>
+      <nav class="case-container case-nav" aria-label="主导航">
+        <a class="case-brand" href="../">俞凯杰 <span>· Case notes</span></a>
+        <a class="case-home-link" href="../#projects">返回项目</a>
+      </nav>
+    </header>
+
+    <main id="case-content">
+      <section class="case-container case-hero" aria-labelledby="case-title">
+        <div>
+          <p class="case-kicker">AI 工具案例 · 农业识别</p>
+          <h1 id="case-title">把模型结果<br />交到使用者手上</h1>
+          <p class="case-lead">
+            一个面向农业识别任务的产品案例：将图像输入、识别结果、人工复核与后续反馈组织成一条工作链，帮助使用者在不确定时知道下一步该做什么。
+          </p>
+        </div>
+        <aside class="case-scope" aria-label="案例范围">
+          <strong>案例范围</strong>
+          <p>基于农业 AI 工具交付经历整理，使用公开样例说明产品流程。线上演示在浏览器本地运行，展示输入和结果的组织方式。</p>
+        </aside>
+        <div class="case-meta" aria-label="案例概览">
+          <span>场景：虫害与田间图像识别</span>
+          <span>职责：AI 工具产品与全栈交付</span>
+          <span>重点：结果解释与人工复核</span>
+        </div>
+      </section>
+
+      <section class="case-container case-section" aria-labelledby="challenge-title">
+        <p class="section-label">问题</p>
+        <h2 id="challenge-title">识别不是终点，使用者还要据此判断和行动</h2>
+        <div class="case-grid two-up">
+          <article>
+            <h3>输入来自真实场景</h3>
+            <p>农业图像可能有遮挡、角度差异和信息缺失。系统需要先把输入转换为可处理的任务，而不是把一张图片直接包装成确定答案。</p>
+          </article>
+          <article>
+            <h3>输出必须能被检查</h3>
+            <p>类别或框选结果应与图像、输入时间和处理状态一起呈现；当证据不足时，使用者应能复核、补充信息或重新提交。</p>
+          </article>
+          <article>
+            <h3>异常需要进入迭代</h3>
+            <p>无法判断、错误识别和用户反馈不是页面末尾的提示，而是后续标注、分析和产品改进的候选材料。</p>
+          </article>
+          <article>
+            <h3>工具要匹配现场节奏</h3>
+            <p>界面优先回答“看到了什么、依据是什么、还需要什么”，让结果可用于下一轮检查，而非只展示一个模型标签。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-container case-section case-flow-section" aria-labelledby="flow-title">
+        <p class="section-label">产品拆解</p>
+        <h2 id="flow-title">从一次输入，到一条可复核的记录</h2>
+        <ol class="case-flow">
+          <li>
+            <span>01</span>
+            <div><h3>提交图像</h3><p>保留原始输入与任务上下文，明确这次识别处理的对象。</p></div>
+          </li>
+          <li>
+            <span>02</span>
+            <div><h3>展示可理解的结果</h3><p>将候选类别、目标位置或分类路径与图像并列呈现，避免只留下一个黑箱结论。</p></div>
+          </li>
+          <li>
+            <span>03</span>
+            <div><h3>交给人工核对</h3><p>信息不足或低把握场景进入复核、补充材料或重新识别路径；不把模型输出写成现场确认。</p></div>
+          </li>
+          <li>
+            <span>04</span>
+            <div><h3>回收反馈</h3><p>把复核结论和异常原因收集为后续分析线索，为数据与规则迭代建立入口。</p></div>
+          </li>
+        </ol>
+        <p class="case-note">这是本案例的产品流程说明，不表示当前公开页面已连接生产数据库、实时模型服务或人工审核系统。</p>
+      </section>
+
+      <section class="case-container case-section" aria-labelledby="work-title">
+        <p class="section-label">本人工作</p>
+        <h2 id="work-title">把非标准的识别需求落到产品和交付边界</h2>
+        <div class="case-grid two-up">
+          <article>
+            <h3>梳理任务与判断标准</h3>
+            <p>负责需求调研、场景梳理与验收指标设计，将虫害鉴定、植物性状识别和生信分析等任务拆成输入、处理、结果与复核环节。</p>
+          </article>
+          <article>
+            <h3>设计结果呈现与复核入口</h3>
+            <p>把模型能力转成可查看的界面流程：展示输入样例、处理步骤与结构化结果，并在信息不足或风险较高时保留人工判断空间。</p>
+          </article>
+          <article>
+            <h3>推进可运行的 MVP</h3>
+            <p>承担前后端开发、模型推理接口封装、API 调用与部署联调，将识别能力接入可供使用者操作的工具。</p>
+          </article>
+          <article>
+            <h3>以异常驱动改进</h3>
+            <p>将错误样例和人工判断标准纳入产品考虑；在本案例中，反馈的作用是帮助定位输入、数据、模型或展示链路需要进一步验证的部分。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-container case-section" aria-labelledby="decisions-title">
+        <p class="section-label">设计判断</p>
+        <h2 id="decisions-title">三个让识别工具更可用的选择</h2>
+        <div class="case-grid decisions">
+          <article>
+            <h3>先呈现依据，再呈现结论</h3>
+            <p>对图像任务，类别名称不足以支持判断。将目标位置、分类路径或待补充信息并置，使用者才能判断是否接受结果。</p>
+          </article>
+          <article>
+            <h3>将“不确定”设计成路径</h3>
+            <p>信息不足时，产品应引导补拍、补充上下文或转人工复核。这样比强行给出高确定性答案更符合高风险领域的使用方式。</p>
+          </article>
+          <article>
+            <h3>让反馈回到任务记录</h3>
+            <p>把一次结果和后续核对关联起来，才能区分是输入质量、识别能力还是交互说明造成的问题，并为后续迭代保留证据。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="case-container case-section" aria-labelledby="evidence-title">
+        <p class="section-label">证据与边界</p>
+        <h2 id="evidence-title">哪些材料可被复查，哪些结论仍待验证</h2>
+        <p class="table-scroll-hint">横向滑动可查看完整表格。</p>
+        <div class="evidence-table-wrap" role="region" aria-label="证据与边界表格" tabindex="0">
+          <table class="evidence-table">
+            <thead><tr><th>可查看材料</th><th>支持的判断</th><th>不能据此证明</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><a href="../demos/#soybean">节肢动物检测样例</a></td>
+                <td>图像、YOLO 标注及结果呈现链路的交互展示</td>
+                <td>浏览器正在运行生产模型，或样例等于整体准确率</td>
+              </tr>
+              <tr>
+                <td><a href="../demos/#moth">夜蛾识别样例</a></td>
+                <td>从图像到物种与分类信息的产品化呈现</td>
+                <td>任意上传图片都能实时识别</td>
+              </tr>
+              <tr>
+                <td><a href="../assets/ai-matrix.png">既有作品集界面示例</a></td>
+                <td>已有面向识别任务的移动端界面材料</td>
+                <td>该界面对应某一已独立验证的生产部署</td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/Jaysaly-cn/Insects.skill" target="_blank" rel="noopener noreferrer">植保智能体公开仓库</a></td>
+                <td>可复查的流程、检索、追问与安全边界设计</td>
+                <td>现场诊断效果或真实用户收益</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="case-note">公开材料用于查看产品流程与实现样例。识别效果和处理时延需要结合固定测试集、运行环境与人工复核记录评估，本页不报告缺少这些口径的数字。</p>
+      </section>
+
+      <section class="case-container case-section case-outcome" aria-labelledby="outcome-title">
+        <p class="section-label">结论</p>
+        <h2 id="outcome-title">这项工作展示的，是把识别能力落入业务判断的能力</h2>
+        <p>我将需求梳理、界面流程与接口集成串联起来，让识别任务有明确的输入、结果和人工判断节点。公开样例提供了查看这些设计的入口；后续评估应持续跟踪错误类型、复核成本与反馈处理情况。</p>
+        <div class="case-actions">
+          <a class="case-button" href="../demos/#soybean">查看识别样例</a>
+          <a class="case-button secondary" href="../demos/pest-agent.html">查看证据诊断原型</a>
+          <a class="case-button secondary" href="../#projects">返回项目列表</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="case-container case-footer">
+      <span>俞凯杰 · 农业识别工具案例</span>
+      <a href="../">个人主页</a>
+    </footer>
+  </body>
+</html>
