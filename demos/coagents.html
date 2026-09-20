@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CoAgents 交互案例：浏览 Agent 市场、设备、实例、任务、自动化、权限与验收如何形成可追溯的工作链。"
+    />
+    <meta name="theme-color" content="#6952d7" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <title>CoAgents｜Agent 运营闭环案例</title>
+    <link rel="stylesheet" href="research.css" />
+  </head>
+  <body class="coagents-page">
+    <header>
+      <div class="container nav">
+        <a class="brand" href="../">俞凯杰｜CoAgents</a>
+        <nav class="nav-links" aria-label="页面导航">
+          <a href="./">AI Demo Lab</a>
+          <a href="../#coagents">返回个人主页</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Agent operations case study</div>
+          <h1>从 Agent 能力，<br />到可验收的交付。</h1>
+          <p>
+            CoAgents 用一条连贯的工作链解释 Agent 如何被选用、部署、触发、授权和验收。重点不在一次对话，而在每次执行的版本、运行位置、交付证据和最终决策都能被追溯。
+          </p>
+          <div class="case-hero-actions"><a class="button" href="https://jaysaly-cn.github.io/coagents-demo/">打开交互 Demo ↗</a><a class="button secondary" href="#case-flow">查看设计流程 ↓</a></div>
+        </div>
+        <aside class="prototype-note">
+          <strong>演示边界</strong>
+          所有场景使用合成预设数据和浏览器本地状态。页面不连接真实设备、后端、模型服务或外部凭据。
+        </aside>
+      </section>
+
+      <figure class="case-preview">
+        <img src="../assets/coagents-workspace.png" width="1440" height="1000" alt="CoAgents 实际 Demo 的任务、设备与实例总览界面" />
+        <figcaption>实际 Demo 界面，所示任务与设备均为合成样例。</figcaption>
+      </figure>
+
+      <section id="case-flow" class="coagents-layout" aria-label="CoAgents 交互案例">
+        <aside class="card case-control">
+          <h2>选择一个工作时刻</h2>
+          <p class="muted">切换预设案例，查看同一任务链在不同关键节点如何保留状态和责任边界。</p>
+
+          <button class="scenario-button" type="button" data-case="automation" aria-pressed="true">
+            <strong>自动化创建任务</strong>
+            <span>预设触发将日常工作转为一条普通任务。</span>
+          </button>
+          <button class="scenario-button" type="button" data-case="permission" aria-pressed="false">
+            <strong>请求受限资源</strong>
+            <span>Agent 必须等待允许或拒绝，不能绕过授权。</span>
+          </button>
+          <button class="scenario-button" type="button" data-case="acceptance" aria-pressed="false">
+            <strong>交付进入人工验收</strong>
+            <span>执行完成、检查证据与最终接受分别记录。</span>
+          </button>
+
+          <p class="manifest-note">
+            <strong>包边界：</strong>随 Demo 提供的 Agent Manifest 校验器可在浏览器或 CLI 中检查 JSON 清单；它不接收或解压 ZIP 包。
+          </p>
+          <a class="button secondary full-button" href="https://jaysaly-cn.github.io/coagents-demo/#packages" target="_blank" rel="noopener noreferrer">查看 Agent 包与校验器</a>
+        </aside>
+
+        <div>
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <span class="case-status" id="case-status">自动化已触发</span>
+                <h2 id="case-title">例行简报成为一条普通任务</h2>
+                <p class="muted" id="case-summary">预设规则创建任务后，任务仍沿用实例、版本、状态和验收记录，不会形成一条无法追踪的旁路。</p>
+              </div>
+            </div>
+            <div class="co-flow" aria-label="CoAgents 工作链">
+              <div class="co-flow-step" data-step="0"><b>市场</b><span>固定版本 Agent</span></div>
+              <div class="co-flow-step" data-step="1"><b>设备</b><span>绑定运行实例</span></div>
+              <div class="co-flow-step" data-step="2"><b>任务</b><span>创建与执行</span></div>
+              <div class="co-flow-step" data-step="3"><b>授权</b><span>范围内决策</span></div>
+              <div class="co-flow-step" data-step="4"><b>验收</b><span>交付与证据</span></div>
+            </div>
+          </section>
+
+          <section class="card chart-card case-result" aria-live="polite">
+            <h2 id="result-heading">任务已由自动化规则创建</h2>
+            <p id="result-copy">任务获得独立 ID，并继承运行实例和固定版本。之后可以像手动任务一样查看、暂停、重试与验收。</p>
+            <div class="case-columns">
+              <section>
+                <h3 id="evidence-heading">保留的上下文</h3>
+                <ul id="evidence-list"></ul>
+              </section>
+              <section>
+                <h3 id="next-heading">下一步</h3>
+                <ul id="next-list"></ul>
+              </section>
+            </div>
+            <div class="case-result-actions">
+              <a class="button" id="demo-link" href="https://jaysaly-cn.github.io/coagents-demo/#automations" target="_blank" rel="noopener noreferrer">在在线 Demo 中查看自动化</a>
+              <a class="button secondary" href="https://github.com/Jaysaly-cn/coagents-package-validator" target="_blank" rel="noopener noreferrer">查看 Manifest 校验器</a>
+              <a class="button secondary" href="https://github.com/Jaysaly-cn/coagents-demo" target="_blank" rel="noopener noreferrer">查看静态 Demo 源码</a>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container">
+      CoAgents 静态交互案例 · 合成预设场景 · 浏览器本地运行 · © 2026 俞凯杰
+    </footer>
+
+    <script>
+      const cases = {
+        automation: {
+          status: "自动化已触发",
+          title: "例行简报成为一条普通任务",
+          summary: "预设规则创建任务后，任务仍沿用实例、版本、状态和验收记录，不会形成一条无法追踪的旁路。",
+          heading: "任务已由自动化规则创建",
+          copy: "任务获得独立 ID，并继承运行实例和固定版本。之后可以像手动任务一样查看、暂停、重试与验收。",
+          evidenceHeading: "保留的上下文",
+          evidence: ["触发来源：预设自动化规则", "运行实例与固定 Agent 版本", "任务状态与交付记录"],
+          nextHeading: "下一步",
+          next: ["进入任务队列", "按设备可用容量开始执行", "完成后进入证据与验收"],
+          link: "https://jaysaly-cn.github.io/coagents-demo/#automations",
+          linkText: "在在线 Demo 中查看自动化",
+          states: ["active", "active", "done", "", ""],
+        },
+        permission: {
+          status: "等待范围内授权",
+          title: "受限资源访问必须经过允许或拒绝",
+          summary: "任务需要读取受限资料时，实例不会把能力声明当成已获得授权。它会明确停在授权节点，等待可见的决策。",
+          heading: "任务正在等待权限决定",
+          copy: "允许后，任务在记录的范围内继续；拒绝后，任务保留原因并停止在该步骤。两种结果都不会丢失已经发生的执行上下文。",
+          evidenceHeading: "已知状态",
+          evidence: ["请求资源与用途", "待决权限范围", "任务与实例的关联"],
+          nextHeading: "可选决策",
+          next: ["允许限定访问", "拒绝并保留原因", "重试并重新请求本次授权"],
+          link: "https://jaysaly-cn.github.io/coagents-demo/#automations",
+          linkText: "触发一个任务，体验权限决策",
+          states: ["active", "active", "active", "caution", ""],
+        },
+        acceptance: {
+          status: "等待人工验收",
+          title: "执行结束后，交付与验收分别记录",
+          summary: "模型或工作流完成只能说明执行停止。CoAgents 将交付物、检查证据和人工接受分别保存，避免把输出直接等同于可靠结果。",
+          heading: "交付物已就绪，等待最终判断",
+          copy: "验收人可以接受、拒绝或要求重试。被拒绝的交付和已有证据仍会留在任务历史中，便于比较下一次尝试。",
+          evidenceHeading: "可审阅内容",
+          evidence: ["本次交付物", "检查结果与证据引用", "实例、版本和尝试记录"],
+          nextHeading: "验收动作",
+          next: ["接受交付", "拒绝并保留验收记录", "发起新的重试尝试"],
+          link: "https://jaysaly-cn.github.io/coagents-demo/#tasks",
+          linkText: "在在线 Demo 中查看验收记录",
+          states: ["active", "active", "active", "active", "caution"],
+        },
+      };
+
+      const scenarioButtons = [...document.querySelectorAll("[data-case]")];
+      const steps = [...document.querySelectorAll("[data-step]")];
+
+      function renderCase(id) {
+        const data = cases[id];
+        scenarioButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.case === id));
+        });
+        document.querySelector("#case-status").textContent = data.status;
+        document.querySelector("#case-title").textContent = data.title;
+        document.querySelector("#case-summary").textContent = data.summary;
+        document.querySelector("#result-heading").textContent = data.heading;
+        document.querySelector("#result-copy").textContent = data.copy;
+        document.querySelector("#evidence-heading").textContent = data.evidenceHeading;
+        document.querySelector("#next-heading").textContent = data.nextHeading;
+        document.querySelector("#evidence-list").innerHTML = data.evidence.map((item) => `<li>${item}</li>`).join("");
+        document.querySelector("#next-list").innerHTML = data.next.map((item) => `<li>${item}</li>`).join("");
+        const demoLink = document.querySelector("#demo-link");
+        demoLink.href = data.link;
+        demoLink.textContent = data.linkText;
+        steps.forEach((step, index) => {
+          step.classList.remove("active", "caution", "done");
+          if (data.states[index]) step.classList.add(data.states[index]);
+        });
+      }
+
+      scenarioButtons.forEach((button) => {
+        button.addEventListener("click", () => renderCase(button.dataset.case));
+      });
+
+      renderCase("automation");
+    </script>
+  </body>
+</html>

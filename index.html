@@ -3,10 +3,11 @@
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta name="description" content="俞凯杰的个人主页：AI 应用产品、Agent 工作流、多模态 AI 与全栈 MVP 项目经历。" />
+      <meta name="description" content="俞凯杰的个人主页：AI 应用产品、Agent 工作流、多模态 AI、全栈 MVP 与 CoAgents 交互案例。" />
       <meta name="theme-color" content="#2563eb" />
+      <link rel="icon" href="favicon.svg" type="image/svg+xml" />
       <title>
-        俞凯杰｜AI Product Manager & AI Native Builder
+        俞凯杰｜AI Product Manager · AI Native Builder
       </title>
       <style>
         :root {
@@ -20,6 +21,9 @@
       --tag-bg: #eff6ff;
       --tag-text: #1d4ed8;
       --shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      --coagents: #6952d7;
+      --coagents-dark: #5940c5;
+      --coagents-border: #d9d1fa;
     }
 
     * {
@@ -145,8 +149,12 @@
       letter-spacing: -0.8px;
     }
 
-    .hero h1 span {
+    .hero h1 .hero-emphasis {
       color: var(--primary);
+    }
+
+    .hero-verb {
+      white-space: nowrap;
     }
 
     .hero-desc {
@@ -159,6 +167,18 @@
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
+    }
+
+    .btn-coagents {
+      background: var(--coagents);
+      color: #fff;
+      border-color: var(--coagents);
+    }
+
+    .btn-coagents:hover {
+      background: var(--coagents-dark);
+      color: #fff;
+      text-decoration: none;
     }
 
     .btn {
@@ -405,12 +425,205 @@
       font-weight: 700;
     }
 
+    /* CoAgents case study */
+    .coagents-case {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--coagents-border);
+      background: #fbfaff;
+      box-shadow: 0 14px 34px rgba(86, 64, 197, 0.08);
+    }
+
+    .coagents-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .case-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 10px;
+      color: var(--coagents-dark);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .case-kicker::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--coagents);
+      box-shadow: 0 0 0 5px rgba(105, 82, 215, 0.12);
+    }
+
+    .coagents-heading h2 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+    }
+
+    .coagents-heading p {
+      max-width: 690px;
+      margin: 0;
+      color: var(--subtext);
+    }
+
+    .case-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .case-links .btn {
+      white-space: nowrap;
+    }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.88fr);
+      gap: 24px;
+      margin-top: 26px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .case-problem {
+      margin: 0;
+      padding: 18px 20px;
+      border-left: 3px solid var(--coagents);
+      background: rgba(255, 255, 255, 0.7);
+      color: #334155;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .case-problem strong {
+      color: var(--text);
+    }
+
+    .case-decisions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .case-decision {
+      padding: 13px 14px;
+      border: 1px solid var(--coagents-border);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .case-decision b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--coagents-dark);
+      font-size: 13px;
+    }
+
+    .case-decision span {
+      color: var(--subtext);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .flow-panel {
+      padding: 18px;
+      border-radius: 16px;
+      background: #26214a;
+      color: #f3f1ff;
+    }
+
+    .flow-panel h3 {
+      margin: 0 0 16px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .agent-flow {
+      display: grid;
+      gap: 8px;
+    }
+
+    .flow-step {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-height: 42px;
+      padding: 9px 12px;
+      border: 1px solid rgba(236, 253, 245, 0.2);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.07);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .flow-step::after {
+      content: "↓";
+      position: absolute;
+      left: 29px;
+      bottom: -19px;
+      color: #c7bdff;
+      font-weight: 700;
+    }
+
+    .flow-step:last-child::after {
+      display: none;
+    }
+
+    .flow-index {
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 20px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #c7bdff;
+      color: #26214a;
+      font-size: 11px;
+    }
+
+    .flow-note {
+      margin: 14px 0 0;
+      color: #ddd8ff;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .case-footnote {
+      margin: 20px 0 0;
+      color: var(--subtext);
+      font-size: 13px;
+      position: relative;
+      z-index: 1;
+    }
+
     .demo-card {
       display: flex;
       min-height: 190px;
       flex-direction: column;
       justify-content: space-between;
       border-top: 4px solid var(--primary);
+    }
+
+    .demo-card.coagents-demo-card {
+      border-top-color: var(--coagents);
+    }
+
+    .project-card.coagents-project-card {
+      border-color: var(--coagents-border);
+      background: #fbfaff;
     }
 
     .demo-card h3 {
@@ -486,7 +699,9 @@
       .nav-links {
         width: 100%;
         gap: 10px;
-        justify-content: space-between;
+        justify-content: flex-start;
+        overflow-x: auto;
+        white-space: nowrap;
         padding-bottom: 10px;
         font-size: 12px;
       }
@@ -498,6 +713,19 @@
       .exp-header {
         flex-direction: column;
         gap: 4px;
+      }
+
+      .coagents-heading,
+      .case-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .coagents-heading {
+        flex-direction: column;
+      }
+
+      .case-decisions {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -522,6 +750,9 @@
               </a>
               <a href="#experience">
                 经历
+              </a>
+              <a href="#coagents">
+                CoAgents
               </a>
               <a href="#demos">
                 AI Demo
@@ -549,9 +780,9 @@
                   AI Application PM · AI Native Builder · 浙江大学
                 </div>
                 <h1>
-                  将复杂业务问题，转化为
+                  将复杂业务问题，<span class="hero-verb">转化为</span>
                   <br />
-                  <span>
+                  <span class="hero-emphasis">
                     可落地的 AI 产品
                   </span>
                 </h1>
@@ -560,6 +791,9 @@
           具备从业务调研、策略文档、模型评估、全栈 MVP 开发到生产交付的闭环经验。
                 </p>
                 <div class="hero-actions">
+                  <a class="btn btn-coagents" href="https://jaysaly-cn.github.io/coagents-demo/" target="_blank" rel="noopener noreferrer">
+                    体验 CoAgents
+                  </a>
                   <a class="btn btn-primary" href="#projects">
                     查看项目作品
                   </a>
@@ -594,6 +828,63 @@
                 </div>
               </aside>
             </section>
+            <!-- CoAgents -->
+              <section id="coagents" aria-labelledby="coagents-title">
+                <article class="card coagents-case">
+                  <div class="coagents-heading">
+                    <div>
+                      <p class="case-kicker">Featured case study · Browser demo</p>
+                      <h2 id="coagents-title">CoAgents：把 Agent 从能力选择带到可验收交付</h2>
+                      <p>
+                        一个用于解释 Agent 运营闭环的交互式原型。它把“选择一个 Agent”延展为市场、设备、实例、任务、权限、交付与人工验收的连续流程。
+                      </p>
+                    </div>
+                    <div class="case-links">
+                      <a class="btn btn-coagents" href="https://jaysaly-cn.github.io/coagents-demo/" target="_blank" rel="noopener noreferrer">打开在线 Demo</a>
+                      <a class="btn btn-secondary" href="https://github.com/Jaysaly-cn/coagents-demo" target="_blank" rel="noopener noreferrer">查看源码</a>
+                    </div>
+                  </div>
+                  <div class="case-grid">
+                    <div>
+                      <p class="case-problem">
+                        <strong>产品问题：</strong>当 Agent 从一次对话变成持续执行的工作单元，用户需要知道它由哪个版本运行、部署在哪里、是否具备所需权限，以及任务产出是否真正被接受。
+                      </p>
+                      <div class="case-decisions" aria-label="CoAgents 设计决策">
+                        <div class="case-decision">
+                          <b>产品与实例分离</b>
+                          <span>市场中的 Agent 版本与实际运行实例分开管理，保留版本和设备归属。</span>
+                        </div>
+                        <div class="case-decision">
+                          <b>自动化转为普通任务</b>
+                          <span>预设触发只负责创建任务，后续仍进入同一条可追踪的执行链路。</span>
+                        </div>
+                        <div class="case-decision">
+                          <b>权限有明确边界</b>
+                          <span>演示受限资源时，可选择允许或拒绝，任务状态会据此继续或停止。</span>
+                        </div>
+                        <div class="case-decision">
+                          <b>完成不等于验收</b>
+                          <span>交付物、检查证据和人工接受分开呈现，避免把模型输出当作最终结论。</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flow-panel" aria-label="CoAgents 任务流程示意图">
+                      <h3>一条可追溯的 Agent 工作链</h3>
+                      <div class="agent-flow">
+                        <div class="flow-step"><span class="flow-index">1</span>市场：选择固定版本 Agent</div>
+                        <div class="flow-step"><span class="flow-index">2</span>设备：部署并创建运行实例</div>
+                        <div class="flow-step"><span class="flow-index">3</span>任务：手动或预设自动化触发</div>
+                        <div class="flow-step"><span class="flow-index">4</span>授权：允许或拒绝受限资源访问</div>
+                        <div class="flow-step"><span class="flow-index">5</span>交付：保存证据并由人工验收</div>
+                      </div>
+                      <p class="flow-note">流程图使用的是可操作的页面结构，不是产品截图。每一环都能在在线 Demo 中查看。</p>
+                    </div>
+                  </div>
+                  <p class="case-footnote">
+                    当前版本为纯浏览器静态演示：使用合成预设数据、本地状态和模拟触发；不包含后端、真实设备连接、模型调用或外部凭据。附带浏览器与 CLI 可用的 JSON Agent Manifest 校验器，校验对象为 JSON 清单，不处理 ZIP 包。
+                  </p>
+                </article>
+              </section>
             <!-- About -->
               <section id="about">
                 <h2 class="section-title">
@@ -783,6 +1074,13 @@
                       用真实项目样例体验模型输入、处理流程与结果解释；新增农业世界模型与植保智能体研究原型。
                     </p>
                     <div class="grid-3">
+                      <article class="card demo-card coagents-demo-card">
+                        <div>
+                          <h3>CoAgents</h3>
+                          <p>浏览 Agent 如何经过版本选择、实例部署、任务触发、权限决策和人工验收，形成可追溯的交付流程。</p>
+                        </div>
+                        <a class="demo-link" href="demos/coagents.html">阅读案例与体验流程 →</a>
+                      </article>
                       <article class="card demo-card">
                         <div>
                           <h3>节肢动物目标检测</h3>
@@ -829,6 +1127,25 @@
                       从 AI 工具、Agent 工作流、多模态模型到数据流水线的代表项目。
                     </p>
                     <div class="grid-2">
+                      <div class="card project-card coagents-project-card">
+                        <h3>
+                          CoAgents Agent 运营闭环
+                        </h3>
+                        <p>
+                          一个浏览器端交互原型，将 Agent 市场、运行设备、实例、任务、自动化、受限资源授权和证据验收串联为连续的运营流程。
+                        </p>
+                        <div class="tag-list">
+                          <span class="tag">Agent Operations</span>
+                          <span class="tag">Workflow Design</span>
+                          <span class="tag">Human-in-the-loop</span>
+                          <span class="tag">Static Demo</span>
+                        </div>
+                        <div class="project-links">
+                          <a href="demos/coagents.html">案例与流程</a>
+                          <a href="https://jaysaly-cn.github.io/coagents-demo/" target="_blank" rel="noopener noreferrer">在线 Demo</a>
+                          <a href="https://github.com/Jaysaly-cn/coagents-demo" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        </div>
+                      </div>
                       <div class="card project-card">
                         <h3>
                           AI 生产力工具矩阵

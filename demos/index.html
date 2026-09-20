@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="俞凯杰 AI 工具交互 Demo：节肢动物检测、夜蛾识别、蛋白序列分析、农业世界模型与植保智能体。"
+      content="俞凯杰 AI 工具交互 Demo：CoAgents、节肢动物检测、夜蛾识别、蛋白序列分析、农业世界模型与植保智能体。"
     />
     <meta name="theme-color" content="#0f172a" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <title>AI Demo Lab｜俞凯杰</title>
     <style>
       :root {
@@ -158,6 +159,58 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 14px;
+      }
+
+      .coagents-feature {
+        margin: 28px 0 0;
+        padding: 22px 24px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 22px;
+        align-items: center;
+        border: 1px solid #a8d9c3;
+        border-radius: 18px;
+        color: var(--text);
+        background: linear-gradient(125deg, #f3fcf8, #fff 58%, #eaf8f2);
+        box-shadow: 0 10px 32px rgba(15, 75, 55, 0.08);
+      }
+
+      .coagents-feature:hover {
+        text-decoration: none;
+        box-shadow: var(--shadow);
+      }
+
+      .coagents-kicker {
+        display: inline-flex;
+        margin-bottom: 7px;
+        padding: 4px 9px;
+        border-radius: 999px;
+        color: #0b694b;
+        background: #d8f4e7;
+        font-size: 11px;
+        font-weight: 850;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .coagents-feature strong {
+        display: block;
+        margin-bottom: 6px;
+        color: #145b43;
+        font-size: 20px;
+      }
+
+      .coagents-feature p {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .coagents-arrow {
+        color: #0f9f6e;
+        font-size: 28px;
+        font-weight: 800;
       }
 
       .research-link {
@@ -614,6 +667,10 @@
           grid-template-columns: 1fr;
         }
 
+        .coagents-feature {
+          grid-template-columns: 1fr;
+        }
+
         .stage {
           min-height: 260px;
         }
@@ -676,6 +733,15 @@
           本页不会上传你输入的图片或序列，也不调用生产数据库。
         </aside>
       </section>
+
+      <a class="coagents-feature" href="coagents.html" aria-label="查看 CoAgents Agent 运营闭环案例">
+        <div>
+          <span class="coagents-kicker">Featured project · CoAgents</span>
+          <strong>把 Agent 从能力选择带到可验收交付</strong>
+          <p>体验市场、设备、实例、任务、自动化触发、权限决策和人工验收如何组成一条可追溯的工作链。</p>
+        </div>
+        <span class="coagents-arrow" aria-hidden="true">↗</span>
+      </a>
 
       <section class="research-grid" aria-label="农业 AI 研究原型">
         <a class="research-link" href="world-model.html">
