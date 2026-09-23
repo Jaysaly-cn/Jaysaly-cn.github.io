@@ -1,0 +1,13 @@
+{
+  "base": "http://127.0.0.1:8806",
+  "campaign": "51e3e3912a4945f1a86de60c5be14553",
+  "name": "拾光任务本 · 合成产品示例",
+  "export_id": "f4061dc3ba374f7fba3694adde5da06a",
+  "copies": 1,
+  "status": 200,
+  "content_type": "text/markdown; charset=utf-8",
+  "content_disposition": "attachment; filename=\"contentbench-f4061dc3ba374f7fba3694adde5da06a.md\"",
+  "exact_title_body_review": true,
+  "bytes": 1479,
+  "source": "existing approved synthetic model workflow snapshot"
+}

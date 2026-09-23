@@ -12,6 +12,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, field_validator
 from . import model, security
 from .checks import CHANNELS, check
+from .exports import markdown
 from .store import connect, initialize, now
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -261,9 +262,13 @@ def create_app(path=None):
             return snapshot
 
     @app.get('/api/exports/{eid}')
-    def download(eid: str):
+    def download(eid: str, format: Literal['json', 'markdown'] = 'json'):
         with connect(path) as db:
             snapshot = get(db, 'exports', eid)['snapshot']
+        if format == 'markdown':
+            return Response(markdown(snapshot), media_type='text/markdown',
+                            headers={'Content-Disposition': f'attachment; filename="contentbench-{eid}.md"',
+                                     'X-Content-Type-Options': 'nosniff'})
         return Response(json.dumps(snapshot, ensure_ascii=False, indent=2), media_type='application/json',
                         headers={'Content-Disposition': f'attachment; filename="contentbench-{eid}.json"'})
 

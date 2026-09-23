@@ -32,7 +32,18 @@ async function load(id) {
   current.drafts.forEach(renderDraft);
   $('#exports').replaceChildren();
   if (!current.exports.length) $('#exports').append(el('p', '尚无导出记录。审核通过后可冻结稿件。', 'muted'));
-  current.exports.forEach(x => {const b = el('button', '下载 ' + new Date(x.created_at).toLocaleString(), 'secondary'); action(b, async () => {const data = await api('/exports/' + x.id); const url = URL.createObjectURL(new Blob([JSON.stringify(data,null,2)], {type:'application/json'})); const a = el('a'); a.href = url; a.download = 'contentbench-' + x.id + '.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url),1000);}); $('#exports').append(b);});
+  current.exports.forEach(x => {
+    const row=el('div',undefined,'actions'); row.append(el('span',new Date(x.created_at).toLocaleString()));
+    for(const [format,label,extension] of [['json','下载 JSON','json'],['markdown','下载 Markdown','md']]) {
+      const b=el('button',label,'secondary');
+      action(b,async()=>{
+        const response=await fetch('/api/exports/'+x.id+'?format='+format,{headers:{Authorization:'Bearer '+(sessionStorage.getItem('cb-token')||'')}});
+        if(!response.ok){const error=await response.json();throw Error(error.detail||'下载失败');}
+        const url=URL.createObjectURL(await response.blob()),a=el('a');a.href=url;a.download='contentbench-'+x.id+'.'+extension;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+        notice('已请求下载冻结快照；后续修改不影响此版本。');
+      });row.append(b);
+    }$('#exports').append(row);
+  });
   $('#events').replaceChildren(...current.events.map(e => el('div', `${new Date(e.created_at).toLocaleString()} · ${e.action} · ${e.detail}`, 'event')));
   await list();
 }
