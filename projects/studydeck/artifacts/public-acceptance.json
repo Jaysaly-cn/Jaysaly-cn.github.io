@@ -1,0 +1,100 @@
+{
+  "url": "https://ensure-syndication-dry-justice.trycloudflare.com",
+  "created_at": "2026-09-23T08:31:05.588038+00:00",
+  "synthetic": true,
+  "checks": [
+    "cross-session mutation 404 and export empty",
+    "manual draft approval review export",
+    "foreign origin 403"
+  ],
+  "model": {
+    "status": 201,
+    "body": [
+      {
+        "id": "5535622f30874b4da50f1a6a390a17f7",
+        "material_id": "f569cd0278c643d7945921fc8906445c",
+        "question": "缓存命中时返回什么？",
+        "answer": "缓存内容",
+        "quote": "缓存命中时直接返回缓存内容。",
+        "state": "draft",
+        "version": 1,
+        "fsrs": null,
+        "due": null,
+        "origin": "model"
+      },
+      {
+        "id": "73080fef6eea474997d6804d52783725",
+        "material_id": "f569cd0278c643d7945921fc8906445c",
+        "question": "缓存未命中时访问什么？",
+        "answer": "数据源",
+        "quote": "缓存未命中时访问数据源，并将结果写入缓存。",
+        "state": "draft",
+        "version": 1,
+        "fsrs": null,
+        "due": null,
+        "origin": "model"
+      },
+      {
+        "id": "c2d8041d548f4da0b4527a587e22179f",
+        "material_id": "f569cd0278c643d7945921fc8906445c",
+        "question": "缓存过期后需要做什么？",
+        "answer": "重新获取数据",
+        "quote": "缓存过期后需要重新获取数据。",
+        "state": "draft",
+        "version": 1,
+        "fsrs": null,
+        "due": null,
+        "origin": "model"
+      }
+    ]
+  },
+  "reviewed_snapshot": {
+    "format": "studydeck-1",
+    "exported_at": "2026-09-23T08:31:14.446668+00:00",
+    "materials": [
+      {
+        "id": "f569cd0278c643d7945921fc8906445c",
+        "title": "缓存基础 · 合成演示资料",
+        "body": "缓存命中时直接返回缓存内容。缓存未命中时访问数据源，并将结果写入缓存。缓存过期后需要重新获取数据。",
+        "created_at": "2026-09-23T08:31:07.335233+00:00"
+      }
+    ],
+    "cards": [
+      {
+        "id": "586c302339b845c691289d69725026fb",
+        "material_id": "f569cd0278c643d7945921fc8906445c",
+        "question": "缓存命中时如何处理？",
+        "answer": "直接返回缓存内容。",
+        "quote": "缓存命中时直接返回缓存内容。",
+        "state": "active",
+        "version": 3,
+        "fsrs": "{\"card_id\": 1790152272885, \"state\": 1, \"step\": 1, \"stability\": 2.3065, \"difficulty\": 2.118103970459016, \"due\": \"2026-09-23T08:41:13.383729+00:00\", \"last_review\": \"2026-09-23T08:31:13.383729+00:00\"}",
+        "due": "2026-09-23T08:41:13.383729+00:00",
+        "origin": "manual"
+      }
+    ],
+    "events": [
+      {
+        "id": 1,
+        "card_id": "586c302339b845c691289d69725026fb",
+        "action": "created",
+        "snapshot": "{\"id\": \"586c302339b845c691289d69725026fb\", \"material_id\": \"f569cd0278c643d7945921fc8906445c\", \"question\": \"缓存命中时如何处理？\", \"answer\": \"直接返回缓存内容。\", \"quote\": \"缓存命中时直接返回缓存内容。\", \"state\": \"draft\", \"version\": 1, \"fsrs\": null, \"due\": null, \"origin\": \"manual\"}",
+        "created_at": "2026-09-23T08:31:11.417522+00:00"
+      },
+      {
+        "id": 2,
+        "card_id": "586c302339b845c691289d69725026fb",
+        "action": "approved",
+        "snapshot": "{\"id\": \"586c302339b845c691289d69725026fb\", \"material_id\": \"f569cd0278c643d7945921fc8906445c\", \"question\": \"缓存命中时如何处理？\", \"answer\": \"直接返回缓存内容。\", \"quote\": \"缓存命中时直接返回缓存内容。\", \"state\": \"active\", \"version\": 2, \"fsrs\": \"{\\\"card_id\\\": 1790152272885, \\\"state\\\": 1, \\\"step\\\": 0, \\\"stability\\\": null, \\\"difficulty\\\": null, \\\"due\\\": \\\"2026-09-23T08:31:12.886722+00:00\\\", \\\"last_review\\\": null}\", \"due\": \"2026-09-23T08:31:12.886722+00:00\", \"origin\": \"manual\"}",
+        "created_at": "2026-09-23T08:31:12.890900+00:00"
+      },
+      {
+        "id": 3,
+        "card_id": "586c302339b845c691289d69725026fb",
+        "action": "reviewed",
+        "snapshot": "{\"id\": \"586c302339b845c691289d69725026fb\", \"material_id\": \"f569cd0278c643d7945921fc8906445c\", \"question\": \"缓存命中时如何处理？\", \"answer\": \"直接返回缓存内容。\", \"quote\": \"缓存命中时直接返回缓存内容。\", \"state\": \"active\", \"version\": 3, \"fsrs\": \"{\\\"card_id\\\": 1790152272885, \\\"state\\\": 1, \\\"step\\\": 1, \\\"stability\\\": 2.3065, \\\"difficulty\\\": 2.118103970459016, \\\"due\\\": \\\"2026-09-23T08:41:13.383729+00:00\\\", \\\"last_review\\\": \\\"2026-09-23T08:31:13.383729+00:00\\\"}\", \"due\": \"2026-09-23T08:41:13.383729+00:00\", \"origin\": \"manual\", \"review_log\": {\"card_id\": 1790152272885, \"rating\": 3, \"review_datetime\": \"2026-09-23T08:31:13.383729+00:00\", \"review_duration\": null}, \"scheduler\": {\"parameters\": [0.212, 1.2931, 2.3065, 8.2956, 6.4133, 0.8334, 3.0194, 0.001, 1.8722, 0.1666, 0.796, 1.4835, 0.0614, 0.2629, 1.6483, 0.6014, 1.8729, 0.5425, 0.0912, 0.0658, 0.1542], \"desired_retention\": 0.9, \"learning_steps\": [60, 600], \"relearning_steps\": [600], \"maximum_interval\": 36500, \"enable_fuzzing\": false}}",
+        "created_at": "2026-09-23T08:31:13.391097+00:00"
+      }
+    ]
+  }
+}

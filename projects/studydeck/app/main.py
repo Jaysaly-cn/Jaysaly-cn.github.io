@@ -2,7 +2,7 @@ import asyncio
 import json
 import os
 import sqlite3
-from contextlib import contextmanager, asynccontextmanager
+from contextlib import contextmanager, asynccontextmanager, closing
 from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
@@ -49,11 +49,23 @@ class Revision(Draft):
     version: int = Field(ge=1)
     note: str = Field(min_length=5, max_length=1000)
 
+def initialize(path):
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with closing(sqlite3.connect(path)) as c:
+        c.executescript('''
+            CREATE TABLE IF NOT EXISTS materials(id TEXT PRIMARY KEY,title TEXT,body TEXT,created_at TEXT);
+            CREATE TABLE IF NOT EXISTS cards(id TEXT PRIMARY KEY,material_id TEXT REFERENCES materials(id),
+              question TEXT,answer TEXT,quote TEXT,state TEXT,version INTEGER,fsrs TEXT,due TEXT,origin TEXT);
+            CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY,card_id TEXT REFERENCES cards(id),
+              action TEXT,snapshot TEXT,created_at TEXT);
+            ''')
+
 def create_app(path=None):
-    path = Path(path or os.getenv('STUDYDECK_DB', str(ROOT/'data/study.sqlite3')))
+    path = path or os.getenv('STUDYDECK_DB', str(ROOT/'data/study.sqlite3'))
     @contextmanager
     def db():
-        conn = sqlite3.connect(path, timeout=10)
+        conn = sqlite3.connect(path() if callable(path) else path, timeout=10)
         conn.row_factory = sqlite3.Row
         conn.execute('PRAGMA foreign_keys=ON')
         try:
@@ -62,15 +74,7 @@ def create_app(path=None):
 
     @asynccontextmanager
     async def lifespan(app):
-        path.parent.mkdir(parents=True, exist_ok=True)
-        with db() as c:
-            c.executescript('''
-            CREATE TABLE IF NOT EXISTS materials(id TEXT PRIMARY KEY,title TEXT,body TEXT,created_at TEXT);
-            CREATE TABLE IF NOT EXISTS cards(id TEXT PRIMARY KEY,material_id TEXT REFERENCES materials(id),
-              question TEXT,answer TEXT,quote TEXT,state TEXT,version INTEGER,fsrs TEXT,due TEXT,origin TEXT);
-            CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY,card_id TEXT REFERENCES cards(id),
-              action TEXT,snapshot TEXT,created_at TEXT);
-            ''')
+        initialize(path() if callable(path) else path)
         yield
     app = FastAPI(title='StudyDeck', version='0.1.0', lifespan=lifespan)
     security.install(app)
