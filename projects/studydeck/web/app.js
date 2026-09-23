@@ -10,9 +10,9 @@ async function queue(){const due=await api('due');$('#queue').replaceChildren(el
 $('#material').onsubmit=e=>{e.preventDefault();action(async()=>{const m=await api('materials',fields(e.target));selected=m.id;e.target.reset();});};
 $('#manual').onsubmit=e=>{e.preventDefault();action(async()=>{if(!selected)throw Error('请先选择资料');await api('materials/'+selected+'/cards',fields(e.target));e.target.reset();});};
 $('#generate').onclick=()=>action(async()=>{if(!selected)throw Error('请先选择资料');$('#notice').textContent='本地模型生成中，请稍候…';await api('materials/'+selected+'/generate',{});});
-document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{for(const id of ['make','review','library'])$('#'+id).hidden=id!==b.dataset.tab;if(b.dataset.tab==='review')load().catch(e=>$('#notice').textContent=e.message);});
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{for(const id of ['make','review','library','history'])$('#'+id).hidden=id!==b.dataset.tab;if(b.dataset.tab==='history')loadHistory().catch(e=>$('#notice').textContent=e.message);if(b.dataset.tab==='review')load().catch(e=>$('#notice').textContent=e.message);});
 $('#export').onclick=()=>action(async()=>{const data=await api('export');const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=el('a','');a.href=url;a.download='studydeck-records.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);});
-load().then(async()=>{$('#notice').textContent=(await api('status')).model_configured?'本地免费模型已连接。':'模型未配置，手工制卡和复习可用。';}).catch(e=>$('#notice').textContent=e.message);
+load().then(async()=>{const status=await api('status');$('#history-tab').hidden=!status.generation_history;$('#notice').textContent=status.model_configured?'本地免费模型已连接。':'模型未配置，手工制卡和复习可用。';}).catch(e=>$('#notice').textContent=e.message);
 
 
 function renderLibrary(){
@@ -46,3 +46,21 @@ function renderLibrary(){
  if(!$('#collection').children.length)$('#collection').append(el('p','没有匹配的卡片。'));
 }
 $('#search').oninput=renderLibrary;
+
+async function loadHistory(){
+ const records=await api('generations');$('#generation-list').replaceChildren();
+ for(const record of records){
+  const box=el('article',''),source=materials.find(x=>x.id===record.material_id);
+  box.append(el('h2',(record.status==='saved'?'草稿已保存':'生成失败')+' · '+(source?.title||'资料')));
+  box.append(el('p',new Date(record.created_at).toLocaleString()));
+  for(const issue of JSON.parse(record.issues)){
+   const descriptions={provider:'模型请求失败（'+issue.error_type+'）',schema:'输出格式错误：'+issue.field,quote:'第'+issue.card_index+'张：'+issue.message,capacity:issue.message};
+   box.append(el('p',descriptions[issue.kind]||'校验失败'));
+  }
+  const details=el('details','');details.append(el('summary','核对原文与原始输出'),el('blockquote',source?.body||''),el('pre',record.raw||'没有可保留的模型输出'));box.append(details);
+  if(source){const manual=el('button','打开资料手工修正');manual.onclick=()=>{choose(source.id);for(const id of ['make','review','library','history'])$('#'+id).hidden=id!=='make';};box.append(manual);}
+  $('#generation-list').append(box);
+ }
+ if(!records.length)$('#generation-list').append(el('p','暂无生成记录。升级前的历史请求不会补录。'));
+}
+$('#refresh-history').onclick=()=>loadHistory().catch(e=>$('#notice').textContent=e.message);

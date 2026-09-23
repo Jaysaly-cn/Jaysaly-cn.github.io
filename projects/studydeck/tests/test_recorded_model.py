@@ -26,3 +26,8 @@ def test_recorded_generation_boundary(tmp_path,monkeypatch,result):
         else:
             assert len(cards)==1 and cards[0]['state']=='draft'
         assert client.get('/api/due').json()==[]
+        history=client.get('/api/generations').json()
+        assert len(history)==1 and history[0]['raw']==result['raw']
+        assert history[0]['status']==('saved' if expected==201 else 'failed')
+        assert json.loads(history[0]['card_ids'])==[card['id'] for card in cards]
+        if expected==422:assert json.loads(history[0]['issues'])[0]['kind']=='quote'

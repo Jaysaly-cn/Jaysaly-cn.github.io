@@ -9,7 +9,7 @@ from uuid import uuid4
 from typing import Literal
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from fsrs import Scheduler, Card, Rating
 from . import security, model
 
@@ -59,6 +59,8 @@ def initialize(path):
               question TEXT,answer TEXT,quote TEXT,state TEXT,version INTEGER,fsrs TEXT,due TEXT,origin TEXT);
             CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY,card_id TEXT REFERENCES cards(id),
               action TEXT,snapshot TEXT,created_at TEXT);
+            CREATE TABLE IF NOT EXISTS generations(id TEXT PRIMARY KEY,material_id TEXT REFERENCES materials(id),
+              status TEXT,raw TEXT,issues TEXT,card_ids TEXT,created_at TEXT);
             ''')
 
 def create_app(path=None):
@@ -103,7 +105,7 @@ def create_app(path=None):
                   (identity, action, json.dumps(snapshot, ensure_ascii=False), now().isoformat()))
 
     @app.get('/api/status')
-    def status(): return {'model_configured': model.configured(), 'scheduler': 'fsrs 6.3.2', 'version': '0.1.0'}
+    def status(): return {'model_configured': model.configured(), 'scheduler': 'fsrs 6.3.2', 'version': '0.1.0', 'generation_history': True}
 
     @app.get('/api/materials')
     def materials():
@@ -131,11 +133,46 @@ def create_app(path=None):
         if not model.configured(): raise HTTPException(503, '未配置免费模型，可手动制卡')
         if lock.locked(): raise HTTPException(409, '模型正在生成，请稍后重试')
         async with lock:
-            with db() as c: source = get(c, 'materials', mid)
-            try: proposals = Proposals.model_validate_json(await model.propose(source))
+            with db() as c:
+                source = get(c, 'materials', mid)
+                if c.execute('SELECT count(*) FROM generations').fetchone()[0] >= 100:
+                    raise HTTPException(409, '当前工作台最多保存100次生成记录，仍可手工制卡')
+            identity, stamp = uuid4().hex, now().isoformat()
+            raw = None
+            def save(c, status, issues, card_ids=None):
+                c.execute('INSERT INTO generations VALUES(?,?,?,?,?,?,?)',
+                          (identity, mid, status, raw, json.dumps(issues,ensure_ascii=False),
+                           json.dumps(card_ids or []), stamp))
+            try:
+                raw = await model.propose(source)
+                if not isinstance(raw,str) or len(raw)>20000:
+                    raw = None
+                    raise ValueError('Invalid output size')
             except Exception as exc:
-                raise HTTPException(502, '模型输出未通过校验，请手动制卡或重试') from exc
-            with db() as c: return [insert(c, mid, item, 'model') for item in proposals.cards]
+                with db() as c: save(c,'failed',[{'kind':'provider','error_type':type(exc).__name__}])
+                raise HTTPException(502, '模型请求失败，见生成记录；可继续手工制卡') from exc
+            try: proposals = Proposals.model_validate_json(raw)
+            except ValidationError as exc:
+                issues=[{'kind':'schema','field':'.'.join(map(str,e['loc'])),'type':e['type']} for e in exc.errors()]
+                with db() as c: save(c,'failed',issues)
+                raise HTTPException(502, '模型格式错误，见生成记录；未创建卡片') from exc
+            issues=[{'kind':'quote','card_index':i+1,'question':item.question,
+                     'message':'引用不是原文中的连续逐字片段'} for i,item in enumerate(proposals.cards) if item.quote not in source['body']]
+            if issues:
+                with db() as c: save(c,'failed',issues)
+                raise HTTPException(422, '引用校验失败，见生成记录；整批未创建卡片')
+            try:
+                with db() as c:
+                    created=[insert(c,mid,item,'model') for item in proposals.cards]
+                    save(c,'saved',[],[item['id'] for item in created])
+                    return created
+            except HTTPException:
+                with db() as c: save(c,'failed',[{'kind':'capacity','message':'卡片容量不足，整批未创建'}])
+                raise
+
+    @app.get('/api/generations')
+    def generations():
+        with db() as c: return [dict(row) for row in c.execute('SELECT * FROM generations ORDER BY created_at DESC')]
 
     @app.post('/api/cards/{identity}/approve')
     def approve(identity: str, item: Approval):
@@ -206,7 +243,7 @@ def create_app(path=None):
     def export():
         with db() as c:
             return {'format':'studydeck-1','exported_at':now().isoformat(),
-                    **{table:[dict(r) for r in c.execute(f'SELECT * FROM {table}')] for table in ('materials','cards','events')}}
+                    **{table:[dict(r) for r in c.execute(f'SELECT * FROM {table}')] for table in ('materials','cards','events','generations')}}
 
     app.mount('/', StaticFiles(directory=ROOT/'web', html=True), name='web')
     return app

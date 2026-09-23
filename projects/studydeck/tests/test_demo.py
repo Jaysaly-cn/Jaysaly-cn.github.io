@@ -62,3 +62,19 @@ def test_private_token_cannot_be_bypassed(tmp_path,monkeypatch):
     monkeypatch.setenv('STUDYDECK_ACCESS_TOKEN','secret')
     with TestClient(create_app(tmp_path/'private.sqlite3')) as c:
         assert c.get('/api/cards',headers={'isolated_demo_session':'true'}).status_code==401
+
+def test_generation_diagnostics_are_session_private(tmp_path,monkeypatch):
+    monkeypatch.setattr(model,'configured',lambda:True)
+    async def propose(source):return '{"cards":[{"question":"错误卡片？","answer":"仅首位访客可见","quote":"不存在于原文"}]}'
+    monkeypatch.setattr(model,'propose',propose)
+    with TestClient(create_demo_app(tmp_path),base_url='https://testserver') as c:
+        material=enter(c)
+        assert c.post('/api/materials/'+material['id']+'/generate').status_code==422
+        first=c.get('/api/generations').json()
+        assert len(first)==1 and '仅首位访客可见' in first[0]['raw']
+        cookie=c.cookies.get(COOKIE)
+        c.cookies.clear();enter(c)
+        assert c.get('/api/generations').json()==[]
+        assert c.get('/api/export').json()['generations']==[]
+        c.cookies.clear();c.cookies.set(COOKIE,cookie,domain='testserver.local',path='/')
+        assert c.get('/api/generations').json()==first
