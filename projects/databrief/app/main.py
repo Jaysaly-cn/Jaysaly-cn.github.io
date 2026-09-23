@@ -4,13 +4,13 @@ import os
 from contextlib import asynccontextmanager
 from datetime import datetime,timezone
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated,Literal
 from uuid import uuid4
 from fastapi import FastAPI,HTTPException,Request,Query
 from fastapi.responses import JSONResponse,FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel,ConfigDict,StringConstraints,Field
-from . import data,model,security
+from . import data,model,security,builder
 
 
 class Strict(BaseModel):model_config=ConfigDict(extra='forbid')
@@ -25,6 +25,18 @@ class Execution(Strict):
     proposal_id:str|None=Field(default=None,max_length=32)
     note:Annotated[str,StringConstraints(strip_whitespace=True,min_length=5,max_length=1000)]
     reviewed:bool=False
+
+class Filter(Strict):
+    column:Annotated[str,StringConstraints(max_length=4)]
+    operator:Literal['eq','ne','gte','lte','missing','present']
+    value:Annotated[str,StringConstraints(max_length=500)]=''
+class VisualQuery(Strict):
+    aggregate:Literal['rows','count','distinct','sum','avg','min','max']='rows'
+    metric:Annotated[str,StringConstraints(max_length=4)]=''
+    group:Annotated[str,StringConstraints(max_length=4)]=''
+    nulls:Literal['exclude','zero']='exclude'
+    order:Literal['asc','desc']='desc'
+    filter:Filter|None=None
 
 
 def create_app(path=None):
@@ -50,6 +62,9 @@ def create_app(path=None):
     def profile(did:str):
         source=data.dataset(path,did);source['preview']=source.pop('rows')[:20]
         return source
+    @app.post('/api/datasets/{did}/query-preview')
+    def visual_query(did:str,request:VisualQuery):
+        return builder.preview(data.dataset(path,did),request.model_dump())
     @app.post('/api/datasets/{did}/proposals',status_code=201)
     async def propose(did:str,request:Question):
         source=data.dataset(path,did)

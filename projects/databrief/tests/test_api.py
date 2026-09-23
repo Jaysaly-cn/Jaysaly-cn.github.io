@@ -82,3 +82,17 @@ def test_workspace_and_sample_routes(client):
     did=upload(client,sample.content)
     source=client.get('/api/datasets/'+did).json()
     assert source['row_count']==3 and len(source['preview'])==3 and 'rows' not in source
+
+
+def test_visual_preview_is_model_free_and_requires_separate_review(client):
+    did=upload(client)
+    p=client.post(f'/api/datasets/{did}/query-preview',json={'aggregate':'avg','metric':'c2','nulls':'zero'})
+    assert p.status_code==200
+    assert client.get(f'/api/datasets/{did}/runs').json()==[]
+    payload={'sql':p.json()['sql'],'note':'空白订单数按零计算','reviewed':False}
+    assert client.post(f'/api/datasets/{did}/runs',json=payload).status_code==422
+    r=client.post(f'/api/datasets/{did}/runs',json={**payload,'reviewed':True}).json()
+    assert r['rows']==[[5/3]]
+    assert client.post(f'/api/datasets/{did}/query-preview',json={'aggregate':'sum','metric':'c99'}).status_code==422
+    assert client.post(f'/api/datasets/{did}/query-preview',json={'group':'c1; DROP TABLE data'}).status_code==422
+    assert client.post('/api/datasets/missing/query-preview',json={}).status_code==404

@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-23",
+  "dataset": "samples/channels.csv",
+  "synthetic": true,
+  "checks": [
+    {
+      "operation": "AVG c2 / NULL -> 0",
+      "actual": 1.6666666666666667,
+      "expected": 1.6666666666666667
+    },
+    {
+      "operation": "AVG c2 / ignore NULL",
+      "actual": 2.5,
+      "expected": 2.5
+    },
+    {
+      "operation": "SUM c3 grouped c1 filtered c1 = 搜索",
+      "actual": [
+        [
+          "搜索",
+          30
+        ]
+      ],
+      "expected": [
+        [
+          "搜索",
+          30
+        ]
+      ]
+    }
+  ],
+  "regenerate_clears_review": true,
+  "regenerate_preserves_prior_result": true,
+  "console_errors": [],
+  "screenshot": "portfolio-optimization/databrief-visual-query.png (workspace only)",
+  "mobile": "not newly verified",
+  "model_calls": 0
+}
