@@ -1,0 +1,19 @@
+{
+  "scope": "Synthetic browser revision by coding agent",
+  "revision_event": {
+    "id": 10,
+    "card_id": "27341a7c0b904a3eac8ef7d7f972b00a",
+    "action": "revised",
+    "snapshot": "{\"id\": \"27341a7c0b904a3eac8ef7d7f972b00a\", \"material_id\": \"6f059aefa1184680956c831439e2003d\", \"question\": \"缓存过期后需要做什么？\", \"answer\": \"缓存过期后需要重新获取数据。\", \"quote\": \"缓存过期后需要重新获取数据。\", \"state\": \"draft\", \"version\": 6, \"fsrs\": null, \"due\": null, \"origin\": \"model\", \"previous\": {\"id\": \"27341a7c0b904a3eac8ef7d7f972b00a\", \"material_id\": \"6f059aefa1184680956c831439e2003d\", \"question\": \"缓存过期后需要做什么？\", \"answer\": \"重新获取数据\", \"quote\": \"缓存过期后需要重新获取数据。\", \"state\": \"active\", \"version\": 5, \"fsrs\": \"{\\\"card_id\\\": 1790150926053, \\\"state\\\": 1, \\\"step\\\": 1, \\\"stability\\\": 2.3065, \\\"difficulty\\\": 2.118103970459016, \\\"due\\\": \\\"2026-09-23T08:18:54.384526+00:00\\\", \\\"last_review\\\": \\\"2026-09-23T08:08:54.384526+00:00\\\"}\", \"due\": \"2026-09-23T08:18:54.384526+00:00\", \"origin\": \"model\"}, \"revision_note\": \"补充答案中的适用条件\"}",
+    "created_at": "2026-09-23T08:23:59.531259+00:00"
+  },
+  "old_review_events": [
+    {
+      "id": 5,
+      "card_id": "27341a7c0b904a3eac8ef7d7f972b00a",
+      "action": "reviewed",
+      "snapshot": "{\"id\": \"27341a7c0b904a3eac8ef7d7f972b00a\", \"material_id\": \"6f059aefa1184680956c831439e2003d\", \"question\": \"缓存过期后需要做什么？\", \"answer\": \"重新获取数据\", \"quote\": \"缓存过期后需要重新获取数据。\", \"state\": \"active\", \"version\": 3, \"fsrs\": \"{\\\"card_id\\\": 1790150926053, \\\"state\\\": 1, \\\"step\\\": 1, \\\"stability\\\": 2.3065, \\\"difficulty\\\": 2.118103970459016, \\\"due\\\": \\\"2026-09-23T08:18:54.384526+00:00\\\", \\\"last_review\\\": \\\"2026-09-23T08:08:54.384526+00:00\\\"}\", \"due\": \"2026-09-23T08:18:54.384526+00:00\", \"origin\": \"model\", \"review_log\": {\"card_id\": 1790150926053, \"rating\": 3, \"review_datetime\": \"2026-09-23T08:08:54.384526+00:00\", \"review_duration\": null}, \"scheduler\": {\"parameters\": [0.212, 1.2931, 2.3065, 8.2956, 6.4133, 0.8334, 3.0194, 0.001, 1.8722, 0.1666, 0.796, 1.4835, 0.0614, 0.2629, 1.6483, 0.6014, 1.8729, 0.5425, 0.0912, 0.0658, 0.1542], \"desired_retention\": 0.9, \"learning_steps\": [60, 600], \"relearning_steps\": [600], \"maximum_interval\": 36500, \"enable_fuzzing\": false}}",
+      "created_at": "2026-09-23T08:08:54.386698+00:00"
+    }
+  ]
+}

@@ -27,7 +27,21 @@ function renderLibrary(){
   const choices={draft:['reject','拒绝草稿'],active:['pause','暂停复习'],paused:['resume','恢复复习'],rejected:['restore','恢复草稿']};
   const [command,label]=choices[card.state];const button=el('button',label);
   button.onclick=()=>action(()=>api('cards/'+card.id+'/transition',{version:card.version,action:command}));
-  box.append(button);$('#collection').append(box);
+  box.append(button);
+  if(['active','paused'].includes(card.state)){
+   const edit=el('button','修订内容');edit.onclick=()=>{
+    edit.disabled=true;const form=document.createElement('form');
+    form.append(el('p','修订后回到待确认，复习进度重新开始；旧内容和评分仍保留在导出记录中。'));
+    form.append(el('blockquote','资料原文：'+(materials.find(x=>x.id===card.material_id)?.body||'')));
+    for(const [key,label] of [['question','问题'],['answer','答案'],['quote','原文引用'],['note','修订原因（至少5字）']]){
+     const field=el('label',label),input=document.createElement('textarea');input.name=key;input.value=card[key]||'';input.required=true;input.minLength=key==='note'?5:2;input.maxLength=key==='question'?500:key==='note'?1000:2000;field.append(input);form.append(field);
+    }
+    const cancel=el('button','取消');cancel.type='button';cancel.onclick=()=>{form.remove();edit.disabled=false;};
+    form.append(el('button','保存修订并重新审核'),cancel);
+    form.onsubmit=e=>{e.preventDefault();action(()=>api('cards/'+card.id+'/revise',{...fields(form),version:card.version}));};box.append(form);
+   };box.append(edit);
+  }
+  $('#collection').append(box);
  }
  if(!$('#collection').children.length)$('#collection').append(el('p','没有匹配的卡片。'));
 }

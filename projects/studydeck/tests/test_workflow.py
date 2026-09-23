@@ -79,3 +79,35 @@ def test_reject_restore(client):
     assert client.post(base+'/approve',json={**draft,'version':2,'checked':True}).status_code==409
     assert client.post(base+'/transition',json={'version':2,'action':'restore'}).json()['state']=='draft'
     assert client.post(base+'/approve',json={**draft,'version':3,'checked':True}).status_code==200
+
+@pytest.mark.parametrize('paused',[False,True])
+def test_revision_reaudits_and_preserves_history(client,paused):
+    import json
+    _,draft,card=seed(client)
+    base='/api/cards/'+card['id']
+    client.post(base+'/approve',json={**draft,'version':1,'checked':True})
+    old=client.post(base+'/review',json={'version':2,'rating':3}).json()
+    if paused: old=client.post(base+'/transition',json={'version':3,'action':'pause'}).json()
+    revised={**draft,'answer':'缓存未命中时应访问数据源。','version':old['version'],'note':'补充回答的条件'}
+    response=client.post(base+'/revise',json=revised)
+    assert response.status_code==200
+    updated=response.json()
+    assert updated['state']=='draft' and updated['fsrs'] is None and updated['due'] is None
+    assert client.post(base+'/review',json={'version':updated['version'],'rating':3}).status_code==409
+    assert client.post(base+'/revise',json=revised).status_code==409
+    events=client.get('/api/export').json()['events']
+    revision=json.loads(events[-1]['snapshot'])
+    assert revision['previous']['fsrs']==old['fsrs']
+    assert any(e['action']=='reviewed' for e in events)
+    approved=client.post(base+'/approve',json={**draft,'answer':revised['answer'],'version':updated['version'],'checked':True}).json()
+    assert json.loads(approved['fsrs'])['last_review'] is None
+    assert len(client.get('/api/due').json())==1
+
+def test_invalid_revision_does_not_reset(client):
+    _,draft,card=seed(client)
+    base='/api/cards/'+card['id']
+    old=client.post(base+'/approve',json={**draft,'version':1,'checked':True}).json()
+    payload={**draft,'version':2,'note':'核对内容后提交'}
+    assert client.post(base+'/revise',json=payload).status_code==422
+    assert client.post(base+'/revise',json={**payload,'quote':'不在原文中的引用'}).status_code==422
+    assert client.get('/api/cards').json()[0]==old

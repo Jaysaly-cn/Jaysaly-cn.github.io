@@ -45,6 +45,10 @@ class Transition(Strict):
     version: int = Field(ge=1)
     action: Literal['pause', 'resume', 'reject', 'restore']
 
+class Revision(Draft):
+    version: int = Field(ge=1)
+    note: str = Field(min_length=5, max_length=1000)
+
 def create_app(path=None):
     path = Path(path or os.getenv('STUDYDECK_DB', str(ROOT/'data/study.sqlite3')))
     @contextmanager
@@ -142,6 +146,23 @@ def create_app(path=None):
             c.execute('UPDATE cards SET question=?,answer=?,quote=?,state=?,version=version+1,fsrs=?,due=? WHERE id=?',
                       (item.question,item.answer,item.quote,'active',state.to_json(),state.due.isoformat(),identity))
             event(c, identity, 'approved')
+            return get(c, 'cards', identity)
+
+    @app.post('/api/cards/{identity}/revise')
+    def revise(identity: str, item: Revision):
+        with db() as c:
+            c.execute('BEGIN IMMEDIATE')
+            previous = get(c, 'cards', identity)
+            if previous['version'] != item.version or previous['state'] not in ('active', 'paused'):
+                raise HTTPException(409, '仅可修订当前版本的已确认卡片')
+            source = get(c, 'materials', previous['material_id'])
+            if item.quote not in source['body']:
+                raise HTTPException(422, '引用必须逐字来自原文')
+            if all(previous[key] == getattr(item, key) for key in ('question','answer','quote')):
+                raise HTTPException(422, '内容没有变化，无需重置复习进度')
+            c.execute('UPDATE cards SET question=?,answer=?,quote=?,state=?,version=version+1,fsrs=NULL,due=NULL WHERE id=?',
+                      (item.question,item.answer,item.quote,'draft',identity))
+            event(c, identity, 'revised', {'previous':previous, 'revision_note':item.note})
             return get(c, 'cards', identity)
 
     @app.post('/api/cards/{identity}/transition')
