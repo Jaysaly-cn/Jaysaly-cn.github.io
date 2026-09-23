@@ -56,4 +56,8 @@ def initialize(path):
           claim_id TEXT NOT NULL REFERENCES claims(id),version INTEGER NOT NULL,
           snapshot TEXT NOT NULL,action TEXT NOT NULL,note TEXT NOT NULL,created_at TEXT NOT NULL,
           PRIMARY KEY(claim_id,version));
+        CREATE TABLE IF NOT EXISTS extraction_batches(
+          id TEXT PRIMARY KEY,project_id TEXT NOT NULL REFERENCES projects(id),
+          steps TEXT NOT NULL,paused INTEGER NOT NULL DEFAULT 0,
+          created_at TEXT NOT NULL,updated_at TEXT NOT NULL);
         ''')

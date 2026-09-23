@@ -12,7 +12,7 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, field_validator
-from . import collect, model, report, security, segments
+from . import collect, model, report, security, segments, batches
 from .store import connect, initialize, now
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -382,6 +382,8 @@ def create_app(db_path=None):
             raise HTTPException(502, '此段模型建议未通过验证或调用失败；未保存此段半成品，可重试；其他已成功分段保留')
         finally:
             in_flight.discard(key)
+
+    batches.install(app,path,project_row,source_row,suggestions)
 
     @app.post('/api/projects/{pid}/reports', status_code=201)
     def create_report(pid: str):

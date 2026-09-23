@@ -1,0 +1,64 @@
+{
+  "synthetic": true,
+  "model": "portfolio-qwen-1.5b",
+  "runner": "CLI run --steps 1 twice, then --retry-failed --steps 1",
+  "batch": {
+    "id": "06e588bd4ec245f390b9797c68965098",
+    "project_id": "7b2018972cb34f488645e7fb400b3c19",
+    "steps": [
+      {
+        "source_id": "14cd91f1fa024045906b9b881ad27923",
+        "title": "Alpha合成定价",
+        "sha256": "6ef2a54e3bd6f2f90cceaad5d7fd7b2f9724d591db8e796d390b74120f7cf2b5",
+        "plan_version": "chars-v1",
+        "index": 0,
+        "start": 0,
+        "end": 32,
+        "state": "failed",
+        "attempts": 2,
+        "claim_ids": [],
+        "error": "此段模型建议未通过验证或调用失败；未保存此段半成品，可重试；其他已成功分段保留"
+      },
+      {
+        "source_id": "e29ce5eb005f4dc296178e168e256219",
+        "title": "Beta合成定价",
+        "sha256": "b2cf651accf2dd2e42702de655bd596337a66d9b2c2320cf24b9aff5a601bd00",
+        "plan_version": "chars-v1",
+        "index": 0,
+        "start": 0,
+        "end": 31,
+        "state": "success",
+        "attempts": 1,
+        "claim_ids": [
+          "8d16f8af29e34e2bb942410ae5dc6625"
+        ],
+        "error": "",
+        "cached": false
+      }
+    ],
+    "paused": false,
+    "created_at": "2026-09-23T07:43:53.868473+00:00",
+    "updated_at": "2026-09-23T07:45:06.664201+00:00",
+    "complete": false,
+    "notice": "仅执行选定资料的证据候选抽取；完成不代表研究完整，也不批准结论。"
+  },
+  "claims": [
+    {
+      "id": "8d16f8af29e34e2bb942410ae5dc6625",
+      "project_id": "7b2018972cb34f488645e7fb400b3c19",
+      "source_id": "e29ce5eb005f4dc296178e168e256219",
+      "entity": "Beta",
+      "dimension": "价格",
+      "statement": "Beta 团队版每月 29 元。",
+      "quote": "Beta 团队版每月 29 元。",
+      "quote_start": 0,
+      "state": "draft",
+      "origin": "model",
+      "review_note": "",
+      "version": 1,
+      "created_at": "2026-09-23T07:44:52.839724+00:00",
+      "updated_at": "2026-09-23T07:44:52.839724+00:00"
+    }
+  ],
+  "notes": "Alpha failed validation twice; Beta succeeded once and remained draft. Not an accuracy benchmark. UI orchestration not yet implemented."
+}

@@ -44,6 +44,7 @@ def test_demo_external_fetch_origin_host_and_cookie_guards(demo):
     assert c.post('/api/projects',headers={'Sec-Fetch-Site':'cross-site'},json={}).status_code==403
     assert c.get('/',headers={'Host':'evil.example'}).status_code==403
     assert c.get('/openapi.json').status_code==404
+    assert c.post('/api/projects/fake/batches',json={'source_ids':['fake']}).status_code==403
     assert c.post('/api/projects',content='x'*40001).status_code==413
     c.cookies.clear();c.cookies.set(COOKIE,'forged')
     assert c.get('/api/projects').status_code==401

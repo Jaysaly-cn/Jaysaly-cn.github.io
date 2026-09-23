@@ -102,6 +102,8 @@ def create_demo_app(root=None, clock=time.monotonic):
             return JSONResponse({'detail':'演示入口不开放接口文档'},status_code=404)
         if path.startswith('/static/'):
             return await call_next(request)
+        if '/batches' in path:
+            return JSONResponse({'detail':'执行计划目前仅在本机完整版开放'},status_code=403)
         if path.endswith('/fetch'):
             return JSONResponse({'detail':'公开演示关闭外部网页采集；请使用合成资料或本机完整版'},status_code=403)
         clean()
