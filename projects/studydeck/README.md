@@ -2,7 +2,7 @@
 
 资料驱动的学习卡片工作台：保存原文 → AI 或手工制作草稿 → 人工校对 → FSRS 到期复习 → 导出记录。
 
-这是作品集中的学习场景实验，当前仅本地运行，尚未加入公开陈列馆，也没有真实学习效果数据。
+这是作品集中的学习场景实验，动态工作台仅本地运行，源码和案例已加入公开陈列馆；没有真实学习效果数据。
 
 ## 启动
 
@@ -40,4 +40,8 @@ python -m uvicorn app.main:app --host 127.0.0.1 --port 8794
 
 卡片库支持按问题或资料名称搜索、暂停/恢复复习、拒绝/恢复草稿。操作使用版本检查并记录事件，不删除历史；暂停保留 FSRS 状态和原到期时间。队列为空时显示下一次复习时间。新增两项生命周期测试，合计 9 项通过。浏览器已验证暂停和恢复，原计划时间不变；390×844 手机尺寸已验证无横向溢出，并完成拒绝、恢复及问题搜索。见 artifacts/mobile-acceptance.json。
 
-CI 配置见 `.github/workflows/ci.yml`，运行后端测试和 JavaScript 语法检查。该配置尚未推送，不能视为 GitHub CI 已通过。安装测试依赖使用 `pip install -r requirements-dev.txt`。
+CI 配置见 `.github/workflows/ci.yml`，运行后端测试和 JavaScript 语法检查。站点仓库的 StudyDeck verification 工作流在首次发布提交 53b6d26 上通过；后续提交的运行状态请查看 GitHub Actions。安装测试依赖使用 `pip install -r requirements-dev.txt`。
+
+## 模型开发探针
+
+新增否定、条件与资料内指令三份合成资料，真实本地模型输出保留在 artifacts/model-probes-20260923.json。仅否定样例通过逐字引用；其余两批存在改写或编造引用，且发现引用正确但答案仍缺乏依据的问题。详见 artifacts/model-probes-review.md。3 项离线回放测试验证拒绝时无部分卡片或事件落库，总计 12 项测试；不是模型准确率评测。
