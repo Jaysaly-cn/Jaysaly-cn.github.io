@@ -1,0 +1,76 @@
+# SupportOps — 证据驱动的客服协作台
+
+面向小团队客服与内部支持：将知识资料、答复证据、负面反馈和人工工单放进一个可运行的工作流。
+
+**这是有 FastAPI 后端与 SQLite 数据库的本地应用，不是预设回答的 HTML 演示。** 默认执行真实 BM25 关键词检索，显示原文证据；大模型生成是可选功能，未配置时不冒充 AI 回答。分类与优先级目前为透明关键词规则。
+
+## 5 分钟启动
+
+需要 Python 3.12（当前验证版本 3.12.7）。在本仓库目录执行：
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-lock.txt
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8765
+```
+
+macOS / Linux 将 `.\.venv\Scripts\python.exe` 替换为 `.venv/bin/python`。
+
+打开 http://127.0.0.1:8765 ，点击「载入 8 篇合成示例资料」，试问「首次购买订阅的退款条件是什么？」。
+
+完整体验：载入资料 → 检索问题 → 核对来源 → 记录反馈 → 转工单 → 填处理人并改为处理中 → 填解决记录并标记已解决 → 刷新页面确认记录保留。
+
+## 已实现
+
+- TXT / Markdown 文件读取、粘贴导入、资料删除、对客/内部检索范围筛选。
+- 中英文 BM25Plus 检索、分块、出处/版本/原文快照、无命中提示。
+- 可选兼容 Chat Completions 的模型接口；JSON 与引用编号校验、超时、失败显式降级；生成结果不会自动发给客户。
+- 回答历史、JSON 证据导出、正负反馈、Badcase 队列、实际使用计数。
+- 工单创建去重、处理人、状态流转、解决记录、乐观并发控制、审计事件。
+- 远程访问令牌、同源请求检查、写入频率限制、响应 CSP；密钥只在服务端环境变量。
+
+## 免费模型（可选）
+
+2026-09-23 调研：OpenRouter 免费模型仍要求账号 API Key，且有配额/可用性限制；本次未配置密钥，**未执行真实模型效果评测**。本机也未检测到可用 Ollama 服务。用户要求免费不可用时暂缓，不开通付费服务。
+
+有免费账号时可在启动服务前设置：
+
+```powershell
+$env:LLM_BASE_URL='https://openrouter.ai/api/v1'
+$env:LLM_MODEL='填写当前可用的 :free 型号'
+$env:LLM_API_KEY='在本机填写，不提交仓库'
+```
+
+有本地 Ollama 模型时可用 `http://127.0.0.1:11434/v1`，`LLM_API_KEY` 填占位值 `ollama`，模型名填写已安装模型。是否支持 JSON 模式需实际验证。不自动下载大型模型。
+
+- 免费模型说明：https://openrouter.ai/blog/tutorials/how-to-get-the-lowest-cost-llm-inference-on-openrouter/
+- Windows 本地模型：https://ollama.com/blog/windows-preview
+
+## 验证与评测
+
+```powershell
+python -m pytest -q
+python -m evals.run
+```
+
+若 Windows 默认临时目录不可访问，为 pytest 指定一个**新建且位于工作目录内**的 `--basetemp` 目录。
+
+`artifacts/evaluation.json` 是本机实际运行的 20 条合成开发集检索报告。接口测试中的模型响应由 mock 提供，只验证集成与失败分支，不能当作真实 LLM 测试。
+
+## 部署
+
+GitHub Pages 不支持此应用的 Python 后端。可用 Docker 在已有服务器运行：
+
+```sh
+docker build -t supportops .
+docker run --rm -p 127.0.0.1:8765:8765 -v supportops-data:/app/data \
+  -e SUPPORTOPS_ACCESS_TOKEN="replace-with-your-random-token" supportops
+```
+
+需在入口配置 HTTPS 反向代理、240KB 请求体限制、持久化磁盘与备份。使用单 worker；令牌是团队共享访问控制，**不是多租户、角色权限或客户隔离**。不要向公网匿名开放真实内部资料。云端 Demo 尚未部署，不将本地运行等同于在线服务。
+
+当前提供的是小规模单团队版本：最多 100 篇、每篇 50000 字符；按请求重建检索索引；不支持 PDF/OCR/向量检索；文档“内部”仅用于检索范围筛选，授权用户仍能管理所有资料；文档删除后历史快照仍保留，尚无合规删除与数据保留策略。模型结构校验不能证明所有事实都由引用支持。
+
+## 产品设计与归属
+
+见 [产品说明](docs/PRODUCT.md)、[第三方来源](THIRD_PARTY_NOTICES.md) 与 [进展](STATUS.md)。产品方向由作品集作者定义，代码与测试通过 AI 编程协作完成；不声称存在真实客户落地、商业收入或业务提效数字。

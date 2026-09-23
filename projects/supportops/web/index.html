@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SupportOps · 客服协作台</title><link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script></head>
+<body>
+<a class="skip" href="#main">跳到工作台</a>
+<aside class="sidebar"><a class="brand" href="/">S<span>SupportOps<small>SUPPORT, WITH EVIDENCE</small></span></a><p class="workspace">星河协作 / 学习工作台</p>
+<nav aria-label="工作台导航"><button data-view="desk" class="active">◈　客服工作台</button><button data-view="knowledge">▤　知识资料</button><button data-view="tickets">▦　人工工单</button><button data-view="quality">◎　质量与反馈</button></nav>
+<div class="sidebar-foot"><span class="dot"></span> 真实后端 · SQLite 持久化<p>合成业务资料<br>建议答复由人工核对后使用</p><a href="https://github.com/Jaysaly-cn" target="_blank" rel="noreferrer">俞凯杰 / AI 产品作品集 ↗</a></div></aside>
+<main id="main"><header><div><p class="eyebrow">CUSTOMER OPERATIONS</p><h1 id="page-title">客服工作台</h1></div><button id="connect" class="secondary">访问设置</button></header>
+<div id="notice" role="status" aria-live="polite" hidden></div>
+<section class="status-strip"><span id="model-status">正在连接后端…</span><span>所有数据保存在当前工作台</span></section>
+<section id="desk" class="view">
+<div class="intro"><div><h2>让每一次答复，都有据可查。</h2><p>检索知识，核对来源，再将需要跟进的问题交给合适的人。</p></div><span class="tag">01 / SUPPORT DESK</span></div>
+<div class="desk-grid"><div class="panel compose"><div class="panel-heading"><h3>客户问题</h3><span class="muted">人工辅助</span></div>
+<form id="ask-form"><label for="question">描述需要解决的问题</label><textarea id="question" minlength="2" maxlength="2000" required placeholder="例如：刚买的订阅想退款，有什么条件？" rows="6"></textarea>
+<div class="samples"><button type="button" data-question="首次购买订阅的退款条件是什么？">退款政策</button><button type="button" data-question="忘记登录密码，重置邮件多久有效？">登录问题</button><button type="button" data-question="明天杭州天气如何？">无证据场景</button></div>
+<label for="audience">检索范围</label><select id="audience"><option value="public">对客知识</option><option value="internal">内部工作资料 + 对客知识</option></select><p class="hint">本版本为单团队工作台，范围筛选不代表用户权限隔离。</p>
+<label class="check"><input type="checkbox" id="use-model" disabled> 使用已配置的大模型生成答复</label><button class="primary" id="ask-submit" type="submit">检索并准备答复 <span>→</span></button></form>
+<div class="history"><h3>最近处理</h3><div id="history-list"><p class="muted">暂无记录</p></div></div></div>
+<div class="panel answer-panel"><div class="panel-heading"><h3>答复与证据</h3><span class="tag" id="answer-mode">等待问题</span></div><div id="empty-answer" class="empty"><div class="empty-icon">◎</div><h3>先找到依据，再给出建议</h3><p>点击“知识资料”导入文档，或载入合成示例开始体验。</p><button id="seed" class="secondary">载入 8 篇合成示例资料</button></div>
+<div id="answer-result" hidden><div id="answer-text" class="prose"></div><div class="result-meta" id="result-meta"></div><div class="actions"><button id="helpful" class="secondary">有帮助</button><button id="unhelpful" class="secondary">记录问题</button><button id="export-run" class="secondary">导出证据 JSON</button><button id="create-ticket" class="primary">转人工工单 →</button></div><label for="feedback-note">反馈备注（可选）</label><input id="feedback-note" maxlength="2000" placeholder="遗漏了哪些信息，或哪条证据不合适？"><h3 class="subheading">来源快照</h3><div id="citations"></div><details><summary>查看处理轨迹</summary><pre id="trace"></pre></details></div></div></div>
+</section>
+<section id="knowledge" class="view" hidden><div class="intro"><div><h2>知识是答复的起点。</h2><p>导入 TXT / Markdown，或直接粘贴正文。删除资料不改写历史证据快照。</p></div></div><div class="knowledge-grid"><form id="document-form" class="panel"><h3>添加资料</h3><label for="doc-file">从文本文件读取（最多 150KB）</label><input id="doc-file" type="file" accept=".txt,.md,text/plain,text/markdown"><label for="doc-title">标题</label><input id="doc-title" required maxlength="200"><label for="doc-source">来源说明</label><input id="doc-source" maxlength="500" placeholder="例如：帮助中心 / 2026-09-23"><label for="doc-audience">使用范围</label><select id="doc-audience"><option value="public">对客知识</option><option value="internal">内部资料</option></select><label for="doc-content">正文</label><textarea id="doc-content" required minlength="2" maxlength="50000" rows="10"></textarea><button class="primary" type="submit">保存到知识库</button></form><div class="panel"><div class="panel-heading"><h3>资料目录</h3><button id="seed-library" class="secondary">载入示例</button></div><div id="document-list"></div></div></div></section>
+<section id="tickets" class="view" hidden><div class="intro"><div><h2>从一次咨询，到一次解决。</h2><p>认领 → 处理中 → 等待补充 / 已解决。每次变更都保留记录。</p></div><button id="refresh-tickets" class="secondary">刷新工单</button></div><div id="ticket-board" class="board"></div><div id="ticket-detail" class="panel" hidden></div></section>
+<section id="quality" class="view" hidden><div class="intro"><div><h2>让问题沉淀为下一次改进。</h2><p>这里统计真实工作台记录。离线检索结果不作为大模型效果指标。</p></div><button id="refresh-quality" class="secondary">刷新数据</button></div><div id="metrics" class="metrics"></div><div class="panel"><h3>待复盘问题</h3><p class="muted">负面反馈、无证据、模型失败和证据不足记录。</p><div id="badcases"></div></div></section>
+<footer>SupportOps v0.1 · 以证据、人工复核与可追溯记录组织客服工作</footer></main>
+<dialog id="settings"><form id="settings-form"><h2>连接当前工作台</h2><p>远程服务需要访问令牌。仅保存在本页内存，刷新后需重新填写。</p><label for="access-token">工作台访问令牌</label><input id="access-token" type="password" autocomplete="off"><div class="actions"><button class="primary" type="submit">连接</button><button type="button" id="close-settings" class="secondary">关闭</button></div></form></dialog>
+</body></html>

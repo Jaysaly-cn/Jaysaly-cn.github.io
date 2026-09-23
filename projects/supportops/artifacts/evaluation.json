@@ -1,0 +1,217 @@
+{
+  "generated_at": "2026-09-23T03:28:49.449578+00:00",
+  "dataset": "20 synthetic development cases; not a held-out or production benchmark",
+  "python": "3.12.7",
+  "live_model_tested": false,
+  "total": 20,
+  "passed": 20,
+  "recall_at_4": 1.0,
+  "top1_accuracy_answerable": 1.0,
+  "results": [
+    {
+      "question": "首次购买订阅的退款条件是什么？",
+      "expected": "kb-refund",
+      "retrieved": [
+        "kb-refund"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 4
+    },
+    {
+      "question": "续费订单可以退款吗？",
+      "expected": "kb-refund",
+      "retrieved": [
+        "kb-refund",
+        "kb-invoice"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "取消续费后还能用到什么时候？",
+      "expected": "kb-refund",
+      "retrieved": [
+        "kb-refund"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "忘记密码怎么重置？",
+      "expected": "kb-login",
+      "retrieved": [
+        "kb-login",
+        "kb-invoice"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "重置邮件有效多久？",
+      "expected": "kb-login",
+      "retrieved": [
+        "kb-login"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "SSO 账号找谁重置？",
+      "expected": "kb-login",
+      "retrieved": [
+        "kb-login"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "发票开具需要几个工作日？",
+      "expected": "kb-invoice",
+      "retrieved": [
+        "kb-invoice",
+        "kb-upload"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "发票税号填错怎么办？",
+      "expected": "kb-invoice",
+      "retrieved": [
+        "kb-invoice"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "CSV 单次导出上限多少？",
+      "expected": "kb-export",
+      "retrieved": [
+        "kb-export"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "删除项目多久内可以恢复？",
+      "expected": "kb-export",
+      "retrieved": [
+        "kb-export"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "API 429 应该怎样重试？",
+      "expected": "kb-api",
+      "retrieved": [
+        "kb-api"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "API 幂等键有什么作用？",
+      "expected": "kb-api",
+      "retrieved": [
+        "kb-api"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "免费版成员席位有多少？",
+      "expected": "kb-plan",
+      "retrieved": [
+        "kb-plan"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "团队版自动化任务额度多少？",
+      "expected": "kb-plan",
+      "retrieved": [
+        "kb-plan",
+        "kb-refund",
+        "kb-api",
+        "kb-export"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "扫描版 PDF 怎样导入？",
+      "expected": "kb-upload",
+      "retrieved": [
+        "kb-upload"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "知识文档单文件大小限制是多少？",
+      "expected": "kb-upload",
+      "retrieved": [
+        "kb-upload",
+        "kb-api",
+        "kb-plan"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "内部 ORBIT-47 密钥泄露怎么办？",
+      "audience": "internal",
+      "expected": "kb-security",
+      "retrieved": [
+        "kb-security",
+        "kb-api"
+      ],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "ORBIT-47",
+      "audience": "public",
+      "expected": null,
+      "retrieved": [],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "火星菠萝披萨",
+      "expected": null,
+      "retrieved": [],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    },
+    {
+      "question": "明天杭州天气如何？",
+      "expected": null,
+      "retrieved": [],
+      "pass": true,
+      "top1": true,
+      "elapsed_ms": 3
+    }
+  ]
+}
