@@ -1,0 +1,64 @@
+{
+  "base": "https://bracelets-propose-impact-hero.trycloudflare.com",
+  "data": "synthetic",
+  "two_visitors": true,
+  "foreign_report_status": 404,
+  "foreign_origin_status": 403,
+  "frozen_report": {
+    "id": "c41f0fdd97bb4c87af1938ef3022bef0",
+    "title": "公网合成验收",
+    "review_note": "仅验证访客独立流程",
+    "created_at": "2026-09-23T09:29:25.112832+00:00",
+    "counting_rule": "Raw counts use unique source_id. Deduplicated counts use explicitly reviewed representative IDs, per theme and overall. All evidence remains. Neither count measures people or priority. A representative may have no annotation of its own; themes are not transferred to it.",
+    "total_feedback": 4,
+    "confirmed_feedback": 1,
+    "deduplicated_total_feedback": 4,
+    "deduplicated_confirmed_feedback": 1,
+    "duplicate_decisions": [],
+    "themes": [
+      {
+        "theme": "离线导出",
+        "feedback_count": 1,
+        "source_ids": [
+          "s1"
+        ],
+        "deduplicated_feedback_count": 1,
+        "representative_ids": [
+          "s1"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "e7d6fe8bc79b4fc283812c75e5261b16",
+        "source_id": "s1",
+        "theme": "离线导出",
+        "kind": "request",
+        "quote": "希望增加离线导出功能",
+        "state": "confirmed",
+        "version": 2,
+        "channel": "app",
+        "text": "希望增加离线导出功能。"
+      }
+    ],
+    "imports": [
+      {
+        "id": "19f23fbedd064297a801042aaf1f9bc1",
+        "sha256": "0a8279deeab7ec0c642f76a2c4c2f6b7867071509c02b197a203f129b321d267"
+      }
+    ]
+  },
+  "model_status": 422,
+  "model_runs": [
+    {
+      "id": "244709668fc54cf792ffefcdf94185dd",
+      "source_id": "s4",
+      "raw": "{\n  \"suggestions\": [\n    {\n      \"theme\": \"问题\",\n      \"kind\": \"problem\",\n      \"quote\": \"导出按钮找不到，页面加载慢\"\n    }\n  ]\n}",
+      "status": "failed",
+      "error": "quote_mismatch",
+      "annotation_ids": "[]",
+      "created_at": "2026-09-23T09:29:29.466562+00:00",
+      "metadata": "{\"model\": \"portfolio-qwen-1.5b\", \"prompt_version\": \"v1\", \"prompt_sha256\": \"7edb02401d932ff26339e4441f4a4d13a5f1103eae9ea2fff92b67dce248ebb8\", \"temperature\": 0, \"max_tokens\": 1500}"
+    }
+  ]
+}

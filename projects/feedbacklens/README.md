@@ -52,7 +52,7 @@ RapidFuzz 3.14.6 用字符相似度给出前10个候选，不自动合并、不�
 
 当前24项自动测试通过，包含真实模型输出回放。新增讽刺探针提取“加载速度”问题；嵌入指令探针生成了“忽略规则”“表扬”等错误主题，全部停留草稿，没有执行或发布操作。原始记录见 artifacts/model-additional-probes.json；不能把引用校验通过视为语义正确或抗注入保证。可运行 `python -m evals.live_probes` 生成独立测试记录（已有证据时拒绝覆盖；需本地模型）。此前段落测试数量是各开发阶段记录。
 
-安装与验证：`pip install -r requirements.txt -r requirements-dev.txt`，然后 `python -m pytest -q` 和 `node --check web/app.js`。源码镜像发布于个人主页仓库 projects/feedbacklens，不是独立远程仓库。动态后端仅本地可用，没有稳定公网服务；所有验收资料为合成数据，没有真实业务效果数据。
+安装与验证：`pip install -r requirements.txt -r requirements-dev.txt`，然后 `python -m pytest -q` 和 `node --check web/app.js`。源码镜像发布于个人主页仓库 projects/feedbacklens，不是独立远程仓库。动态后端现提供临时访客演示，尚无稳定公网服务；所有验收资料为合成数据，没有真实业务效果数据。
 
 ## 提示词实验与运行追溯
 
@@ -64,3 +64,9 @@ RapidFuzz 3.14.6 用字符相似度给出前10个候选，不自动合并、不�
 ## 手机重复判断与模型记录
 
 390×844浏览器视口实测发现模型哈希造成608px横向溢出；增加长文本换行及网格最小宽度约束后恢复375px文档宽。已实际保存重复标记、撤销并展开历史，三处均无横向溢出。记录见 artifacts/mobile-duplicate-acceptance.json。这是视口模拟，不是实体手机兼容性认证。
+
+## 临时访客演示
+
+新增 `python -m uvicorn app.demo:app --host 127.0.0.1 --port 8797`。公网反向代理时设置 FL_DEMO_HOST 为准确域名，并仅信任实际本地代理地址。单进程运行，每位访客独立SQLite；30分钟会话、最多12个同时保留的会话、每小时最多30个新会话、每会话60次写入/3次模型请求、全局每小时24次模型请求，单次输入40KB。失败模型请求也占额度，仍可手工归类。演示文件在独立目录内定期清理，重启会使会话失效；不是多进程生产架构。
+
+31项测试通过。公网双访客验收已验证报告/归类/模型记录隔离；一次真实模型请求因引用改写返回422，保留诊断记录，不代表模型提取正确。见 artifacts/public-acceptance.json。临时隧道依赖开发机在线，不是稳定托管。

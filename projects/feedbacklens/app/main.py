@@ -3,7 +3,7 @@ import asyncio
 import csv
 import os
 import sqlite3
-from contextlib import contextmanager, asynccontextmanager
+from contextlib import contextmanager, asynccontextmanager, closing
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal
@@ -56,31 +56,37 @@ class Duplicate(Strict):
     version:int=Field(ge=0)
     note:str=Field(min_length=5,max_length=1000)
 
+def initialize(path):
+    path=Path(path)
+    path.parent.mkdir(parents=True,exist_ok=True)
+    with closing(sqlite3.connect(path)) as c:
+        c.row_factory=sqlite3.Row
+        c.executescript('''
+        CREATE TABLE IF NOT EXISTS imports(id TEXT PRIMARY KEY,sha256 TEXT UNIQUE,raw BLOB);
+        CREATE TABLE IF NOT EXISTS feedback(source_id TEXT PRIMARY KEY,channel TEXT,text TEXT);
+        CREATE TABLE IF NOT EXISTS import_rows(import_id TEXT REFERENCES imports(id),line INTEGER,source_id TEXT REFERENCES feedback(source_id));
+        CREATE TABLE IF NOT EXISTS annotations(id TEXT PRIMARY KEY,source_id TEXT REFERENCES feedback(source_id),theme TEXT,kind TEXT,quote TEXT,state TEXT,version INTEGER);
+        CREATE TABLE IF NOT EXISTS reviews(id TEXT PRIMARY KEY,annotation_id TEXT REFERENCES annotations(id),snapshot TEXT,note TEXT,created_at TEXT);
+        CREATE TABLE IF NOT EXISTS reports(id TEXT PRIMARY KEY,title TEXT,snapshot TEXT,created_at TEXT);
+        CREATE TABLE IF NOT EXISTS model_runs(id TEXT PRIMARY KEY,source_id TEXT REFERENCES feedback(source_id),raw TEXT,status TEXT,error TEXT,annotation_ids TEXT,created_at TEXT);
+        CREATE TABLE IF NOT EXISTS duplicates(source_id TEXT PRIMARY KEY REFERENCES feedback(source_id),target_id TEXT REFERENCES feedback(source_id),version INTEGER,note TEXT,created_at TEXT);
+        CREATE TABLE IF NOT EXISTS duplicate_events(id TEXT PRIMARY KEY,source_id TEXT REFERENCES feedback(source_id),snapshot TEXT,created_at TEXT);
+        ''')
+        if 'metadata' not in {r['name'] for r in c.execute('PRAGMA table_info(model_runs)')}:
+            c.execute("ALTER TABLE model_runs ADD COLUMN metadata TEXT NOT NULL DEFAULT '{}'")
+
 def create_app(path=None):
-    path=Path(path or os.getenv('FEEDBACKLENS_DB',str(ROOT/'data/feedback.sqlite3')))
+    path=path or os.getenv('FEEDBACKLENS_DB',str(ROOT/'data/feedback.sqlite3'))
+    def resolve_path():return Path(path() if callable(path) else path)
     @contextmanager
     def db():
-        c=sqlite3.connect(path,timeout=10);c.row_factory=sqlite3.Row;c.execute('PRAGMA foreign_keys=ON')
+        c=sqlite3.connect(resolve_path(),timeout=10);c.row_factory=sqlite3.Row;c.execute('PRAGMA foreign_keys=ON')
         try:
             with c:yield c
         finally:c.close()
     @asynccontextmanager
     async def lifespan(app):
-        path.parent.mkdir(parents=True,exist_ok=True)
-        with db() as c:
-            c.executescript('''
-            CREATE TABLE IF NOT EXISTS imports(id TEXT PRIMARY KEY,sha256 TEXT UNIQUE,raw BLOB);
-            CREATE TABLE IF NOT EXISTS feedback(source_id TEXT PRIMARY KEY,channel TEXT,text TEXT);
-            CREATE TABLE IF NOT EXISTS import_rows(import_id TEXT REFERENCES imports(id),line INTEGER,source_id TEXT REFERENCES feedback(source_id));
-            CREATE TABLE IF NOT EXISTS annotations(id TEXT PRIMARY KEY,source_id TEXT REFERENCES feedback(source_id),theme TEXT,kind TEXT,quote TEXT,state TEXT,version INTEGER);
-            CREATE TABLE IF NOT EXISTS reviews(id TEXT PRIMARY KEY,annotation_id TEXT REFERENCES annotations(id),snapshot TEXT,note TEXT,created_at TEXT);
-            CREATE TABLE IF NOT EXISTS reports(id TEXT PRIMARY KEY,title TEXT,snapshot TEXT,created_at TEXT);
-            CREATE TABLE IF NOT EXISTS model_runs(id TEXT PRIMARY KEY,source_id TEXT REFERENCES feedback(source_id),raw TEXT,status TEXT,error TEXT,annotation_ids TEXT,created_at TEXT);
-            CREATE TABLE IF NOT EXISTS duplicates(source_id TEXT PRIMARY KEY REFERENCES feedback(source_id),target_id TEXT REFERENCES feedback(source_id),version INTEGER,note TEXT,created_at TEXT);
-            CREATE TABLE IF NOT EXISTS duplicate_events(id TEXT PRIMARY KEY,source_id TEXT REFERENCES feedback(source_id),snapshot TEXT,created_at TEXT);
-            ''')
-            if 'metadata' not in {r['name'] for r in c.execute('PRAGMA table_info(model_runs)')}:
-                c.execute("ALTER TABLE model_runs ADD COLUMN metadata TEXT NOT NULL DEFAULT '{}'")
+        initialize(resolve_path())
         yield
     app=FastAPI(title='FeedbackLens',version='0.1.0',lifespan=lifespan)
     security.install(app)
@@ -96,14 +102,14 @@ def create_app(path=None):
     def status():return {'version':'0.1.0','model_configured':model.configured(),'stage':'model-review-api'}
 
     @app.post('/api/imports',status_code=201)
-    async def import_csv(request:Request):return ingest(path,await request.body())
+    async def import_csv(request:Request):return ingest(resolve_path(),await request.body())
 
     @app.get('/api/feedback')
     def feedback():
         with db() as c:return [dict(row) for row in c.execute('SELECT * FROM feedback ORDER BY source_id')]
 
     @app.get('/api/similar')
-    def candidates(source_id:str):return similar(path,source_id)
+    def candidates(source_id:str):return similar(resolve_path(),source_id)
 
     @app.get('/api/duplicates')
     def duplicates():
