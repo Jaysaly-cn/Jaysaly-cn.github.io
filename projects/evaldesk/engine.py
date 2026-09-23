@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import subprocess
 import uuid
+from schemas import SCHEMAS
 
 ROOT = Path(__file__).resolve().parent
 ENGINE_VERSION = '0.123.1'
@@ -71,15 +72,16 @@ def compile_suite(suite):
             raise ValueError('expected 1–8 deterministic checks')
         assertions = []
         for check in checks:
-            if not isinstance(check, dict) or not isinstance(check.get('type'), str) or check['type'] not in {'equals', 'contains', 'not-contains', 'is-json'}:
+            if not isinstance(check, dict) or not isinstance(check.get('type'), str) or check['type'] not in {'equals', 'contains', 'not-contains', 'is-json', *SCHEMAS}:
                 raise ValueError('unsupported check; executable/model-based checks are forbidden')
             kind = check['type']
-            keys = {'type'} if kind == 'is-json' else {'type', 'value'}
+            keys = {'type'} if kind == 'is-json' or kind in SCHEMAS else {'type', 'value'}
             if set(check) != keys:
                 raise ValueError('unexpected check fields')
-            if kind != 'is-json':
+            if kind != 'is-json' and kind not in SCHEMAS:
                 literal(text(check['value'], 'check value', 2000))
-            assertions.append(dict(check))
+            assertions.append({'type': 'is-json', 'value': json.loads(json.dumps(SCHEMAS[kind]))}
+                              if kind in SCHEMAS else dict(check))
         tests.append({'description': cid, 'vars': {'input': c['input']}, 'assert': assertions,
                       'metadata': {'case_id': cid, 'human_rubric': c['rubric']}})
     return {'description': suite['name'], 'prompts': compiled_prompts,

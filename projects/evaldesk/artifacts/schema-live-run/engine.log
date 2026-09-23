@@ -1,0 +1,17 @@
+(node:31548) ExperimentalWarning: DecompressInterceptor is experimental and subject to change
+(Use `node --trace-warnings ...` to show where the warning was created)
+Cache is disabled.
+Starting evaluation eval-qyZ-2026-09-23T12:15:59
+Running 2 test cases (up to 1 at a time)...
+✓ Eval complete
+
+Total Tokens: 515
+  Provider: 515 (427 prompt, 88 completion)
+
+Results:
+  0 passed (0%)
+  ✗ 2 failed (100%)
+  0 errors (0%)
+Duration: 4s (concurrency: 1)
+
+Writing output to D:\My_programs\作品集与个人主页\evaldesk\data\job-runs\c7449cefdc7240c79653ce2de5d20e3d\results.json

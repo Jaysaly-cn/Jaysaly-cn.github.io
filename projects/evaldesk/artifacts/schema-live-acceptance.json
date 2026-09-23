@@ -1,0 +1,31 @@
+{
+  "run_id": "c7449cefdc7240c79653ce2de5d20e3d",
+  "suite_id": "bfa3fd706735423b8e4ca3bc62cd14cf",
+  "version": 1,
+  "scope": "Browser-created fixed schema suite and browser-started job; two actual model calls",
+  "summary": [
+    {
+      "prompt_id": "baseline",
+      "total": 1,
+      "passed": 0,
+      "assertion_failed": 1,
+      "call_error": 0,
+      "pending": 1,
+      "accepted": 0,
+      "rejected": 0,
+      "unclear": 0
+    },
+    {
+      "prompt_id": "candidate",
+      "total": 1,
+      "passed": 0,
+      "assertion_failed": 1,
+      "call_error": 0,
+      "pending": 1,
+      "accepted": 0,
+      "rejected": 0,
+      "unclear": 0
+    }
+  ],
+  "reviews": "Both remain pending; structure failure does not replace business review"
+}

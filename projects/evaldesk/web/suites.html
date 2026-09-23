@@ -8,7 +8,7 @@
 <p id="version-info" class="provenance">尚未保存</p>
 <form id="suite-form"><label>测试集名称<input id="suite-name" required maxlength="120"></label>
 <div class="section-heading"><h3>对比提示词</h3><button type="button" id="add-prompt" class="secondary">添加提示词</button></div><p class="hint">保留 2–3 套提示词。相同样例将分别交给每套提示词。</p><div id="prompt-editor"></div>
-<div class="section-heading"><h3>测试样例</h3><button type="button" id="add-case" class="secondary">添加样例</button></div><p class="hint">最多 20 个样例。业务判据留给人工复核；自动检查只验证指定的文本或格式规则。</p><div id="case-editor"></div>
+<div class="section-heading"><h3>测试样例</h3><button type="button" id="add-case" class="secondary">添加样例</button></div><p class="hint">最多 20 个样例。业务判据留给人工复核；自动检查只验证指定的文本或格式规则。结构 v1 规则检查字段、类型、长度与额外字段；不会检查引用是否来自原文，也不能识别语义错误。</p><div id="case-editor"></div>
 <section class="save-panel"><label>本次变更说明<textarea id="change-note" required minlength="5" maxlength="2000" placeholder="说明新增了什么、为何调整提示词或判据"></textarea></label><div><button type="submit">保存新版本</button><span id="save-help">首次保存会创建独立测试集</span></div></section></form>
 <section class="history-panel"><h3>版本历史</h3><p class="hint">下载某个版本可用于命令行评测。历史评测始终使用其原始快照，不受这里的编辑影响。</p><div id="suite-history"></div><div id="version-preview"></div></section>
 <footer>本机数据保存在 SQLite。在评测任务页选择已保存版本即可执行，完成后自动导入复核页面。</footer></main></body></html>

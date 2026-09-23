@@ -8,7 +8,7 @@
 
 - 受限 JSON 测试集：2–3 套提示词、最多 20 个样例、每例最多 8 个断言。
 - 复用 Promptfoo 0.123.1 执行，固定本地 Qwen 1.5B 模型；无付费 API。
-- 确定性断言仅支持 equals、contains、not-contains、is-json，不接受用户脚本、自定义 provider 或模型裁判。
+- 确定性断言支持 equals、contains、not-contains、is-json，以及固定反馈/变更结构 v1 规则，不接受用户脚本、自定义 provider 或模型裁判。
 - 每次运行独立目录，保存测试集、生成配置、原始结果、日志和 SHA-256；不覆盖旧运行。
 - 人工判据保存在每个样例中，首次导入全部待复核；人工判断与自动断言分别统计，自动通过不代表语义正确。
 - 按上游 `failureReason` 区分断言失败与调用错误；拒绝重复、缺失或身份不匹配的结果单元。
@@ -50,7 +50,7 @@ python -m pytest -q --basetemp=data/pytest-temp
 
 ## 验证范围
 
-已完成 37 项测试及多轮真实本地模型调用。首轮两套提示词各 2/4 精确标签断言通过，0 个调用错误。逐例输出与限制见 [首轮验收](artifacts/engine-spike-review.md)。原始证据按字节保存，Git 不对该目录转换换行。
+已完成 41 项测试及多轮真实本地模型调用。首轮两套提示词各 2/4 精确标签断言通过，0 个调用错误。逐例输出与限制见 [首轮验收](artifacts/engine-spike-review.md)。原始证据按字节保存，Git 不对该目录转换换行。
 
 恢复验收见 [隔离故障模拟](artifacts/recovery-acceptance.json)：复制数据库后模拟导入中断，浏览器恢复十个真实结果，保留模拟错误历史。原数据库未改动，没有新建评测任务；测试同时禁止恢复路径调用引擎。该故障是主动模拟，不宣称自然发生过。手机诊断布局 390px / scrollWidth 375。
 
@@ -88,6 +88,10 @@ python -m uvicorn demo:app --host 127.0.0.1 --port 8804 --workers 1
 ## 跨项目回归示例库
 
 测试集工作室可选择 FeedbackLens / ChangeLens 各六个已知失败样例，保存后按版本执行。24次真实模型调用及逐例复核见[新基线与边界](artifacts/portfolio-regression-review.md)。JSON检查和业务判断分别统计；本轮运行参数与原工具不同，不直接比较历史通过率。来源哈希见[samples/portfolio-provenance.json](samples/portfolio-provenance.json)。
+
+## 固定结构检查
+
+网页可选择“反馈对象结构 v1”或“变更说明结构 v1”，检查字段、类型、长度和额外字段；不接受任意Schema。旧规则不变，v1定义冻结，后续变化需新增规则名。详见[离线重放、边界构造与真实网页任务](artifacts/schema-review.md)。结构正确不代表引用或业务含义正确，原始输出与人工复核仍保留。
 
 ## 后续交付
 
