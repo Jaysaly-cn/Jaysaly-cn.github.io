@@ -185,6 +185,9 @@ def create_app(path=None):
         if generating.locked():
             raise HTTPException(409, '模型正在生成，请完成后再试')
         async with generating:
+            before_call = getattr(app.state, 'before_model_call', None)
+            if before_call:
+                before_call()
             try:
                 raw, name = await model.generate(brief, request.channel, CHANNELS[request.channel])
                 copy = Copy.model_validate(raw)

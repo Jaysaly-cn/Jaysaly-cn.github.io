@@ -1,0 +1,55 @@
+{
+  "url": "https://derived-miller-allied-enhancement.trycloudflare.com",
+  "synthetic_only": true,
+  "generation": {
+    "status": 201,
+    "elapsed_ms": 2125,
+    "output": {
+      "id": "52c488436ff947cf9d2987bc6d5dcc92",
+      "draft_id": "ce5787ebd0474b8ab3483ca26fe05440",
+      "number": 1,
+      "title": "拾光任务本 · 合成演示",
+      "body": "支持手动添加任务和设置截止日期，支持按周查看任务清单",
+      "fact_ids": [
+        "F1",
+        "F2"
+      ],
+      "origin": "model",
+      "model": "portfolio-qwen",
+      "checks": {
+        "blockers": [
+          {
+            "code": "required",
+            "detail": "正文缺少必带说明：示例产品，仅供学习"
+          }
+        ],
+        "body_characters": 26,
+        "limit": 1200,
+        "human_checks": [
+          "逐句核对事实含义、条件与来源",
+          "确认措辞、权益说明与目标渠道适用性"
+        ],
+        "semantic_verified": false
+      },
+      "state": "draft",
+      "review_note": "",
+      "version": 1,
+      "created_at": "2026-09-23T13:20:25.090787+00:00"
+    }
+  },
+  "delivery": {
+    "export_id": "0588d959d751493cbfa75202286719ca",
+    "approved_revision": "f4230e82493e4dad9e21fd9582d4cb89",
+    "json_status": 200,
+    "markdown_status": 200,
+    "markdown_bytes": 1401,
+    "copies": 1
+  },
+  "cross_visitor": {
+    "campaign": 404,
+    "revision": 404,
+    "compare": 404,
+    "json": 404,
+    "markdown": 404
+  }
+}
