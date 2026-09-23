@@ -89,7 +89,8 @@ def create_app(db_path=None):
 
     @asynccontextmanager
     async def lifespan(app):
-        initialize(path)
+        if not callable(path):
+            initialize(path)
         yield
 
     app = FastAPI(title='EvidenceBrief', version='0.3.0', lifespan=lifespan)

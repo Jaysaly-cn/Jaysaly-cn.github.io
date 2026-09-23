@@ -6,7 +6,7 @@ const states={draft:'待确认',approved:'已确认',rejected:'已退回'};
 function el(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
 function notice(text){$('notice').textContent=text;$('notice').hidden=!text;}
 async function safe(fn){try{notice('');await fn();}catch(e){notice(e.message);}}
-async function api(path,options={}){const r=await fetch('/api'+path,{...options,headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{}),...options.headers}});const d=await r.json();if(!r.ok){if(r.status===401&&!$('settings').open)$('settings').showModal();throw Error(typeof d.detail==='string'?d.detail:'输入未通过校验，请检查必填项、格式与长度');}return d;}
+async function api(path,options={}){const r=await fetch('/api'+path,{...options,headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{}),...options.headers}});const d=await r.json();if(!r.ok){if(r.status===401&&!document.body.classList.contains('demo-mode')&&!$('settings').open)$('settings').showModal();throw Error(typeof d.detail==='string'?d.detail:'输入未通过校验，请检查必填项、格式与长度');}return d;}
 const post=(path,body)=>api(path,{method:'POST',body:body===undefined?undefined:JSON.stringify(body)});
 function button(text,fn,cls='quiet'){const b=el('button',text,cls);b.type='button';b.onclick=()=>safe(fn);return b;}
 function options(target,values){const previous=$(target).value;$(target).replaceChildren(...values.map(v=>{const o=el('option',v);o.value=v;return o;}));if(values.includes(previous))$(target).value=previous;}

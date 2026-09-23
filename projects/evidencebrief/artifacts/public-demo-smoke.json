@@ -1,0 +1,10 @@
+{
+  "date": "2026-09-23",
+  "environment": "Temporary HTTPS Quick Tunnel; isolated synthetic visitor",
+  "url": "https://functional-better-subsequently-paste.trycloudflare.com",
+  "automated_tests_passed": 41,
+  "https_root_status": 200,
+  "secure_cookie": true,
+  "browser_verified": ["Seed project loaded", "Qwen 1.5B returned two draft claims", "54/54 characters processed", "Price claim retained team-plan condition", "Human review approved price claim", "Frozen Markdown report included approved price and three evidence gaps"],
+  "limitations": ["Synthetic example, not model accuracy evaluation", "Second claim remains unapproved and absent from report", "Development machine and temporary tunnel must remain online", "Download buttons enabled; browser file download not checked in this run"]
+}
