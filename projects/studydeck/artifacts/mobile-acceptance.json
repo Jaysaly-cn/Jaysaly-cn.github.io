@@ -1,0 +1,8 @@
+{
+  "date": "2026-09-23",
+  "environment": "Codex in-app browser, localhost:8794",
+  "viewport": {"width": 390, "height": 844, "document_scroll_width": 375},
+  "verified": ["single-column material form", "card library reject draft", "restore rejected draft", "search by question and view one matching card"],
+  "data": "Synthetic cache-learning material; coding-agent acceptance, not real learner evidence",
+  "limitations": ["browser download file persistence not verified", "no retention effectiveness study", "not a public demo"]
+}
