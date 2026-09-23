@@ -7,10 +7,10 @@ from pathlib import Path
 from typing import Annotated,Literal
 from uuid import uuid4
 from fastapi import FastAPI,HTTPException,Request,Query
-from fastapi.responses import JSONResponse,FileResponse
+from fastapi.responses import JSONResponse,FileResponse,Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel,ConfigDict,StringConstraints,Field
-from . import data,model,security,builder
+from . import data,model,security,builder,delivery
 
 
 class Strict(BaseModel):model_config=ConfigDict(extra='forbid')
@@ -104,12 +104,19 @@ def create_app(path=None):
         data.dataset(path,did)
         with data.connect(path) as db:
             return [{**dict(r),'result':json.loads(r['result'])} for r in db.execute('SELECT * FROM runs WHERE dataset_id=? ORDER BY created_at DESC',(did,))]
-    @app.get('/api/runs/{rid}')
-    def download(rid:str):
+    def saved_run(rid):
         with data.connect(path) as db:
             row=db.execute('SELECT * FROM runs WHERE id=?',(rid,)).fetchone()
             if not row:raise HTTPException(404,'查询记录不存在')
-            return JSONResponse({**dict(row),'result':json.loads(row['result'])},headers={'Content-Disposition':f'attachment; filename="databrief-{rid}.json"'})
+            return {**dict(row),'result':json.loads(row['result'])}
+    @app.get('/api/runs/{rid}')
+    def download(rid:str):
+        return JSONResponse(saved_run(rid),headers={'Content-Disposition':f'attachment; filename="databrief-{rid}.json"'})
+    @app.get('/api/runs/{rid}/bundle')
+    def export_bundle(rid:str):
+        record=saved_run(rid)
+        return Response(delivery.bundle(record),media_type='application/zip',
+                        headers={'Content-Disposition':f'attachment; filename="databrief-{record["id"]}.zip"'})
     root=Path(__file__).resolve().parents[1]
     @app.get('/')
     def index():return FileResponse(root/'web/index.html')

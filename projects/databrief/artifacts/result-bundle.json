@@ -1,0 +1,24 @@
+{
+  "synthetic": true,
+  "route": "GET /api/runs/{id}/bundle",
+  "status": 200,
+  "members": [
+    "snapshot.json",
+    "result.csv",
+    "query.sql",
+    "README.txt"
+  ],
+  "csv_rows": [
+    [
+      "分组",
+      "合计"
+    ],
+    [
+      "搜索",
+      "30.0"
+    ]
+  ],
+  "snapshot_matches_stored_run": true,
+  "browser_download_saved": "not yet verified",
+  "browser_click": "download requested; success notice; no console errors"
+}

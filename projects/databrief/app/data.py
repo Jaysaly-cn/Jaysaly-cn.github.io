@@ -129,6 +129,7 @@ def query(parsed,sql):
         if cursor.description is None:raise ValueError('只允许返回结果的只读查询')
         result=cursor.fetchmany(201)
         for row in result:
+            if any(isinstance(v,bytes) for v in row):raise ValueError('结果包含二进制值，无法作为分析表格保存；请查询文本或数值')
             if any(isinstance(v,float) and not math.isfinite(v) for v in row):raise ValueError('结果包含非有限数值，请调整查询')
         return {'columns':[c[0] for c in cursor.description],'rows':[list(r) for r in result[:200]],
                 'truncated':len(result)>200,'source_sha256':parsed['sha256'],'sql':sql,

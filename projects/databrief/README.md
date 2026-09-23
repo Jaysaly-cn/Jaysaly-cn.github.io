@@ -1,4 +1,4 @@
-# DataBrief v0.2 · 运营数据分析台
+# DataBrief v0.3 · 运营数据分析台
 
 第七款作品，目标为CSV→数据质量概览→自然语言分析问题→可检查的SQL→结果与图表快照。
 
@@ -10,7 +10,7 @@ API：POST `/api/datasets?name=名称` 上传CSV字节；GET `/api/datasets/{id}
 
 提议原文与实际执行SQL分别保留；修改查询不改写原提议。模型只接收列映射/名称/类型/缺失计数、总行数与问题，不发送单元格样例或行值。最多30次模型提议/数据集；协议错误保留raw。仅允许本机或明确OpenRouter免费型号，未自动购买额度。
 
-37项测试通过，`node --check web/app.js`语法通过。真实Qwen1.5B三条开发问题中有一条排序要求理解错误；人工修订后结果才与已知答案一致。记录见artifacts/live-proposals.json和live-reviewed-runs.json，不是盲测准确率。
+40项测试通过，`node --check web/app.js`语法通过。真实Qwen1.5B三条开发问题中有一条排序要求理解错误；人工修订后结果才与已知答案一致。记录见artifacts/live-proposals.json和live-reviewed-runs.json，不是盲测准确率。
 
 ```powershell
 python -m app.cli import samples/channels.csv
@@ -36,3 +36,12 @@ POST `/api/datasets/{id}/query-preview` 示例：`{"aggregate":"avg","metric":"c
 文本筛选保留引号作为值；数字比较拒绝表达式。NULL 分组保留，非空比较不匹配 NULL；范围筛选按列类型比较，文本日期不会自动转换。无匹配行时 SUM/AVG/MIN/MAX 为 NULL。当前仅一个筛选条件，不支持多表连接或可视化复杂公式。生成后可手动修改 SQL，但需要重新核对。
 
 浏览器验收：三行样例订单数为 2、3、NULL，忽略空值均值 2.5，补零均值 1.6666666666666667；筛选搜索渠道金额合计 30。修改选项后重新生成会清除审核勾选及说明，旧结果保持不变。记录见 artifacts/visual-query-browser.json。
+
+
+## 结果交付包
+
+成功查询可以下载 ZIP：`GET /api/runs/{id}/bundle`，包括 UTF-8 BOM 的 CSV、实际执行 SQL、带审核说明和来源哈希的 JSON 快照及导入说明。导出读取保存的结果，不重新执行，不包含原始数据集或其他历史。截断结果的表名为 result-truncated.csv，说明中也明确警示。
+
+CSV 的 NULL 写为 `\N`；空字符串保持空单元格，同名列与顺序保留。文本中可能作为公式的前缀会加单引号，数值负数保持数字。CSV不是无损类型格式：原文本身为 `\N`、前导零编码、大整数、日期等请用JSON核对，并在表格软件中选择文本导入。JSON保留原值。失败查询仍可下载JSON，不能导出结果表；二进制SQL结果会被明确拒绝并记录失败。
+
+40项自动测试通过；真实HTTP导出及解包检查通过，浏览器按钮已发起下载且无错误日志，但浏览器最终文件落盘仍未确认。HTTP取得的合成样例包在工作区 portfolio-optimization/databrief-sample-result.zip。

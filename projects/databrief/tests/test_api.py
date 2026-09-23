@@ -1,4 +1,7 @@
 import json
+import csv
+import io
+import zipfile
 import pytest
 from fastapi.testclient import TestClient
 from app.main import create_app
@@ -96,3 +99,30 @@ def test_visual_preview_is_model_free_and_requires_separate_review(client):
     assert client.post(f'/api/datasets/{did}/query-preview',json={'aggregate':'sum','metric':'c99'}).status_code==422
     assert client.post(f'/api/datasets/{did}/query-preview',json={'group':'c1; DROP TABLE data'}).status_code==422
     assert client.post('/api/datasets/missing/query-preview',json={}).status_code==404
+
+
+def test_result_bundle_is_a_stored_snapshot_not_a_new_query(client):
+    did=upload(client)
+    payload={'sql':'SELECT c1, c2, c4 FROM data ORDER BY c4','note':'核对列顺序和空值，保留编码','reviewed':True}
+    run=client.post(f'/api/datasets/{did}/runs',json=payload).json()
+    saved=client.get('/api/runs/'+run['id']).json()
+    client.post(f'/api/datasets/{did}/runs',json={**payload,'sql':'SELECT count(*) FROM data'})
+    response=client.get('/api/runs/'+run['id']+'/bundle')
+    assert response.status_code==200 and response.headers['content-type']=='application/zip'
+    assert response.headers['cache-control']=='no-store'
+    with zipfile.ZipFile(io.BytesIO(response.content)) as archive:
+        assert set(archive.namelist())=={'snapshot.json','result.csv','query.sql','README.txt'}
+        assert json.loads(archive.read('snapshot.json'))==saved
+        rows=list(csv.reader(io.StringIO(archive.read('result.csv').decode('utf-8-sig'))))
+        assert rows==[['c1','c2','c4'],['搜索','2','001'],['社交','3','002'],['搜索','\\N','003']]
+        assert archive.read('query.sql').decode()==payload['sql']
+    assert len(client.get(f'/api/datasets/{did}/runs').json())==2
+    assert client.get('/api/runs/missing/bundle').status_code==404
+
+
+def test_binary_result_is_recorded_as_failure_and_not_exported_as_table(client):
+    did=upload(client)
+    run=client.post(f'/api/datasets/{did}/runs',json={'sql':"SELECT X'4142' AS binary",'note':'测试二进制结果拒绝且留存','reviewed':True}).json()
+    assert run['state']=='failed' and '二进制' in run['error']
+    assert client.get('/api/runs/'+run['id']).json()['result']['state']=='failed'
+    assert client.get('/api/runs/'+run['id']+'/bundle').status_code==422
