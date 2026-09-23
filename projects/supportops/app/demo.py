@@ -11,7 +11,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from .main import create_app
-from .db import initialize, connect, now
+from .db import initialize, connect, now, record_document
 ROOT = Path(__file__).resolve().parents[1]
 
 COOKIE = 'so_demo_session'
@@ -77,6 +77,7 @@ def create_demo_app(root=None, clock=time.monotonic):
         with connect(path) as db:
             for doc in source:
                 db.execute('INSERT INTO documents VALUES (?,?,?,?,?,?,?)',(doc['id'],doc['title'],doc['content'],'合成示例 / 星河协作 SaaS',doc['audience'],1,now()))
+                record_document(db,doc['id'],'访客演示合成示例')
 
     @app.middleware('http')
     async def sandbox(request,call_next):

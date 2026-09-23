@@ -57,7 +57,22 @@ def initialize(path: str):
           id TEXT PRIMARY KEY, run_id TEXT NOT NULL REFERENCES runs(id),
           snapshot TEXT NOT NULL, created_at TEXT NOT NULL,
           verdict TEXT NOT NULL DEFAULT '', note TEXT NOT NULL DEFAULT '', reviewed_at TEXT NOT NULL DEFAULT '');
+        CREATE TABLE IF NOT EXISTS document_versions (
+          document_id TEXT NOT NULL, version INTEGER NOT NULL,
+          snapshot TEXT NOT NULL, change_note TEXT NOT NULL, recorded_at TEXT NOT NULL,
+          PRIMARY KEY(document_id,version));
         ''')
+        # Existing data has no recoverable prior edits: record only the current version.
+        missing = db.execute('''SELECT d.id FROM documents d WHERE NOT EXISTS
+            (SELECT 1 FROM document_versions v WHERE v.document_id=d.id AND v.version=d.version)''').fetchall()
+        for row in missing:
+            record_document(db,row['id'],'迁移时记录当前版本；更早历史不可恢复')
+
+
+def record_document(db, document_id, note):
+    document=dict(db.execute('SELECT * FROM documents WHERE id=?',(document_id,)).fetchone())
+    db.execute('INSERT INTO document_versions VALUES(?,?,?,?,?)',
+               (document_id,document['version'],json.dumps(document,ensure_ascii=False),note,now()))
 
 
 def rowdict(row, json_fields=()):

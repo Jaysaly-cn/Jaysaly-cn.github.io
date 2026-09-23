@@ -1,0 +1,12 @@
+{
+  "date": "2026-09-23",
+  "base": "https://entry-drill-quarterly-selected.trycloudflare.com",
+  "method": "Actual browser workflow on synthetic refund policy",
+  "actions": ["Asked refund conditions and recorded feedback", "Edited kb-refund from 7 to 14 days while retaining other conditions", "Attempted to edit another document with unsaved changes; blocked", "Saved v2 with change note", "Opened v1 and v2 history at 390px viewport", "Rechecked original question"],
+  "before": {"version": 1, "refund_application_days": 7},
+  "after": {"version": 2, "refund_application_days": 14},
+  "old_and_new_evidence_visible_together": true,
+  "viewport": 390,
+  "document_scroll_width": 375,
+  "limitations": ["Synthetic policy only", "Not physical phone certification", "Saving UI lock added after interaction verification and syntax checked"]
+}

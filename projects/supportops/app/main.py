@@ -16,7 +16,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
 
 from . import model
-from .db import connect, initialize, now, rowdict
+from .db import connect, initialize, now, rowdict, record_document
 from .retrieval import search
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,6 +39,11 @@ class Ask(StrictModel):
     question: Question
     audience: Literal['public', 'internal'] = 'public'
     use_model: bool = False
+
+
+class ReviseDocument(Document):
+    version: int = Field(ge=1)
+    change_note: Annotated[str, StringConstraints(strip_whitespace=True,min_length=5,max_length=2000)]
 
 
 class Feedback(StrictModel):
@@ -154,7 +159,32 @@ def create_app(db_path=None, *, allow_model=True):
                 raise HTTPException(409, '此版本每个工作台最多 100 篇文档')
             db.execute('INSERT INTO documents VALUES (?,?,?,?,?,?,?)',
                        (identity, body.title, body.content, body.source, body.audience, 1, now()))
+            record_document(db,identity,'新资料导入')
         return {'id': identity}
+
+    @app.patch('/api/documents/{document_id}')
+    def revise_document(document_id: str, body: ReviseDocument):
+        with connect(path) as db:
+            db.execute('BEGIN IMMEDIATE')
+            original=db.execute('SELECT * FROM documents WHERE id=?',(document_id,)).fetchone()
+            if original is None:raise HTTPException(404,'文档不存在')
+            if original['version']!=body.version:raise HTTPException(409,'资料已更新，请重新载入当前版本再修订')
+            fields=('title','content','source','audience')
+            if all(original[key]==getattr(body,key) for key in fields):raise HTTPException(422,'资料内容未改变')
+            if db.execute('SELECT count(*) FROM document_versions WHERE document_id=?',(document_id,)).fetchone()[0]>=100:
+                raise HTTPException(409,'每份资料最多保留100个版本')
+            db.execute('UPDATE documents SET title=?,content=?,source=?,audience=?,version=version+1 WHERE id=?',
+                       (*[getattr(body,key) for key in fields],document_id))
+            record_document(db,document_id,body.change_note)
+            return dict(db.execute('SELECT * FROM documents WHERE id=?',(document_id,)).fetchone())
+
+    @app.get('/api/documents/{document_id}/history')
+    def document_history(document_id: str):
+        with connect(path) as db:
+            rows=[rowdict(row,('snapshot',)) for row in db.execute(
+                'SELECT * FROM document_versions WHERE document_id=? ORDER BY version',(document_id,))]
+            if not rows:raise HTTPException(404,'资料历史不存在')
+            return {'current':rowdict(db.execute('SELECT * FROM documents WHERE id=?',(document_id,)).fetchone()),'versions':rows}
 
     @app.delete('/api/documents/{document_id}')
     def delete_document(document_id: str):
@@ -172,9 +202,13 @@ def create_app(db_path=None, *, allow_model=True):
             missing = [d for d in source if not db.execute('SELECT 1 FROM documents WHERE id=?', (d['id'],)).fetchone()]
             if count + len(missing) > 100:
                 raise HTTPException(409, '导入将超过文档数量限制')
+            if any(db.execute('SELECT count(*) FROM document_versions WHERE document_id=?',(d['id'],)).fetchone()[0]>=100 for d in missing):
+                raise HTTPException(409,'示例资料已达到100个历史版本上限')
             for d in missing:
+                version=db.execute('SELECT coalesce(max(version),0)+1 FROM document_versions WHERE document_id=?',(d['id'],)).fetchone()[0]
                 db.execute('INSERT INTO documents VALUES (?,?,?,?,?,?,?)',
-                    (d['id'], d['title'], d['content'], '合成示例 / 星河协作 SaaS', d['audience'], 1, now()))
+                    (d['id'], d['title'], d['content'], '合成示例 / 星河协作 SaaS', d['audience'], version, now()))
+                record_document(db,d['id'],'载入合成示例；既有历史保留')
         return {'inserted': len(missing)}
 
     @app.post('/api/ask', status_code=201)
@@ -335,6 +369,7 @@ def create_app(db_path=None, *, allow_model=True):
             document={'id':document_id,'title':body.title,'content':body.content,'source':source,'audience':audience,'version':1,'created_at':stamp}
             snapshot={'ticket':dict(ticket),'run':run,'document':document,'review_note':body.review_note}
             db.execute('INSERT INTO documents VALUES(?,?,?,?,?,?,?)',tuple(document.values()))
+            record_document(db,document_id,'由已解决工单人工审核发布')
             db.execute('INSERT INTO knowledge_publications VALUES(?,?,?,?,?,?)',
                        (publication_id,ticket_id,body.version,document_id,json.dumps(snapshot,ensure_ascii=False),stamp))
             db.execute('INSERT INTO events(ticket_id,event,detail,created_at) VALUES(?,?,?,?)',
