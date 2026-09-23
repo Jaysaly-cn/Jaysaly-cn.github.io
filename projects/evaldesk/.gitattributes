@@ -1,0 +1,6 @@
+* text=auto
+artifacts/engine-spike/* -text whitespace=cr-at-eol
+artifacts/review-report-first.json -text
+artifacts/suite-editor-run/* -text whitespace=cr-at-eol
+artifacts/job-run-*/* -text whitespace=cr-at-eol
+artifacts/public-*-run/* -text whitespace=cr-at-eol

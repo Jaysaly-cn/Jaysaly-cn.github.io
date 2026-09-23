@@ -1,0 +1,20 @@
+{
+  "id": "53c001d5e8bf495d9040fe09a78bd933",
+  "engine": "promptfoo",
+  "engine_version": "0.123.1",
+  "suite_sha256": "bdbed090ebb8dabe2175cde78053d8222007865f39b184b2ae1bc51bc6d76bde",
+  "started_at": "2026-09-23T11:41:14.585331+00:00",
+  "status": "finished",
+  "semantic_review": "pending",
+  "scope": "synthetic development evaluation; assertions are not semantic accuracy",
+  "suite_version": {
+    "suite_id": "8f2ac63faf384d9bb89ae0d7fdcf93f0",
+    "version": 1,
+    "sha256": "bdbed090ebb8dabe2175cde78053d8222007865f39b184b2ae1bc51bc6d76bde"
+  },
+  "exit_code": 100,
+  "completed_at": "2026-09-23T11:41:18.383602+00:00",
+  "config.json_sha256": "b551e4476a347387bf5bfb1387c79735154a63c4974295a6d112d7a39982b662",
+  "results.json_sha256": "706bdf3f9804f96f7713e2a7f432c9b41966f9facf83a42f96d22e945161ebc0",
+  "engine.log_sha256": "7a1043393cb988cca524a5ad95b567700e7a7e86ddda4e8ad67c4d20e2a34fa9"
+}

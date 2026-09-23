@@ -1,0 +1,46 @@
+{
+  "date": "2026-09-23",
+  "scenario": "Simulated import interruption in a SQLite backup; original real model evidence reused unchanged. Not a naturally observed production failure.",
+  "recovered_job": {
+    "id": "86d18394a33c483f8e2e6d8968452ea6",
+    "request_key": "a921db0a-37c9-4a21-8c11-0664e9fc2cb9",
+    "suite_id": "17a19e9e6c824226a0962f453bc12197",
+    "suite_version": 2,
+    "suite_sha256": "90892873c274bf68b89fe5903b5a8634394b47bde20c05c08a77075e4afc71e8",
+    "state": "finished",
+    "worker_pid": 10412,
+    "worker_created": 1790162685.1626153,
+    "engine_pid": 7924,
+    "engine_created": 1790162685.303579,
+    "error": null,
+    "created_at": "2026-09-23T11:24:45.158365+00:00",
+    "completed_at": "2026-09-23T11:33:42.406014+00:00",
+    "run_id": "86d18394a33c483f8e2e6d8968452ea6",
+    "name": "工单路由 · 分类约束迭代",
+    "planned_calls": 10
+  },
+  "events": [
+    {
+      "id": "ffc2e90b98c440e2916deb787b8886d8",
+      "job_id": "86d18394a33c483f8e2e6d8968452ea6",
+      "action": "recover_import",
+      "detail": "{\"previous_state\": \"interrupted\", \"previous_error\": \"验收模拟：引擎完成后导入进程中断\", \"new_state\": \"finished\", \"run_id\": \"86d18394a33c483f8e2e6d8968452ea6\"}",
+      "created_at": "2026-09-23T11:33:42.406014+00:00"
+    }
+  ],
+  "restored_cells": 10,
+  "original_database_job_count": 2,
+  "original_job_events": 0,
+  "browser_checks": [
+    "Opened diagnostics showing both recorded processes no longer active",
+    "Clicked recover existing result; no retry button used",
+    "Observed finished state and audit history with original simulated error",
+    "Mobile viewport 390, document scrollWidth375"
+  ],
+  "test_scope": "31 tests pass; unit recovery test forbids engine.run, verifies idempotence and rejects live/unknown process or mismatched evidence",
+  "limitations": [
+    "Missing engine process identity remains blocked for manual investigation",
+    "No authenticated actor identity",
+    "Recovery simulated in isolated database at port8804; main port8803 unmodified by simulation"
+  ]
+}

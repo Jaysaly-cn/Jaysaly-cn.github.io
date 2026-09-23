@@ -1,0 +1,32 @@
+{
+  "date": "2026-09-23",
+  "url": "http://127.0.0.1:8803/",
+  "run_id": "bcda48fbd2aa4380bdf891746d6b87fb",
+  "source": "Actual in-app browser interaction against the local FastAPI/SQLite service; existing real model outputs, no additional generation in this turn.",
+  "checks": [
+    "Rendered both prompts at 2/4 deterministic assertion passes, zero call errors, all eight initially pending human review.",
+    "Edited two cards; saving candidate duplicate-charge left baseline's unsaved note intact.",
+    "Replaced native confirm after it stalled the original browser tab; verified the final inline guard rejects filter navigation while preserving text.",
+    "Saved baseline duplicate-charge as accepted and candidate duplicate-charge as rejected with reasons and self-declared developer name.",
+    "Froze a report with two reviewed cells and six pending cells.",
+    "Revised candidate duplicate-charge reason to version 2; expanded history showing versions 1 and 2.",
+    "Selected assertion-failure filter and observed three of four cases; call-error filter displayed an empty state.",
+    "At width 390, document scrollWidth was 375; submitted candidate embedded-instruction review as rejected on mobile.",
+    "Filled an unsaved draft, triggered guard, explicitly discarded it, and observed saved version 2 restored.",
+    "Refreshed the record and retained saved reviews; browser captured no console errors in the checked interval."
+  ],
+  "report": {
+    "id": "892bd9e00bf04eb8ac0ddc979d172308",
+    "http_download_sha256": "a84477b9aac36f5d9fc79d2cdc84add378306d0fac710b00f032175a60f50b98",
+    "frozen_candidate_duplicate_charge_version": 1,
+    "live_candidate_duplicate_charge_version": 2,
+    "pending_in_report": 6,
+    "download_verification": "Separate real HTTP request, saved exact JSON response. Browser download event was not used to claim disk verification."
+  },
+  "limitations": [
+    "Developer-authored review of synthetic development examples; not authenticated or independent blind review.",
+    "Only three of eight cells currently reviewed; five remain pending. Frozen report intentionally predates the third review.",
+    "Original tab stalled on native confirm; continued verification in a fresh tab after removing that dialog from the workflow.",
+    "No dataset editor, browser-started evaluation, account isolation or public demo yet."
+  ]
+}

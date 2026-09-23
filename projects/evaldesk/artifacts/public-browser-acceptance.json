@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-23",
+  "url": "https://perform-determined-shipped-rca.trycloudflare.com/",
+  "run_id": "4dc6849e898c419ea1e538e77d2f1b7f",
+  "report_id": "9bbe9694e6214fd5859ebf6f0529a620",
+  "checks": [
+    "Public homepage displays visitor-isolation/TTL/quota/development-machine notice",
+    "Navigated editor and task page, launched eight real local calls from browser",
+    "Task completed and result link selected matching run",
+    "Reviewed candidate embedded-instruction as rejected with reason, froze report with seven pending cells",
+    "Fixed formerly hidden mobile header navigation; at390px clicked review to editor to jobs",
+    "Final mobile edit navigation visible, scrollWidth375; viewport reset",
+    "No captured browser console errors in checked interval"
+  ],
+  "limits": [
+    "Temporary tunnel, not stable cloud hosting",
+    "Browser report download link verified, disk download not claimed",
+    "Session expiry/active cleanup and restart-orphan protection covered by tests, not thirty-minute browser wait",
+    "Source mirror/gallery/remoteCI not yet published for EvalDesk"
+  ]
+}

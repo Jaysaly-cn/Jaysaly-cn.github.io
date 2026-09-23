@@ -1,0 +1,43 @@
+{
+  "job": {
+    "id": "b15344234078466b8f287783e78c01f7",
+    "request_key": "726573746172742d636865636b2d3230",
+    "suite_id": "17a19e9e6c824226a0962f453bc12197",
+    "suite_version": 1,
+    "suite_sha256": "a77be3b2f2b762f8743f61c97b618866a16d4ab4c744603d5cbe53ce58d7ac44",
+    "state": "starting",
+    "worker_pid": 27992,
+    "worker_created": 1790162732.4040048,
+    "engine_pid": null,
+    "engine_created": null,
+    "error": null,
+    "created_at": "2026-09-23T11:25:32.394484+00:00",
+    "completed_at": null,
+    "run_id": null,
+    "name": "工单路由 · 分类约束迭代",
+    "planned_calls": 8
+  },
+  "worker_verified_alive_before_restart": true,
+  "server_pid": 24088,
+  "after_restart": {
+    "id": "b15344234078466b8f287783e78c01f7",
+    "request_key": "726573746172742d636865636b2d3230",
+    "suite_id": "17a19e9e6c824226a0962f453bc12197",
+    "suite_version": 1,
+    "suite_sha256": "a77be3b2f2b762f8743f61c97b618866a16d4ab4c744603d5cbe53ce58d7ac44",
+    "state": "finished",
+    "worker_pid": 27992,
+    "worker_created": 1790162732.4040048,
+    "engine_pid": 32380,
+    "engine_created": 1790162732.5303235,
+    "error": null,
+    "created_at": "2026-09-23T11:25:32.394484+00:00",
+    "completed_at": "2026-09-23T11:25:36.282975+00:00",
+    "run_id": "b15344234078466b8f287783e78c01f7",
+    "name": "工单路由 · 分类约束迭代",
+    "planned_calls": 8
+  },
+  "same_key_returned_same_job": true,
+  "total_jobs": 2,
+  "server_pid_after": 32724
+}

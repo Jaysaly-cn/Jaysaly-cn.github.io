@@ -1,0 +1,13 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EvalDesk · 测试集工作室</title><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/suites.css"><script src="/suites.js" defer></script></head><body>
+<aside class="rail"><a class="brand" href="/">E<span>EvalDesk</span></a><p class="rail-label">PREPARE / COMPARE / REVIEW</p><h1>测试集工作室</h1><p>让每一轮比较有据可查。</p><div class="rail-bottom"><a href="/">返回评测观察室 →</a><p>本地开发版 · 免费模型<br>保存测试集不会自动调用模型。</p></div></aside>
+<main><header><div><span class="eyebrow">DATASET / VERSION HISTORY</span><h2>先固定问题，再比较答案</h2><p>编写提示词与业务判据，每次保存留下一个新版本。</p></div><a href="/jobs.html" class="pill">运行评测 →</a></header>
+<div id="message" role="status" aria-live="polite"></div><button id="discard-draft" hidden class="secondary">丢弃未保存的修改</button>
+<section class="toolbar"><label>已保存的测试集<select id="suite-picker"><option value="">新建测试集</option></select></label><button id="reload-suite" class="secondary">重新载入</button><button id="new-suite" class="secondary">从示例新建</button></section>
+<section class="source-bar"><label>从历史评测复制<select id="run-source"><option value="">请选择运行记录</option></select></label><button id="copy-run" class="secondary">复制为新测试集</button></section>
+<p id="version-info" class="provenance">尚未保存</p>
+<form id="suite-form"><label>测试集名称<input id="suite-name" required maxlength="120"></label>
+<div class="section-heading"><h3>对比提示词</h3><button type="button" id="add-prompt" class="secondary">添加提示词</button></div><p class="hint">保留 2–3 套提示词。相同样例将分别交给每套提示词。</p><div id="prompt-editor"></div>
+<div class="section-heading"><h3>测试样例</h3><button type="button" id="add-case" class="secondary">添加样例</button></div><p class="hint">最多 20 个样例。业务判据留给人工复核；自动检查只验证指定的文本或格式规则。</p><div id="case-editor"></div>
+<section class="save-panel"><label>本次变更说明<textarea id="change-note" required minlength="5" maxlength="2000" placeholder="说明新增了什么、为何调整提示词或判据"></textarea></label><div><button type="submit">保存新版本</button><span id="save-help">首次保存会创建独立测试集</span></div></section></form>
+<section class="history-panel"><h3>版本历史</h3><p class="hint">下载某个版本可用于命令行评测。历史评测始终使用其原始快照，不受这里的编辑影响。</p><div id="suite-history"></div><div id="version-preview"></div></section>
+<footer>本机数据保存在 SQLite。在评测任务页选择已保存版本即可执行，完成后自动导入复核页面。</footer></main></body></html>

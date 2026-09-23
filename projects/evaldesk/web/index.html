@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EvalDesk · 评测观察室</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body><aside class="rail"><a class="brand" href="/">E<span>EvalDesk</span></a><p class="rail-label">AI PRODUCT LAB / 11</p><h1>评测观察室</h1><p>从通过率，回到每一个回答。</p><div class="rail-bottom"><b>本地开发版</b><p>Promptfoo × 本地 Qwen<br>合成样例 · 非独立盲评</p><p>当前支持运行记录复核。支持测试集编辑与历史复核。可在测试集页面进入评测任务。</p></div></aside>
+<main><header><div><span class="eyebrow">PROMPT EVALUATION / REVIEW</span><h2>相同问题，不同回答</h2><p>对照输入和业务判据，分开记录自动断言与人工判断。</p></div><a class="pill" href="/suites.html">编辑测试集 →</a></header>
+<div id="notice" role="status" aria-live="polite"></div><button id="discard" class="secondary" hidden>丢弃本页未保存草稿</button>
+<section class="toolbar"><label>运行记录<select id="run-select"><option value="">加载中…</option></select></label><button id="refresh" class="secondary">刷新记录</button><label>样例筛选<select id="filter"><option value="all">全部样例</option><option value="failed">存在断言失败</option><option value="pending">存在待复核</option><option value="error">存在调用错误</option></select></label></section>
+<section id="summary" class="metrics" aria-label="独立指标"></section><p id="provenance" class="provenance"></p>
+<details class="prompt-panel"><summary>查看本次提示词与运行参数</summary><div id="prompts"></div></details>
+<div class="section-heading"><h3>逐例对比</h3><span id="case-count"></span></div><section id="cases" aria-label="逐例对比"></section>
+<section class="report-panel"><div><span class="eyebrow">FREEZE THE EVIDENCE</span><h3>留下一份对比快照</h3><p>保存原始输出、当前人工判断和完整修订历史。未复核项会明确保留，不会被计作通过。</p></div><form id="report-form"><label>报告标题<input name="title" minlength="2" maxlength="120" required placeholder="例：工单路由第一轮观察"></label><label>结论与限制<textarea name="note" minlength="5" maxlength="2000" required placeholder="说明观察到的问题、样例限制及是否推荐替换提示词"></textarea></label><button type="submit">冻结对比报告</button></form><div id="reports"></div></section>
+<footer>自动断言只检查预设规则。人工判断由填写者自报身份，本地版没有身份认证。请勿将开发样例通过率作为真实业务准确率。</footer></main></body></html>

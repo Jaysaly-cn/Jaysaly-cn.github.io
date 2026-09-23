@@ -1,0 +1,55 @@
+{
+  "date": "2026-09-23",
+  "jobs": [
+    {
+      "id": "b15344234078466b8f287783e78c01f7",
+      "request_key": "726573746172742d636865636b2d3230",
+      "suite_id": "17a19e9e6c824226a0962f453bc12197",
+      "suite_version": 1,
+      "suite_sha256": "a77be3b2f2b762f8743f61c97b618866a16d4ab4c744603d5cbe53ce58d7ac44",
+      "state": "finished",
+      "worker_pid": 27992,
+      "worker_created": 1790162732.4040048,
+      "engine_pid": 32380,
+      "engine_created": 1790162732.5303235,
+      "error": null,
+      "created_at": "2026-09-23T11:25:32.394484+00:00",
+      "completed_at": "2026-09-23T11:25:36.282975+00:00",
+      "run_id": "b15344234078466b8f287783e78c01f7",
+      "name": "工单路由 · 分类约束迭代",
+      "planned_calls": 8
+    },
+    {
+      "id": "86d18394a33c483f8e2e6d8968452ea6",
+      "request_key": "a921db0a-37c9-4a21-8c11-0664e9fc2cb9",
+      "suite_id": "17a19e9e6c824226a0962f453bc12197",
+      "suite_version": 2,
+      "suite_sha256": "90892873c274bf68b89fe5903b5a8634394b47bde20c05c08a77075e4afc71e8",
+      "state": "finished",
+      "worker_pid": 10412,
+      "worker_created": 1790162685.1626153,
+      "engine_pid": 7924,
+      "engine_created": 1790162685.303579,
+      "error": null,
+      "created_at": "2026-09-23T11:24:45.158365+00:00",
+      "completed_at": "2026-09-23T11:24:49.974328+00:00",
+      "run_id": "86d18394a33c483f8e2e6d8968452ea6",
+      "name": "工单路由 · 分类约束迭代",
+      "planned_calls": 10
+    }
+  ],
+  "browser_checks": [
+    "Started v2 evaluation from jobs.html",
+    "Observed starting then finished and followed result link to matching run",
+    "Result automatically imported with 3/5 baseline and 2/5 candidate, all ten human reviews pending",
+    "390px viewport, document scrollWidth 375",
+    "No captured console errors in inspected interval"
+  ],
+  "restart_probe": "job-restart-probe.json",
+  "limitations": [
+    "No cancel or distributed scheduling",
+    "Unknown process identity blocks new jobs, requires operator investigation",
+    "Failure and explicit retry persistence covered by tests, not a browser-induced model failure",
+    "Retry-button request-key retention was adjusted after workflow verification and syntax checked"
+  ]
+}

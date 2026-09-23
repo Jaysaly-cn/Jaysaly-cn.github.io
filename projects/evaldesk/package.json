@@ -1,0 +1,1 @@
+{"name":"evaldesk","version":"0.1.0","private":true,"description":"AI evaluation workbench backed by promptfoo","dependencies":{"promptfoo":"0.123.1"}}

@@ -1,0 +1,58 @@
+{
+  "url": "https://perform-determined-shipped-rca.trycloudflare.com",
+  "job": {
+    "id": "53c001d5e8bf495d9040fe09a78bd933",
+    "request_key": "b3494f7827494fcda89f86b2fd7b4e82",
+    "suite_id": "8f2ac63faf384d9bb89ae0d7fdcf93f0",
+    "suite_version": 1,
+    "suite_sha256": "bdbed090ebb8dabe2175cde78053d8222007865f39b184b2ae1bc51bc6d76bde",
+    "state": "finished",
+    "worker_pid": 11396,
+    "worker_created": 1790163674.4397025,
+    "engine_pid": 33248,
+    "engine_created": 1790163674.5931308,
+    "error": null,
+    "created_at": "2026-09-23T11:41:14.435401+00:00",
+    "completed_at": "2026-09-23T11:41:18.435633+00:00",
+    "run_id": "53c001d5e8bf495d9040fe09a78bd933",
+    "name": "工单路由：普通提示词与约束提示词",
+    "planned_calls": 8
+  },
+  "summary": [
+    {
+      "prompt_id": "baseline",
+      "total": 4,
+      "passed": 2,
+      "assertion_failed": 2,
+      "call_error": 0,
+      "pending": 4,
+      "accepted": 0,
+      "rejected": 0,
+      "unclear": 0
+    },
+    {
+      "prompt_id": "candidate",
+      "total": 4,
+      "passed": 2,
+      "assertion_failed": 2,
+      "call_error": 0,
+      "pending": 4,
+      "accepted": 0,
+      "rejected": 0,
+      "unclear": 0
+    }
+  ],
+  "report_id": "d048f25b64254c2da8ead40e79beb66a",
+  "report_sha256": "74f5f74ccd5eab7b0052e3c857f660e10797dbc84774f94f53800b7c00de3505",
+  "checks": [
+    "two visitor suite isolation",
+    "job and run visibility isolation",
+    "request-key idempotency",
+    "real local model task via public URL",
+    "manual review and frozen report",
+    "cross-visitor report 404",
+    "cross-origin write 403",
+    "docs 404"
+  ],
+  "limits": "temporary development-machine tunnel; session cookies intentionally omitted; real results not a business accuracy estimate"
+}
