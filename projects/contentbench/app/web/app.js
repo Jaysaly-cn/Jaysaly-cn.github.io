@@ -36,6 +36,33 @@ async function load(id) {
   $('#events').replaceChildren(...current.events.map(e => el('div', `${new Date(e.created_at).toLocaleString()} · ${e.action} · ${e.detail}`, 'event')));
   await list();
 }
+function comparison(d) {
+  const box=el('details',undefined,'comparison'); box.append(el('summary','对比修订内容'));
+  const controls=el('div',undefined,'grid'), selects=[];
+  for (const [i,title] of ['修改前','修改后'].entries()) {
+    const label=el('label',title), select=el('select');
+    [...d.revisions].reverse().forEach(r=>{const option=el('option',`v${r.number} · ${r.title}`);option.value=r.id;select.append(option);});
+    select.value=d.revisions[i===0?1:0].id; label.append(select);controls.append(label);selects.push(select);
+  }
+  const button=el('button','显示差异','secondary'), result=el('div');result.setAttribute('aria-live','polite');
+  action(button,async()=>{
+    const data=await api(`/drafts/${d.id}/compare?before=${encodeURIComponent(selects[0].value)}&after=${encodeURIComponent(selects[1].value)}`);
+    result.replaceChildren(el('h3',`v${data.before.number} → v${data.after.number}`),el('p',data.notice,'muted'));
+    for(const [field,title] of [['title','标题'],['body','正文']]) {
+      result.append(el('h3',title));
+      for(const part of data.changes[field]) {
+        if(part.operation==='equal') result.append(el('pre','未变 · '+part.after,'diff-equal'));
+        else {if(part.before)result.append(el('pre','删除 − '+part.before,'diff-removed'));if(part.after)result.append(el('pre','新增 + '+part.after,'diff-added'));}
+      }
+    }
+    result.append(el('p',`关联事实新增：${data.facts_added.join('、')||'无'}；移除：${data.facts_removed.join('、')||'无'}`));
+    for(const [title,revision] of [['修改前',data.before],['修改后',data.after]]) {
+      result.append(el('h3',`${title}规则与审核`),el('p',revision.checks.blockers.map(i=>i.detail).join('；')||'规则检查通过'),el('p',`状态：${{draft:'待审核',approved:'已批准',rejected:'已退回'}[revision.state]}；审核说明：${revision.review_note||'尚未审核'}`));
+    }
+  });
+  selects.forEach(s=>s.addEventListener('change',()=>result.replaceChildren()));
+  box.append(controls,button,result);return box;
+}
 function renderDraft(d) {
   const r = d.revisions[0], card = el('article', undefined, 'draft'), head = el('div', undefined, 'section-head');
   head.append(el('h2', r.title), el('span', `${d.channel} · v${r.number} · ${{draft:'待审核',approved:'已批准',rejected:'已退回'}[r.state]}`, 'tag')); card.append(head, el('p', `${r.origin === 'model' ? '模型起草 · ' + r.model : '人工录入/修订'} · 关联 ${r.fact_ids.join('、') || '无事实'}`, 'muted'), el('div', r.body, 'body'));
@@ -53,6 +80,7 @@ function renderDraft(d) {
     review.append(label,confirm,buttons); card.append(review);
   } else card.append(el('p','审核说明：' + r.review_note,'muted'));
   if (d.revisions.length > 1) {const history = el('details'); history.append(el('summary','查看历史版本 · ' + (d.revisions.length-1))); d.revisions.slice(1).forEach(old => {history.append(el('h3',`v${old.number} · ${old.title} · ${old.state}`),el('pre',old.body),el('p','审核说明：' + (old.review_note || '未审核')));}); card.append(history);}
+  if(d.revisions.length>1)card.append(comparison(d));
   $('#drafts').append(card);
 }
 $('#new').onclick = () => {$('#create').hidden = false; $('#welcome').hidden = true; $('#workspace').hidden = true;};

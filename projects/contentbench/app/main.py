@@ -1,4 +1,5 @@
 import asyncio
+from difflib import SequenceMatcher
 import json
 import os
 from contextlib import asynccontextmanager
@@ -222,6 +223,23 @@ def create_app(path=None):
                        (request.state, request.note, rid))
             event(db, draft['campaign_id'], request.state, rid + ': ' + request.note)
             return get(db, 'revisions', rid)
+
+    @app.get('/api/drafts/{did}/compare')
+    def compare(did: str, before: str, after: str):
+        with connect(path) as db:
+            get(db, 'drafts', did)
+            old, new = get(db, 'revisions', before), get(db, 'revisions', after)
+            if old['draft_id'] != did or new['draft_id'] != did:
+                raise HTTPException(404, '版本不属于当前稿件')
+            changes = {}
+            for field in ('title', 'body'):
+                a, b = old[field].splitlines(keepends=True), new[field].splitlines(keepends=True)
+                changes[field] = [{'operation': tag, 'before': ''.join(a[i:j]), 'after': ''.join(b[k:l])}
+                                  for tag, i, j, k, l in SequenceMatcher(None, a, b).get_opcodes()]
+            return {'before': old, 'after': new, 'changes': changes,
+                    'facts_added': sorted(set(new['fact_ids']) - set(old['fact_ids'])),
+                    'facts_removed': sorted(set(old['fact_ids']) - set(new['fact_ids'])),
+                    'notice': '逐行文本差异，不判断语义正确性。对比不会修改审核状态或旧导出。'}
 
     @app.post('/api/campaigns/{cid}/exports', status_code=201)
     def export(cid: str):

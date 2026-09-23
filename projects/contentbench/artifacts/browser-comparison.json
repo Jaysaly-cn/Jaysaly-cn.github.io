@@ -1,0 +1,7 @@
+{
+  "date": "2026-09-23",
+  "dataset": "Existing synthetic campaign; real Qwen 0.5B draft and human revision",
+  "verified": ["v1 to v2 selected in browser", "Title and body additions/removals displayed", "Missing required phrase visible in v1 blockers", "v2 approved state and human note visible", "Fact IDs unchanged", "390px viewport scrollWidth 375", "No browser console errors"],
+  "automated_tests": 20,
+  "limitations": ["Line-level comparison, not semantic checking", "Model generation unchanged; no new accuracy claim", "Single-team local workspace, no public dynamic ContentBench demo"]
+}
