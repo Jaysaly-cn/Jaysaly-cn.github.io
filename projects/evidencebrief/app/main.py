@@ -157,7 +157,8 @@ def create_app(db_path=None):
     def health():
         with connect(path) as db:
             db.execute('SELECT 1')
-        return {'status': 'ok', 'version': '0.1.0', 'model_configured': model.configured()}
+        return {'status': 'ok', 'version': '0.1.0', 'model_configured': model.configured(),
+                'model_input_character_limit': model.input_limit()}
 
     @app.get('/api/projects')
     def projects():
@@ -253,8 +254,11 @@ def create_app(db_path=None):
             with connect(path) as db:
                 db.execute('BEGIN IMMEDIATE')
                 results = [add_claim(db, pid, body, 'model') for body in bodies]
-                event(db, pid, 'model_suggested', f'{len(results)} 条候选；仅处理来源前 20000 字符；均需人工审核')
-            return {'claims': results, 'model': os.environ['EB_MODEL'], 'scope': 'first 20000 characters'}
+                processed = min(len(source['content']), model.input_limit())
+                event(db, pid, 'model_suggested', f'{len(results)} 条候选；处理来源前 {processed} 字符；均需人工审核')
+            return {'claims': results, 'model': os.environ['EB_MODEL'], 'scope': f'first {processed} characters',
+                    'processed_characters': processed, 'total_characters': len(source['content']),
+                    'truncated': processed < len(source['content'])}
         except Exception as exc:
             with connect(path) as db:
                 event(db, pid, 'model_failed', type(exc).__name__)

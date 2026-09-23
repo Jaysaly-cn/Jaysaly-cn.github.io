@@ -220,3 +220,18 @@ def test_model_provider_contract(monkeypatch):
         return httpx.Response(200, json={'choices':[{'message':{'content':'{"claims": []}'}}]})
     monkeypatch.setattr(model.httpx, 'AsyncClient', lambda **kw: original(transport=httpx.MockTransport(handler), **kw))
     assert asyncio.run(model.suggest({'entity':'A','content':'x'*30000}, ['价格'])) == []
+
+
+def test_local_model_excerpt_is_bounded(monkeypatch):
+    import asyncio
+    import httpx
+    monkeypatch.setenv('EB_MODEL_BASE_URL', 'http://127.0.0.1:8771/v1')
+    monkeypatch.setenv('EB_MODEL', 'local')
+    original = httpx.AsyncClient
+    def handler(request):
+        text = json.loads(json.loads(request.content)['messages'][1]['content'])['text']
+        assert len(text) == 4000
+        assert '正文尾部' not in text
+        return httpx.Response(200, json={'choices':[{'message':{'content':'{"claims": []}'}}]})
+    monkeypatch.setattr(model.httpx, 'AsyncClient', lambda **kw: original(transport=httpx.MockTransport(handler), **kw))
+    assert asyncio.run(model.suggest({'entity':'A','content':'正'*5000+'正文尾部'}, ['价格'])) == []

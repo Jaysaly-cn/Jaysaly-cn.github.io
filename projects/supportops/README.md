@@ -31,7 +31,7 @@ macOS / Linux 将 `.\.venv\Scripts\python.exe` 替换为 `.venv/bin/python`。
 
 ## 免费模型（可选）
 
-2026-09-23 调研：OpenRouter 免费模型仍要求账号 API Key，且有配额/可用性限制；本次未配置密钥，**未执行真实模型效果评测**。本机也未检测到可用 Ollama 服务。用户要求免费不可用时暂缓，不开通付费服务。
+2026-09-23 已真实测试免费本机 Qwen2.5 0.5B / 1.5B（llama.cpp CPU）。小模型存在协议失败、无依据赔偿和虚假操作完成声明，因此 **默认客服服务仍使用证据检索，未将小模型判定为可用的自动答复方案**。原始输出、淘汰理由见 [模型评测](docs/MODEL_EVALUATION.md)。没有使用付费 API。
 
 有免费账号时可在启动服务前设置：
 
@@ -41,7 +41,7 @@ $env:LLM_MODEL='填写当前可用的 :free 型号'
 $env:LLM_API_KEY='在本机填写，不提交仓库'
 ```
 
-有本地 Ollama 模型时可用 `http://127.0.0.1:11434/v1`，`LLM_API_KEY` 填占位值 `ollama`，模型名填写已安装模型。是否支持 JSON 模式需实际验证。不自动下载大型模型。
+本地模型只需设置 URL 和模型名，不要求 Key。实际评测使用 `http://127.0.0.1:8771/v1` + `portfolio-qwen-1.5b`，运行 `python -m evals.live_model`。模型部署及哈希见 [本机模型](docs/LOCAL_MODEL.md)。远程只允许确切的 OpenRouter 端点、`:free` 型号和 Key；其他远程型号在发请求前拒绝。
 
 - 免费模型说明：https://openrouter.ai/blog/tutorials/how-to-get-the-lowest-cost-llm-inference-on-openrouter/
 - Windows 本地模型：https://ollama.com/blog/windows-preview
@@ -55,7 +55,7 @@ python -m evals.run
 
 若 Windows 默认临时目录不可访问，为 pytest 指定一个**新建且位于工作目录内**的 `--basetemp` 目录。
 
-`artifacts/evaluation.json` 是本机实际运行的 20 条合成开发集检索报告。接口测试中的模型响应由 mock 提供，只验证集成与失败分支，不能当作真实 LLM 测试。
+`artifacts/evaluation.json` 是 20 条合成检索开发集报告。16 项接口/协议测试中的模型响应使用 mock；`artifacts/live-model*.json` 则来自真实本机模型，记录六个开发问题及失败输出。两类结果分开，不把协议通过率当模型准确率。
 
 ## 部署
 

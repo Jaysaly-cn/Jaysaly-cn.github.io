@@ -1,0 +1,25 @@
+{
+  "method": "Browser UI, synthetic material, real local Qwen2.5-1.5B call, review actions executed by development assistant",
+  "source_characters": 28,
+  "processed_characters": 28,
+  "claims": [
+    {
+      "dimension": "渠道",
+      "statement": "支持邮件工单",
+      "quote": "合成客服系统支持邮件工单。",
+      "origin": "model",
+      "state": "approved",
+      "review_note": "合成资料验收：原文明确支持邮件工单，不代表实测商业产品"
+    },
+    {
+      "dimension": "导出",
+      "statement": "导出 CSV 报表",
+      "quote": "管理员可以导出 CSV 报表。",
+      "origin": "model",
+      "state": "approved",
+      "review_note": "合成资料验收：原文明确管理员可导出 CSV，候选仅作为功能声明"
+    }
+  ],
+  "report_count": 1,
+  "notice": "No actual customer/product claims; user review remains required for real research."
+}

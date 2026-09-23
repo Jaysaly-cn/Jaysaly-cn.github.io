@@ -17,7 +17,7 @@ async function api(path, options={}) {
 }
 async function safely(task) { try{notice('');await task();}catch(error){notice(error.message);} }
 function button(text, action, className='secondary') { const b=node('button',text,className);b.type='button';b.addEventListener('click',()=>safely(action));return b; }
-async function refreshHealth(){const h=await api('/health');$('model-status').textContent=h.model_configured?'模型已配置：'+h.model+' · 待实际调用验证':'当前为离线证据检索 · 未配置大模型';$('use-model').disabled=!h.model_configured;}
+async function refreshHealth(){const h=await api('/health');$('model-status').textContent=h.model_configured?'模型已配置：'+h.model+' · 输出需人工核对':'当前为离线证据检索 · 未配置大模型';$('use-model').disabled=!h.model_configured;}
 async function showView(view){document.querySelectorAll('.view').forEach(e=>e.hidden=e.id!==view);document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));$('page-title').textContent={desk:'客服工作台',knowledge:'知识资料',tickets:'人工工单',quality:'质量与反馈'}[view];if(view==='knowledge')await loadDocuments();if(view==='tickets')await loadTickets();if(view==='quality')await loadQuality();}
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>safely(()=>showView(b.dataset.view))));
 document.querySelectorAll('[data-question]').forEach(b=>b.addEventListener('click',()=>{$('question').value=b.dataset.question;$('question').focus();}));

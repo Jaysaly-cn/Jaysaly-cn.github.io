@@ -116,13 +116,13 @@ def test_model_success_and_failure_are_not_disguised(client, monkeypatch):
     {'answer': '错配引用 [2]', 'citation_ids': [1], 'insufficient': False},
 ])
 def test_provider_http_contract(monkeypatch, payload):
-    monkeypatch.setenv('LLM_BASE_URL', 'https://model.example/v1')
+    monkeypatch.setenv('LLM_BASE_URL', 'http://127.0.0.1:8770/v1')
     monkeypatch.setenv('LLM_API_KEY', 'fake')
     monkeypatch.setenv('LLM_MODEL', 'test')
     original = httpx.AsyncClient
 
     def handler(request):
-        assert str(request.url) == 'https://model.example/v1/chat/completions'
+        assert str(request.url) == 'http://127.0.0.1:8770/v1/chat/completions'
         data = json.loads(request.content)
         assert data['model'] == 'test' and len(data['messages']) == 2
         return httpx.Response(200, json={'choices': [{'message': {'content': json.dumps(payload)}}]})
@@ -143,3 +143,23 @@ def test_request_limit_and_literal_document_content(client):
     run = client.post('/api/ask', json={'question': '月球会议何时举行？'}).json()
     assert run['citations'][0]['content'] == content
     assert run['mode'] == 'extractive'
+
+
+@pytest.mark.parametrize('base,name', [
+    ('https://openrouter.ai/api/v1', 'paid-model'),
+    ('https://unapproved.example/v1', 'anything:free'),
+    ('http://user:password@localhost/v1', 'local'),
+])
+def test_only_free_or_local_provider(monkeypatch, base, name):
+    monkeypatch.setenv('LLM_BASE_URL', base)
+    monkeypatch.setenv('LLM_MODEL', name)
+    monkeypatch.setenv('LLM_API_KEY', 'test')
+    with pytest.raises(ValueError):
+        asyncio.run(model.generate('退款规则', [{'title': '合成政策', 'content': '原文'}]))
+
+
+def test_local_model_does_not_need_key(monkeypatch):
+    monkeypatch.setenv('LLM_BASE_URL', 'http://127.0.0.1:8770/v1')
+    monkeypatch.setenv('LLM_MODEL', 'local')
+    monkeypatch.delenv('LLM_API_KEY', raising=False)
+    assert model.configured()
