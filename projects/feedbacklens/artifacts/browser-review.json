@@ -1,0 +1,74 @@
+{
+  "scope": "Synthetic browser acceptance by AI coding assistant",
+  "report": {
+    "id": "08a1f0249ec94f20b4e9640bc6dd92e9",
+    "title": "模型主题修正验收",
+    "review_note": "合成反馈，保留反对意见；仅已确认归类参与计数。",
+    "created_at": "2026-09-23T08:55:40.999505+00:00",
+    "counting_rule": "Each source_id counted once per theme and once overall. Counts are feedback records, not people. No automatic deduplication.",
+    "total_feedback": 4,
+    "confirmed_feedback": 2,
+    "themes": [
+      {
+        "theme": "反对新增离线导出",
+        "feedback_count": 1,
+        "source_ids": [
+          "s3"
+        ]
+      },
+      {
+        "theme": "导出可发现性",
+        "feedback_count": 1,
+        "source_ids": [
+          "s4"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "48d6626d7ff94df8b079ce54221f66d5",
+        "source_id": "s3",
+        "theme": "反对新增离线导出",
+        "kind": "other",
+        "quote": "不希望增加离线导出功能",
+        "state": "confirmed",
+        "version": 3,
+        "channel": "app",
+        "text": "不希望增加离线导出功能。"
+      },
+      {
+        "id": "e71bd18d8ae042ec86759e287704210f",
+        "source_id": "s4",
+        "theme": "导出可发现性",
+        "kind": "problem",
+        "quote": "导出按钮找不到",
+        "state": "confirmed",
+        "version": 2,
+        "channel": "web",
+        "text": "导出按钮找不到，另外页面加载很慢。"
+      }
+    ],
+    "imports": [
+      {
+        "id": "e56369fa1a9949c988505884d35ffd56",
+        "sha256": "0a8279deeab7ec0c642f76a2c4c2f6b7867071509c02b197a203f129b321d267"
+      }
+    ]
+  },
+  "revision_history": [
+    {
+      "id": "726c1cc04c42418786ae17a80c17115a",
+      "annotation_id": "48d6626d7ff94df8b079ce54221f66d5",
+      "snapshot": "{\"action\": \"revised\", \"previous\": {\"id\": \"48d6626d7ff94df8b079ce54221f66d5\", \"source_id\": \"s3\", \"theme\": \"简短主题\", \"kind\": \"other\", \"quote\": \"不希望增加离线导出功能\", \"state\": \"draft\", \"version\": 1}, \"current\": {\"id\": \"48d6626d7ff94df8b079ce54221f66d5\", \"source_id\": \"s3\", \"theme\": \"反对新增离线导出\", \"kind\": \"other\", \"quote\": \"不希望增加离线导出功能\", \"state\": \"draft\", \"version\": 2}}",
+      "note": "保留否定意见并修正占位主题",
+      "created_at": "2026-09-23T08:55:30.282811+00:00"
+    },
+    {
+      "id": "280694bb735e4d8f9392037d29cd8a3a",
+      "annotation_id": "48d6626d7ff94df8b079ce54221f66d5",
+      "snapshot": "{\"id\": \"48d6626d7ff94df8b079ce54221f66d5\", \"source_id\": \"s3\", \"theme\": \"反对新增离线导出\", \"kind\": \"other\", \"quote\": \"不希望增加离线导出功能\", \"state\": \"confirmed\", \"version\": 3}",
+      "note": "核对原文，明确表达反对意见",
+      "created_at": "2026-09-23T08:55:35.477873+00:00"
+    }
+  ]
+}

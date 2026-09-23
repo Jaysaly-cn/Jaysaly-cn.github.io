@@ -1,0 +1,186 @@
+{
+  "date": "2026-09-23",
+  "environment": "local single-user",
+  "data": "synthetic",
+  "reviewer": "AI agent operating browser, not independent human validation",
+  "browser_verified": [
+    "mark s2 as duplicate of s1",
+    "frozen report raw 4 deduplicated 3",
+    "revoke marker and inspect both history entries",
+    "new report raw 4 deduplicated 4",
+    "reopen old report and retain deduplicated 3"
+  ],
+  "reports": [
+    {
+      "id": "5ac90bdc94c14008b68270dd6aec1b48",
+      "title": "撤销重复标记后验收",
+      "review_note": "合成验收：撤销后独立保留4条原文。",
+      "created_at": "2026-09-23T09:05:21.365628+00:00",
+      "counting_rule": "Raw counts use unique source_id. Deduplicated counts use explicitly reviewed representative IDs, per theme and overall. All evidence remains. Neither count measures people or priority. A representative may have no annotation of its own; themes are not transferred to it.",
+      "total_feedback": 4,
+      "confirmed_feedback": 2,
+      "deduplicated_total_feedback": 4,
+      "deduplicated_confirmed_feedback": 2,
+      "duplicate_decisions": [
+        {
+          "source_id": "s2",
+          "target_id": null,
+          "version": 2,
+          "note": "撤销合成测试标记：同文不足以证明重复收录",
+          "created_at": "2026-09-23T09:05:13.175521+00:00"
+        }
+      ],
+      "themes": [
+        {
+          "theme": "反对新增离线导出",
+          "feedback_count": 1,
+          "source_ids": [
+            "s3"
+          ],
+          "deduplicated_feedback_count": 1,
+          "representative_ids": [
+            "s3"
+          ]
+        },
+        {
+          "theme": "导出可发现性",
+          "feedback_count": 1,
+          "source_ids": [
+            "s4"
+          ],
+          "deduplicated_feedback_count": 1,
+          "representative_ids": [
+            "s4"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "48d6626d7ff94df8b079ce54221f66d5",
+          "source_id": "s3",
+          "theme": "反对新增离线导出",
+          "kind": "other",
+          "quote": "不希望增加离线导出功能",
+          "state": "confirmed",
+          "version": 3,
+          "channel": "app",
+          "text": "不希望增加离线导出功能。"
+        },
+        {
+          "id": "e71bd18d8ae042ec86759e287704210f",
+          "source_id": "s4",
+          "theme": "导出可发现性",
+          "kind": "problem",
+          "quote": "导出按钮找不到",
+          "state": "confirmed",
+          "version": 2,
+          "channel": "web",
+          "text": "导出按钮找不到，另外页面加载很慢。"
+        }
+      ],
+      "imports": [
+        {
+          "id": "e56369fa1a9949c988505884d35ffd56",
+          "sha256": "0a8279deeab7ec0c642f76a2c4c2f6b7867071509c02b197a203f129b321d267"
+        }
+      ]
+    },
+    {
+      "id": "66ea9af90ad849f78d0bc38c145d30e8",
+      "title": "人工重复标记快照验收",
+      "review_note": "合成验收：暂标记s2为s1重复，不代表真实用户重复。",
+      "created_at": "2026-09-23T09:05:00.606630+00:00",
+      "counting_rule": "Raw counts use unique source_id. Deduplicated counts use explicitly reviewed representative IDs, per theme and overall. All evidence remains. Neither count measures people or priority. A representative may have no annotation of its own; themes are not transferred to it.",
+      "total_feedback": 4,
+      "confirmed_feedback": 2,
+      "deduplicated_total_feedback": 3,
+      "deduplicated_confirmed_feedback": 2,
+      "duplicate_decisions": [
+        {
+          "source_id": "s2",
+          "target_id": "s1",
+          "version": 1,
+          "note": "合成验收：暂假定为重复收录，随后撤销验证",
+          "created_at": "2026-09-23T09:04:53.281884+00:00"
+        }
+      ],
+      "themes": [
+        {
+          "theme": "反对新增离线导出",
+          "feedback_count": 1,
+          "source_ids": [
+            "s3"
+          ],
+          "deduplicated_feedback_count": 1,
+          "representative_ids": [
+            "s3"
+          ]
+        },
+        {
+          "theme": "导出可发现性",
+          "feedback_count": 1,
+          "source_ids": [
+            "s4"
+          ],
+          "deduplicated_feedback_count": 1,
+          "representative_ids": [
+            "s4"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "48d6626d7ff94df8b079ce54221f66d5",
+          "source_id": "s3",
+          "theme": "反对新增离线导出",
+          "kind": "other",
+          "quote": "不希望增加离线导出功能",
+          "state": "confirmed",
+          "version": 3,
+          "channel": "app",
+          "text": "不希望增加离线导出功能。"
+        },
+        {
+          "id": "e71bd18d8ae042ec86759e287704210f",
+          "source_id": "s4",
+          "theme": "导出可发现性",
+          "kind": "problem",
+          "quote": "导出按钮找不到",
+          "state": "confirmed",
+          "version": 2,
+          "channel": "web",
+          "text": "导出按钮找不到，另外页面加载很慢。"
+        }
+      ],
+      "imports": [
+        {
+          "id": "e56369fa1a9949c988505884d35ffd56",
+          "sha256": "0a8279deeab7ec0c642f76a2c4c2f6b7867071509c02b197a203f129b321d267"
+        }
+      ]
+    }
+  ],
+  "history": [
+    {
+      "id": "a41adf24272b48a8b2bcd4937cbc96ed",
+      "source_id": "s2",
+      "snapshot": "{\"previous\": null, \"current\": {\"source_id\": \"s2\", \"target_id\": \"s1\", \"version\": 1, \"note\": \"合成验收：暂假定为重复收录，随后撤销验证\", \"created_at\": \"2026-09-23T09:04:53.281884+00:00\"}}",
+      "created_at": "2026-09-23T09:04:53.281884+00:00"
+    },
+    {
+      "id": "afeba476edef4e2ca24366c4061bdde3",
+      "source_id": "s2",
+      "snapshot": "{\"previous\": {\"source_id\": \"s2\", \"target_id\": \"s1\", \"version\": 1, \"note\": \"合成验收：暂假定为重复收录，随后撤销验证\", \"created_at\": \"2026-09-23T09:04:53.281884+00:00\"}, \"current\": {\"source_id\": \"s2\", \"target_id\": null, \"version\": 2, \"note\": \"撤销合成测试标记：同文不足以证明重复收录\", \"created_at\": \"2026-09-23T09:05:13.175521+00:00\"}}",
+      "created_at": "2026-09-23T09:05:13.175521+00:00"
+    }
+  ],
+  "current_decisions": [
+    {
+      "source_id": "s2",
+      "target_id": null,
+      "version": 2,
+      "note": "撤销合成测试标记：同文不足以证明重复收录",
+      "created_at": "2026-09-23T09:05:13.175521+00:00"
+    }
+  ]
+}

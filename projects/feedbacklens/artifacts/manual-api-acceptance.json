@@ -1,0 +1,37 @@
+{
+  "id": "064d70219f1841c4b77495116e6f25e8",
+  "title": "合成反馈首轮归类",
+  "review_note": "仅验证人工归类链路，不代表真实用户研究",
+  "created_at": "2026-09-23T08:49:20.174721+00:00",
+  "counting_rule": "Each source_id counted once per theme and once overall. Counts are feedback records, not people. No automatic deduplication.",
+  "total_feedback": 4,
+  "confirmed_feedback": 1,
+  "themes": [
+    {
+      "theme": "导出可发现性",
+      "feedback_count": 1,
+      "source_ids": [
+        "s4"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "e71bd18d8ae042ec86759e287704210f",
+      "source_id": "s4",
+      "theme": "导出可发现性",
+      "kind": "problem",
+      "quote": "导出按钮找不到",
+      "state": "confirmed",
+      "version": 2,
+      "channel": "web",
+      "text": "导出按钮找不到，另外页面加载很慢。"
+    }
+  ],
+  "imports": [
+    {
+      "id": "e56369fa1a9949c988505884d35ffd56",
+      "sha256": "0a8279deeab7ec0c642f76a2c4c2f6b7867071509c02b197a203f129b321d267"
+    }
+  ]
+}

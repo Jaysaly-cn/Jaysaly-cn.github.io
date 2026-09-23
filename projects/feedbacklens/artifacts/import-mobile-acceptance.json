@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-23",
+  "scope": "Local browser acceptance using synthetic data, performed by AI coding assistant",
+  "file_picker": "Selected samples/feedback.csv through native browser file chooser",
+  "import_status": "导入完成：新增 0 条，复用 4 条。同一文件已导入，未重复计数。",
+  "viewport": {"width":390,"height":844,"document_scroll_width":375},
+  "verified": ["feedback text search", "selected negative feedback source", "opened frozen report", "expanded frozen evidence without horizontal overflow"],
+  "not_verified": ["browser download file persistence", "new record import through browser", "public deployment"]
+}
