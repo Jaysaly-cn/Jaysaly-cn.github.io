@@ -112,26 +112,26 @@ def create_demo_app(root=None, clock=time.monotonic):
             seed(database)
             session={'path':database,'expires':stamp+TTL,'active':0,'writes':0,'models':0}
             sessions[sid]=session;creation_times.append(stamp);fresh=True
-        if request.method not in ('GET','HEAD'):
-            if session['writes']>=MAX_WRITES:
-                return JSONResponse({'detail':'本次演示写入额度已用完'},status_code=429)
-            body=bytearray()
-            async for part in request.stream():
-                if len(body)+len(part)>40000:
-                    return JSONResponse({'detail':'演示单次输入最多40KB'},status_code=413)
-                body.extend(part)
-            request._body=bytes(body)
-            session['writes']+=1
-        if request.method=='POST' and path.endswith('/proposals'):
-            while model_times and stamp-model_times[0]>3600:
-                model_times.popleft()
-            if session['models']>=MODEL_CALLS or len(model_times)>=24:
-                return JSONResponse({'detail':'免费演示模型额度暂时用完；仍可使用可视化查询与结果导出'},status_code=429)
-            session['models']+=1;model_times.append(stamp)
         session['active']+=1
         context_token=current_path.set(session['path'])
         request.scope['isolated_demo_session']=True
         try:
+            if request.method not in ('GET','HEAD'):
+                if session['writes']>=MAX_WRITES:
+                    return JSONResponse({'detail':'本次演示写入额度已用完'},status_code=429)
+                body=bytearray()
+                async for part in request.stream():
+                    if len(body)+len(part)>40000:
+                        return JSONResponse({'detail':'演示单次输入最多40KB'},status_code=413)
+                    body.extend(part)
+                request._body=bytes(body)
+                session['writes']+=1
+            if request.method=='POST' and path.endswith('/proposals'):
+                while model_times and stamp-model_times[0]>3600:
+                    model_times.popleft()
+                if session['models']>=MODEL_CALLS or len(model_times)>=24:
+                    return JSONResponse({'detail':'免费演示模型额度暂时用完；仍可使用可视化查询与结果导出'},status_code=429)
+                session['models']+=1;model_times.append(stamp)
             if path=='/':
                 html=(ROOT/'web/index.html').read_text(encoding='utf-8')
                 html=html.replace('2 MB / 10000 行 / 40 列。数据保存在本机，模型只接收列结构与问题。','40 KB / 10000 行 / 40 列。数据临时保存在演示服务器的独立会话中；模型只接收列结构与问题。')

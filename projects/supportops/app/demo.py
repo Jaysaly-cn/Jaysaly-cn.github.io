@@ -116,20 +116,20 @@ def create_demo_app(root=None, clock=time.monotonic):
             seed(database)
             session={'path':database,'expires':stamp+TTL,'active':0,'writes':0}
             sessions[sid]=session;creation_times.append(stamp);fresh=True
-        if request.method not in ('GET','HEAD'):
-            if session['writes']>=MAX_WRITES:
-                return JSONResponse({'detail':'本次演示写入额度已用完'},status_code=429)
-            body=bytearray()
-            async for part in request.stream():
-                if len(body)+len(part)>40000:
-                    return JSONResponse({'detail':'演示单次输入最多40KB'},status_code=413)
-                body.extend(part)
-            request._body=bytes(body)
-            session['writes']+=1
         session['active']+=1
         context_token=current_path.set(session['path'])
         request.scope['isolated_demo_session']=True
         try:
+            if request.method not in ('GET','HEAD'):
+                if session['writes']>=MAX_WRITES:
+                    return JSONResponse({'detail':'本次演示写入额度已用完'},status_code=429)
+                body=bytearray()
+                async for part in request.stream():
+                    if len(body)+len(part)>40000:
+                        return JSONResponse({'detail':'演示单次输入最多40KB'},status_code=413)
+                    body.extend(part)
+                request._body=bytes(body)
+                session['writes']+=1
             if path=='/':
                 html=(ROOT/'web/index.html').read_text(encoding='utf-8')
                 banner='<aside class="demo-banner" role="note"><strong>临时公开演示 · 每位访客独立空间</strong><p>已放入8篇合成知识。可检索问题、转人工工单、解决后审核发布知识，再复查旧问题。免费小模型答复实测未达标，演示仅提供证据检索。请仅使用合成资料，资料在演示服务器处理。会话30分钟后失效并清理，重启也会失效；最多60次写入，单次输入40KB。请及时导出回答证据。入口依赖开发机在线，尚非稳定服务。</p><a href="/">会话过期后重新进入 →</a></aside>'

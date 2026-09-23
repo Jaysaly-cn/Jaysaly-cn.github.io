@@ -127,30 +127,30 @@ def create_demo_app(root=None, clock=time.monotonic):
             sessions[sid] = session
             creations.append(stamp)
             fresh = True
-        payload = None
-        if request.method not in ('GET', 'HEAD'):
-            if session['writes'] >= 60:
-                return JSONResponse({'detail': '本次会话写入额度已用完'}, 429)
-            body = bytearray()
-            async for part in request.stream():
-                if len(body) + len(part) > 40000:
-                    return JSONResponse({'detail': '演示单次输入最多40KB'}, 413)
-                body.extend(part)
-            request._body = bytes(body)
-            session['writes'] += 1
-        is_launch = request.method == 'POST' and route == '/api/jobs'
-        if is_launch:
-            try:
-                payload = json.loads(request._body)
-                if not isinstance(payload, dict):
-                    raise ValueError()
-            except (ValueError, UnicodeError):
-                return JSONResponse({'detail': '无效任务请求'}, 422)
         session['active'] += 1
         token = current.set(session['path'])
         request.scope['isolated_demo_session'] = True
         locked = False
         try:
+            payload = None
+            if request.method not in ('GET', 'HEAD'):
+                if session['writes'] >= 60:
+                    return JSONResponse({'detail': '本次会话写入额度已用完'}, 429)
+                body = bytearray()
+                async for part in request.stream():
+                    if len(body) + len(part) > 40000:
+                        return JSONResponse({'detail': '演示单次输入最多40KB'}, 413)
+                    body.extend(part)
+                request._body = bytes(body)
+                session['writes'] += 1
+            is_launch = request.method == 'POST' and route == '/api/jobs'
+            if is_launch:
+                try:
+                    payload = json.loads(request._body)
+                    if not isinstance(payload, dict):
+                        raise ValueError()
+                except (ValueError, UnicodeError):
+                    return JSONResponse({'detail': '无效任务请求'}, 422)
             if is_launch:
                 await launch_lock.acquire()
                 locked = True

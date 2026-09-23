@@ -134,21 +134,21 @@ def create_demo_app(root=None, clock=time.monotonic):
             seed(database)
             session={'path':database,'expires':stamp+TTL,'active':0,'writes':0,'models':0}
             sessions[sid]=session;creation_times.append(stamp);fresh=True
-        if request.method not in ('GET','HEAD'):
-            if session['writes']>=MAX_WRITES:
-                return JSONResponse({'detail':'本次演示写入额度已用完'},status_code=429)
-            body=bytearray()
-            async for part in request.stream():
-                if len(body)+len(part)>40000:
-                    return JSONResponse({'detail':'演示单次输入最多40KB'},status_code=413)
-                body.extend(part)
-            request._body=bytes(body)
-            session['writes']+=1
         session['active']+=1
         context_token=current_path.set(session['path'])
         session_token=current_session.set(session)
         request.scope['isolated_demo_session']=True
         try:
+            if request.method not in ('GET','HEAD'):
+                if session['writes']>=MAX_WRITES:
+                    return JSONResponse({'detail':'本次演示写入额度已用完'},status_code=429)
+                body=bytearray()
+                async for part in request.stream():
+                    if len(body)+len(part)>40000:
+                        return JSONResponse({'detail':'演示单次输入最多40KB'},status_code=413)
+                    body.extend(part)
+                request._body=bytes(body)
+                session['writes']+=1
             if path=='/':
                 html=(ROOT/'web/index.html').read_text(encoding='utf-8')
                 banner='<section class="demo-banner" role="note"><strong>临时公开演示 · 每位访客独立空间</strong><p>已放入合成会议。逐段提取或手工补充，确认后进入任务看板。请仅使用合成资料，输入在演示服务器处理。会话30分钟，最多3次模型尝试，失败也计入；成功段复用不重复计次。可导出JSON、CSV或日历快照。重启后会话失效；入口依赖开发机在线，不是稳定云服务。</p><a href="/">会话过期后重新进入 →</a></section>'

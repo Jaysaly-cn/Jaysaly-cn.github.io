@@ -62,3 +62,7 @@ python -m evals.live_model
 ## 临时公开演示
 
 [打开会后行动台](https://surrounded-symphony-summit-flags.trycloudflare.com) · [部署、额度、隔离与真实验收](docs/PUBLIC_DEMO.md)。每位访客独立空间，30分钟会话，3次模型尝试；成功段复用不计次。仅使用合成资料，重要结果及时导出。入口依赖开发机在线。
+
+## 演示会话可靠性更新
+
+当前完整测试共 33 项通过。修复慢上传途中会话过期时提前清理数据库的问题，新增正常上传、超限与额度拒绝回归。[复现与范围](docs/DEMO_UPLOAD_FIX.md)。此前章节中的测试数量是对应版本的历史记录。

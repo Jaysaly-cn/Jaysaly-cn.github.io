@@ -103,3 +103,7 @@ python -m uvicorn demo:app --host 127.0.0.1 --port 8804 --workers 1
 执行引擎 [Promptfoo](https://github.com/promptfoo/promptfoo)，MIT；通过锁定 npm 依赖直接复用。配置依据其[命令行文档](https://www.promptfoo.dev/docs/usage/command-line/)、[兼容模型接入文档](https://www.promptfoo.dev/docs/providers/openai/)及[遥测开关文档](https://www.promptfoo.dev/docs/configuration/telemetry/)。项目不冒充上游原创；EvalDesk 的测试集、受限执行层和后续产品流程为本仓库增量。
 
 进程核查复用 [psutil](https://psutil.io/) 7.2.2，BSD 3-Clause，许可保存在 `third_party/psutil-LICENSE`。使用 PID 与进程创建时间共同识别任务进程，避免将复用的 PID 当作原进程。
+
+## 演示会话可靠性更新
+
+当前完整测试共 44 项通过。修复慢上传途中会话过期时提前清理数据库的问题，新增正常上传、超限与额度拒绝回归。[复现与范围](docs/DEMO_UPLOAD_FIX.md)。此前章节中的测试数量是对应版本的历史记录。

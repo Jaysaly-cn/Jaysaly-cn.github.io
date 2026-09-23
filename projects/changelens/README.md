@@ -58,3 +58,7 @@ python -m uvicorn app.main:app --host 127.0.0.1 --port 8798
 对六条预先固定的合成样例做12次真实调用，候选方案格式/引用门槛5/6、基线4/6，但仍存在指令污染和条件漏提，故保留默认v1。见 artifacts/prompt-comparison-review.md 与 prompt-comparison-v2.json；不是独立盲测或语义准确率。可设置上述本地模型环境变量后执行 python -m evals.compare_prompt artifacts/new-comparison.json 重跑，脚本拒绝覆盖已有证据。
 
 手工说明新增“填入此块原文引用”。未编辑引用保留原始CRLF等换行，浏览器显示可能标准化；编辑后按实际输入校验。说明未保存时阻止切换变更块，撤销后可切换。单侧超过4000码点需手选片段。实际浏览器保存、修订及确认后，通过HTTP核对CRLF仍在，见 artifacts/quote-helper-browser.json。
+
+## 演示会话可靠性更新
+
+当前完整测试共 34 项通过。修复慢上传途中会话过期时提前清理数据库的问题，新增正常上传、超限与额度拒绝回归。[复现与范围](docs/DEMO_UPLOAD_FIX.md)。此前章节中的测试数量是对应版本的历史记录。
