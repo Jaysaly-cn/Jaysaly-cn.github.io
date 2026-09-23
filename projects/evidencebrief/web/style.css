@@ -7,3 +7,5 @@
 .demo-banner{grid-column:1/-1;background:#fff2cd;color:#382c16;padding:14px 24px;border-bottom:1px solid #e0c779;font-size:13px}.demo-banner p{margin:5px 0;max-width:1100px}
 
 .demo-banner{margin-left:240px}.demo-mode #settings-open,.demo-mode #mode-fetch{display:none}@media(max-width:1100px){.demo-banner{margin-left:205px}}@media(max-width:700px){.demo-banner{margin-left:0}}
+
+.demo-mode [data-tab="batches"],.demo-mode #batches{display:none!important}#batch-sources label{display:flex;gap:10px;align-items:start}#batch-sources input{width:auto;flex-shrink:0}#batch-sources span{overflow-wrap:anywhere}#batch-create fieldset{border:1px solid #d9e1e8;margin-bottom:18px;min-width:0}#batch-steps article{padding:14px 0;border-top:1px solid #d9e1e8;overflow-wrap:anywhere}#batch-progress{color:#53657c}#batch-list button{display:block;width:100%;text-align:left;margin:8px 0;overflow-wrap:anywhere}

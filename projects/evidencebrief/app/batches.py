@@ -54,6 +54,13 @@ def install(app,path,project_row,source_row,suggest):
             db.execute('INSERT INTO extraction_batches VALUES(?,?,?,0,?,?)',(bid,pid,json.dumps(steps,ensure_ascii=False),stamp,stamp))
             return read(db,pid,bid)
 
+    @app.get('/api/projects/{pid}/batches')
+    def listing(pid:str):
+        with connect(path) as db:
+            project_row(db,pid)
+            ids=[r['id'] for r in db.execute('SELECT id FROM extraction_batches WHERE project_id=? ORDER BY created_at DESC',(pid,))]
+            return [read(db,pid,bid) for bid in ids]
+
     @app.get('/api/projects/{pid}/batches/{bid}')
     def status(pid:str,bid:str):
         with connect(path) as db:return read(db,pid,bid)

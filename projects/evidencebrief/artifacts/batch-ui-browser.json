@@ -1,0 +1,42 @@
+{
+  "synthetic": true,
+  "old_plan_pause_resume_verified": true,
+  "new_plan": {
+    "id": "37db123456f740f98e2165a3a39f1bb1",
+    "project_id": "7b2018972cb34f488645e7fb400b3c19",
+    "steps": [
+      {
+        "source_id": "e29ce5eb005f4dc296178e168e256219",
+        "title": "Beta合成定价",
+        "sha256": "b2cf651accf2dd2e42702de655bd596337a66d9b2c2320cf24b9aff5a601bd00",
+        "plan_version": "chars-v1",
+        "index": 0,
+        "start": 0,
+        "end": 31,
+        "state": "success",
+        "attempts": 1,
+        "claim_ids": [
+          "8d16f8af29e34e2bb942410ae5dc6625"
+        ],
+        "error": "",
+        "cached": true
+      }
+    ],
+    "paused": false,
+    "created_at": "2026-09-23T07:53:47.968415+00:00",
+    "updated_at": "2026-09-23T07:53:59.592704+00:00",
+    "complete": true,
+    "notice": "仅执行选定资料的证据候选抽取；完成不代表研究完整，也不批准结论。"
+  },
+  "candidate_count_after_cached_step": 1,
+  "candidate_state": "draft",
+  "refresh_retains_both_plans": true,
+  "mobile": {
+    "width": 390,
+    "scrollWidth": 375
+  },
+  "console_errors": [],
+  "model_calls_in_this_browser_check": 0,
+  "concurrency_and_pause_during_step": "covered by automated test, not live model browser concurrency",
+  "screenshot": "portfolio-optimization/evidencebrief-batch-mobile.png (workspace only)"
+}

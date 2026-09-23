@@ -78,3 +78,37 @@ def test_cli_no_empty_bearer_and_failed_step_has_nonzero_exit(monkeypatch):
     monkeypatch.setattr(agent_cli.httpx,'Client',lambda **kwargs:original_client(**kwargs,transport=httpx.MockTransport(handle)))
     with pytest.raises(SystemExit) as caught:agent_cli.main()
     assert caught.value.code==2
+
+
+def test_plan_listing_survives_reload_and_is_project_scoped(client):
+    pid=project(client);other=project(client,title='其他项目');s=source(client,pid)
+    created=client.post(f'/api/projects/{pid}/batches',json={'source_ids':[s['id']]}).json()
+    assert client.get(f'/api/projects/{pid}/batches').json()==[created]
+    assert client.get(f'/api/projects/{other}/batches').json()==[]
+    assert client.get('/api/projects/missing/batches').status_code==404
+    page=client.get('/').text
+    assert '/static/batch-ui.js' in page and 'id="batch-detail"' in page
+
+
+def test_pause_during_step_and_concurrent_advance(client,monkeypatch):
+    import asyncio
+    import threading
+    from concurrent.futures import ThreadPoolExecutor
+    enable(monkeypatch);pid=project(client);s=source(client,pid)
+    batch=client.post(f'/api/projects/{pid}/batches',json={'source_ids':[s['id']]}).json()
+    route=f'/api/projects/{pid}/batches/{batch["id"]}'
+    entered=threading.Event();release=threading.Event()
+    async def waiting(*args):
+        entered.set();await asyncio.to_thread(release.wait,5);return []
+    monkeypatch.setattr(model,'suggest',waiting)
+    with ThreadPoolExecutor(max_workers=1) as executor:
+        running=executor.submit(client.post,route+'/next',json={})
+        try:
+            assert entered.wait(3)
+            assert client.get(route).json()['steps'][0]['state']=='running'
+            assert client.post(route+'/next',json={}).status_code==409
+            assert client.post(route+'/pause',json={'paused':True}).json()['paused']
+        finally:release.set()
+        result=running.result(timeout=5).json()
+    assert result['paused'] and result['complete']
+    assert client.post(route+'/next',json={}).status_code==409

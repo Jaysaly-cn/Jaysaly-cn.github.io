@@ -21,3 +21,4 @@ jobs:
       - run: python -m pytest -q
       - run: python -m evals.run
       - run: node --check web/app.js
+      - run: node --check web/batch-ui.js

@@ -80,9 +80,9 @@ SQLite保存每次修订和审核状态的完整版本。旧记录在第一次�
 本轮36项测试通过；浏览器将此前真实模型遗漏团队版限定的候选补齐、重新审核，版本1/2/3可查看。`artifacts/browser-revisions.json` 记录合成验收；模型本身未改变，不将人工修订算成模型准确率提升。
 
 
-## 持久化研究执行计划（本机 API / CLI）
+## 持久化研究执行计划（本机网页 / API / CLI）
 
-为选定来源建立跨资料分段计划，按次调用既有抽取工具，每步保留来源哈希、分段范围、尝试数、状态和候选ID。此功能目前提供 API 与 CLI，网页调度面板尚未接入，临时公网演示不开放批处理。
+为选定来源建立跨资料分段计划，按次调用既有抽取工具，每步保留来源哈希、分段范围、尝试数、状态和候选ID。研究工作台的“执行计划”标签页支持选择资料、保存计划、执行下一步或连续最多3步、暂停恢复、显式重试失败步骤以及查看候选。还提供API和CLI；临时公网演示不开放批处理。
 
 ```powershell
 python -m app.agent_cli plan <项目ID> --source <来源ID1> --source <来源ID2>
@@ -97,4 +97,11 @@ python -m app.agent_cli resume <项目ID> --batch <计划ID>
 
 每项目最多10计划，每计划最多8个来源和32个分段，超限拒绝而非截断。先执行待处理/中断步骤；只有显式 --retry-failed 才在待处理步骤耗尽后重试失败。已成功分段复用；重启后持久化running记录显示interrupted，下次执行依据分段缓存恢复。单进程执行，不能部署多个worker。计划完成只指抽取步骤完成，不代表事实完整或研究质量达标；不会自动抓网页、批准候选或生成最终报告。
 
-API：POST `/api/projects/{pid}/batches` (source_ids)，GET同路径加 `/{bid}`，POST `/{bid}/next` (retry_failed)，POST `/{bid}/pause` (paused)。46项测试通过。真实Qwen两资料验收：Alpha两次校验失败，Beta一次成功且仍为draft；已成功步骤不重复调用。见 artifacts/batch-agent-live.json，不是盲测。
+API：POST `/api/projects/{pid}/batches` (source_ids)，GET同路径加 `/{bid}`，POST `/{bid}/next` (retry_failed)，POST `/{bid}/pause` (paused)。48项测试通过。真实Qwen两资料验收：Alpha两次校验失败，Beta一次成功且仍为draft；已成功步骤不重复调用。见 artifacts/batch-agent-live.json，不是盲测。
+
+
+### 网页执行计划验收（v0.4）
+
+计划列表由服务端保存，刷新后可重新打开。连续执行遇到新失败即停止；切换项目或选中其他计划后不再提交原计划后续步骤，当前已提交请求可能完成。暂停按钮在执行期间仍可用；恢复只解除暂停，不自动启动。另一标签页同时执行同一计划会收到409，需刷新状态。
+
+48项测试通过，包含执行中暂停与并发冲突。浏览器完成旧计划暂停/恢复、创建新计划、复用成功分段、查看待审核候选、刷新恢复；390px宽实测scrollWidth375。此轮浏览器复用已处理的合成资料，未再次调用模型；原真实模型失败仍保留。记录见 artifacts/batch-ui-browser.json。

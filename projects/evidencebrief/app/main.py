@@ -93,7 +93,7 @@ def create_app(db_path=None):
             initialize(path)
         yield
 
-    app = FastAPI(title='EvidenceBrief', version='0.3.0', lifespan=lifespan)
+    app = FastAPI(title='EvidenceBrief', version='0.4.0', lifespan=lifespan)
     security.install(app)
     slots = asyncio.Semaphore(2)
     in_flight = set()  # Single-process workspace; no persisted running state to strand on restart.
@@ -182,7 +182,7 @@ def create_app(db_path=None):
     def health():
         with connect(path) as db:
             db.execute('SELECT 1')
-        return {'status': 'ok', 'version': '0.3.0', 'model_configured': model.configured(),
+        return {'status': 'ok', 'version': '0.4.0', 'model_configured': model.configured(),
                 'model_input_character_limit': model.input_limit()}
 
     @app.get('/api/projects')
