@@ -71,6 +71,15 @@ class Review(Strict):
     note: Annotated[str, StringConstraints(strip_whitespace=True, min_length=2, max_length=1000)]
 
 
+class Revision(Strict):
+    version: int = Field(ge=1)
+    dimension: Name
+    statement: Short
+    quote: Annotated[str, StringConstraints(strip_whitespace=True, min_length=4, max_length=4000)]
+    quote_start: int | None = Field(default=None, ge=0)
+    note: Annotated[str, StringConstraints(strip_whitespace=True, min_length=2, max_length=1000)]
+
+
 class Archive(Strict):
     archived: bool
 
@@ -83,7 +92,7 @@ def create_app(db_path=None):
         initialize(path)
         yield
 
-    app = FastAPI(title='EvidenceBrief', version='0.2.0', lifespan=lifespan)
+    app = FastAPI(title='EvidenceBrief', version='0.3.0', lifespan=lifespan)
     security.install(app)
     slots = asyncio.Semaphore(2)
     in_flight = set()  # Single-process workspace; no persisted running state to strand on restart.
@@ -104,6 +113,16 @@ def create_app(db_path=None):
 
     def event(db, pid, action, detail):
         db.execute('INSERT INTO events(project_id,action,detail,created_at) VALUES (?,?,?,?)', (pid, action, detail, now()))
+
+    def remember(db, row, action, note):
+        db.execute('INSERT OR IGNORE INTO claim_versions VALUES(?,?,?,?,?,?)',
+                   (row['id'],row['version'],json.dumps(dict(row),ensure_ascii=False),action,note,now()))
+
+    def claim_row(db, pid, cid):
+        row=db.execute('SELECT * FROM claims WHERE id=? AND project_id=?',(cid,pid)).fetchone()
+        if not row:
+            raise HTTPException(404,'此项目内不存在该结论')
+        return dict(row)
 
     def save_source(pid, body, method, raw_sha=''):
         content_hash = hashlib.sha256(body.content.encode()).hexdigest()
@@ -146,7 +165,9 @@ def create_app(db_path=None):
                    (identity, pid, body.source_id, source['entity'], body.dimension, body.statement, body.quote,
                     position, 'draft', origin, '', 1, stamp, stamp))
         event(db, pid, 'claim_added', f'{source["entity"]} / {body.dimension}：{body.statement}，待人工确认')
-        return dict(db.execute('SELECT * FROM claims WHERE id=?', (identity,)).fetchone())
+        result=claim_row(db,pid,identity)
+        remember(db,result,'created','初始候选')
+        return result
 
     def snapshot(db, pid):
         p = project_row(db, pid)
@@ -160,7 +181,7 @@ def create_app(db_path=None):
     def health():
         with connect(path) as db:
             db.execute('SELECT 1')
-        return {'status': 'ok', 'version': '0.2.0', 'model_configured': model.configured(),
+        return {'status': 'ok', 'version': '0.3.0', 'model_configured': model.configured(),
                 'model_input_character_limit': model.input_limit()}
 
     @app.get('/api/projects')
@@ -235,11 +256,52 @@ def create_app(db_path=None):
             source = source_row(db, pid, row['source_id'])
             if body.state == 'approved' and source['archived']:
                 raise HTTPException(409, '已归档来源不能批准结论')
+            remember(db,row,'baseline','版本记录启用时保留的当前状态；此前历史不可追溯')
             db.execute('UPDATE claims SET state=?,review_note=?,version=version+1,updated_at=? WHERE id=?',
                        (body.state, body.note, now(), cid))
             label = {'draft': '待确认', 'approved': '已确认', 'rejected': '已退回'}[body.state]
             event(db, pid, 'claim_reviewed', f'{row["statement"]} → {label}；{body.note}')
-            return dict(db.execute('SELECT * FROM claims WHERE id=?', (cid,)).fetchone())
+            result=claim_row(db,pid,cid)
+            remember(db,result,'reviewed',body.note)
+            return result
+
+    @app.post('/api/projects/{pid}/claims/{cid}/revisions',status_code=201)
+    def revise_claim(pid: str,cid: str,body: Revision):
+        with connect(path) as db:
+            db.execute('BEGIN IMMEDIATE')
+            row=claim_row(db,pid,cid)
+            if row['version']!=body.version:
+                raise HTTPException(409,'结论已更新，请刷新后修订')
+            source=source_row(db,pid,row['source_id'])
+            if source['archived']:
+                raise HTTPException(409,'已归档来源不能修订结论')
+            if body.dimension not in project_row(db,pid)['dimensions']:
+                raise HTTPException(422,'比较维度不属于此研究项目')
+            position=body.quote_start
+            if position is None:
+                position=source['content'].find(body.quote)
+                if position>=0 and source['content'].find(body.quote,position+1)>=0:
+                    raise HTTPException(422,'引用重复，请填写明确的全文起始位置或扩展上下文')
+            if position<0 or source['content'][position:position+len(body.quote)]!=body.quote:
+                raise HTTPException(422,'引用或位置与原始来源不一致')
+            changed=(body.dimension,body.statement,body.quote,position)
+            if changed==(row['dimension'],row['statement'],row['quote'],row['quote_start']):
+                raise HTTPException(422,'修订内容未发生变化')
+            remember(db,row,'baseline','版本记录启用时保留的当前状态；此前历史不可追溯')
+            db.execute("UPDATE claims SET dimension=?,statement=?,quote=?,quote_start=?,state='draft',review_note='',version=version+1,updated_at=? WHERE id=?",
+                       (*changed,now(),cid))
+            result=claim_row(db,pid,cid)
+            remember(db,result,'revised',body.note)
+            event(db,pid,'claim_revised',f'结论 {cid}：v{row["version"]} → v{result["version"]}，重新待审核；{body.note}')
+            return result
+
+    @app.get('/api/projects/{pid}/claims/{cid}/versions')
+    def versions(pid: str,cid: str):
+        with connect(path) as db:
+            current=claim_row(db,pid,cid)
+            history=[{**dict(r),'snapshot':json.loads(r['snapshot'])} for r in db.execute(
+                'SELECT * FROM claim_versions WHERE claim_id=? ORDER BY version',(cid,))]
+            return {'current':current,'versions':history,'note':'仅记录启用版本管理后的变化；旧记录首次变更时保存当时基线，不补造历史。'}
 
     def segment_state(db, pid, sid):
         source = source_row(db, pid, sid)

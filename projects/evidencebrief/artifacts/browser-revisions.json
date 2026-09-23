@@ -1,0 +1,117 @@
+{
+  "scope": "Synthetic browser workflow; development assistant performed review; no customer data",
+  "claim": {
+    "id": "d422e26604d542818b84b1a42795f283",
+    "project_id": "9119608b584945c5b21dcd63f471724a",
+    "source_id": "a2ba7517a8824d1aa756beec4f0a4aa6",
+    "entity": "Alpha",
+    "dimension": "价格",
+    "statement": "Alpha 团队版每月 19 元",
+    "quote": "Alpha 团队版每月 19 元，支持导入 Markdown 文档。",
+    "quote_start": 4590,
+    "state": "approved",
+    "origin": "model",
+    "review_note": "合成验收：核对原文，团队版限定和19元月费一致",
+    "version": 3,
+    "created_at": "2026-09-23T05:33:07.537590+00:00",
+    "updated_at": "2026-09-23T05:43:42.261782+00:00"
+  },
+  "history": {
+    "current": {
+      "id": "d422e26604d542818b84b1a42795f283",
+      "project_id": "9119608b584945c5b21dcd63f471724a",
+      "source_id": "a2ba7517a8824d1aa756beec4f0a4aa6",
+      "entity": "Alpha",
+      "dimension": "价格",
+      "statement": "Alpha 团队版每月 19 元",
+      "quote": "Alpha 团队版每月 19 元，支持导入 Markdown 文档。",
+      "quote_start": 4590,
+      "state": "approved",
+      "origin": "model",
+      "review_note": "合成验收：核对原文，团队版限定和19元月费一致",
+      "version": 3,
+      "created_at": "2026-09-23T05:33:07.537590+00:00",
+      "updated_at": "2026-09-23T05:43:42.261782+00:00"
+    },
+    "versions": [
+      {
+        "claim_id": "d422e26604d542818b84b1a42795f283",
+        "version": 1,
+        "snapshot": {
+          "id": "d422e26604d542818b84b1a42795f283",
+          "project_id": "9119608b584945c5b21dcd63f471724a",
+          "source_id": "a2ba7517a8824d1aa756beec4f0a4aa6",
+          "entity": "Alpha",
+          "dimension": "价格",
+          "statement": "每月 19 元",
+          "quote": "Alpha 团队版每月 19 元，支持导入 Markdown 文档。",
+          "quote_start": 4590,
+          "state": "draft",
+          "origin": "model",
+          "review_note": "",
+          "version": 1,
+          "created_at": "2026-09-23T05:33:07.537590+00:00",
+          "updated_at": "2026-09-23T05:33:07.537590+00:00"
+        },
+        "action": "baseline",
+        "note": "版本记录启用时保留的当前状态；此前历史不可追溯",
+        "created_at": "2026-09-23T05:43:35.236800+00:00"
+      },
+      {
+        "claim_id": "d422e26604d542818b84b1a42795f283",
+        "version": 2,
+        "snapshot": {
+          "id": "d422e26604d542818b84b1a42795f283",
+          "project_id": "9119608b584945c5b21dcd63f471724a",
+          "source_id": "a2ba7517a8824d1aa756beec4f0a4aa6",
+          "entity": "Alpha",
+          "dimension": "价格",
+          "statement": "Alpha 团队版每月 19 元",
+          "quote": "Alpha 团队版每月 19 元，支持导入 Markdown 文档。",
+          "quote_start": 4590,
+          "state": "draft",
+          "origin": "model",
+          "review_note": "",
+          "version": 2,
+          "created_at": "2026-09-23T05:33:07.537590+00:00",
+          "updated_at": "2026-09-23T05:43:35.236800+00:00"
+        },
+        "action": "revised",
+        "note": "合成验收：依据原文补齐模型遗漏的团队版适用范围",
+        "created_at": "2026-09-23T05:43:35.237976+00:00"
+      },
+      {
+        "claim_id": "d422e26604d542818b84b1a42795f283",
+        "version": 3,
+        "snapshot": {
+          "id": "d422e26604d542818b84b1a42795f283",
+          "project_id": "9119608b584945c5b21dcd63f471724a",
+          "source_id": "a2ba7517a8824d1aa756beec4f0a4aa6",
+          "entity": "Alpha",
+          "dimension": "价格",
+          "statement": "Alpha 团队版每月 19 元",
+          "quote": "Alpha 团队版每月 19 元，支持导入 Markdown 文档。",
+          "quote_start": 4590,
+          "state": "approved",
+          "origin": "model",
+          "review_note": "合成验收：核对原文，团队版限定和19元月费一致",
+          "version": 3,
+          "created_at": "2026-09-23T05:33:07.537590+00:00",
+          "updated_at": "2026-09-23T05:43:42.261782+00:00"
+        },
+        "action": "reviewed",
+        "note": "合成验收：核对原文，团队版限定和19元月费一致",
+        "created_at": "2026-09-23T05:43:42.261782+00:00"
+      }
+    ],
+    "note": "仅记录启用版本管理后的变化；旧记录首次变更时保存当时基线，不补造历史。"
+  },
+  "new_report": "f23c99a9ebdf4562b9d3b18171b94646",
+  "prior_report_count": 1,
+  "prior_reports_unchanged": true,
+  "mobile": {
+    "width": 390,
+    "scroll": 375
+  },
+  "duplicate_ids": []
+}

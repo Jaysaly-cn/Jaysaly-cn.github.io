@@ -51,4 +51,8 @@ def initialize(path):
           start INTEGER NOT NULL,end INTEGER NOT NULL,state TEXT NOT NULL,attempts INTEGER NOT NULL,
           model TEXT NOT NULL,claim_ids TEXT NOT NULL,error TEXT NOT NULL,updated_at TEXT NOT NULL,
           PRIMARY KEY(source_id,plan_version,segment_index));
+        CREATE TABLE IF NOT EXISTS claim_versions(
+          claim_id TEXT NOT NULL REFERENCES claims(id),version INTEGER NOT NULL,
+          snapshot TEXT NOT NULL,action TEXT NOT NULL,note TEXT NOT NULL,created_at TEXT NOT NULL,
+          PRIMARY KEY(claim_id,version));
         ''')
