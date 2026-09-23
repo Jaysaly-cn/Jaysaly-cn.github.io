@@ -1,0 +1,23 @@
+{
+  "scope": "Actual browser-driven source collection and human-review workflow; not a model evaluation",
+  "source_url": "https://raw.githubusercontent.com/chatwoot/chatwoot/develop/README.md",
+  "captured_at": "2026-09-23T03:47:42.540821+00:00",
+  "characters": 7509,
+  "content_sha256": "0fd89b5e413fb806d3907f04b77a4193031ff3afc24ceda8cd7918ed22b39d97",
+  "raw_sha256": "00b1867b3e486325ff35a8d5194e937974a02cab39cbbc0a0d9846e3c1ff1ac7",
+  "claim_exact_quote_verified": true,
+  "claim_review_state": "approved",
+  "report_created_at": "2026-09-23T03:49:52.159465+00:00",
+  "report_source_hash_present": true,
+  "viewport_checks": [
+    {
+      "width": 1440,
+      "document_scroll_width": 1425
+    },
+    {
+      "width": 390,
+      "document_scroll_width": 375
+    }
+  ],
+  "live_model_tested": false
+}

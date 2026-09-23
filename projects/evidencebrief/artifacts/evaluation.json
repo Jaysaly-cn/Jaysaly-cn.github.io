@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-09-23T03:54:53.068401+00:00",
+  "scope": "Synthetic development workflow; no live model evaluation",
+  "total": 11,
+  "passed": 11,
+  "results": [
+    {
+      "case": "来源正文哈希可重算",
+      "actual": "66af6143bbc4a87e5769b9376d1af5e6f681368a0511b51b0c6f7209a5869c11",
+      "expected": "66af6143bbc4a87e5769b9376d1af5e6f681368a0511b51b0c6f7209a5869c11",
+      "pass": true
+    },
+    {
+      "case": "相同材料去重",
+      "actual": "9e84a31dfbf84b0b88ade42a4ef1ea38",
+      "expected": "9e84a31dfbf84b0b88ade42a4ef1ea38",
+      "pass": true
+    },
+    {
+      "case": "初始比较矩阵保留六个缺口",
+      "actual": 6,
+      "expected": 6,
+      "pass": true
+    },
+    {
+      "case": "虚构引用拒绝",
+      "actual": 422,
+      "expected": 422,
+      "pass": true
+    },
+    {
+      "case": "候选不进入报告",
+      "actual": 6,
+      "expected": 6,
+      "pass": true
+    },
+    {
+      "case": "批准后填补一个缺口",
+      "actual": 5,
+      "expected": 5,
+      "pass": true
+    },
+    {
+      "case": "旧审核版本禁止覆盖",
+      "actual": 409,
+      "expected": 409,
+      "pass": true
+    },
+    {
+      "case": "报告包含逐字原文",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "case": "来源归档后恢复缺口",
+      "actual": 6,
+      "expected": 6,
+      "pass": true
+    },
+    {
+      "case": "历史报告保持不变",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "case": "恢复来源后重新纳入证据",
+      "actual": 5,
+      "expected": 5,
+      "pass": true
+    }
+  ]
+}
