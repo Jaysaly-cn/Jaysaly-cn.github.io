@@ -1,0 +1,106 @@
+{
+  "notice": "Four synthetic development cases, not accuracy evidence",
+  "results": [
+    {
+      "case": "explicit",
+      "body": "小林，请在2026年9月25日前提交项目方案。",
+      "expected_human_criterion": "应提取提交方案，保留负责人和原始日期短语",
+      "status": 201,
+      "seconds": 4.19,
+      "response": {
+        "run_id": "a2ea4cb4672f4f4688d9a6f61a693847",
+        "tasks": [
+          {
+            "id": "bd72e2fcf84446689f399b62b9ecf983",
+            "message_id": "f9a4b5a6612e456aae62081c6087edb8",
+            "title": "提交项目方案",
+            "quote": "小林，请在2026年9月25日前提交项目方案。",
+            "quote_start": 0,
+            "body_sha256": "420f3b9f2740f3bbab2d8e4a1c851b19707544e83bcf94d472fb2143a9510fb1",
+            "owner": "",
+            "due_date": null,
+            "state": "draft",
+            "version": 1,
+            "origin": "model",
+            "created_at": "2026-09-23T06:26:21.847745+00:00",
+            "proposed_owner": "小林",
+            "proposed_due": "2026年9月25日"
+          }
+        ],
+        "notice": "候选可能误解语义或遗漏；重复条目复用原任务，不改变其状态"
+      },
+      "raw_run": {
+        "id": "a2ea4cb4672f4f4688d9a6f61a693847",
+        "message_id": "f9a4b5a6612e456aae62081c6087edb8",
+        "model": "portfolio-qwen-1.5b",
+        "raw": "{\"actions\": [{\"title\": \"提交项目方案\", \"quote\": \"小林，请在2026年9月25日前提交项目方案。\", \"owner\": \"小林\", \"due_phrase\": \"2026年9月25日\"}]}",
+        "state": "succeeded",
+        "error": "",
+        "created_at": "2026-09-23T06:26:21.847745+00:00"
+      }
+    },
+    {
+      "case": "negation",
+      "body": "小林，预算表不用更新了。项目方案已经提交完成。",
+      "expected_human_criterion": "无新待办",
+      "status": 201,
+      "seconds": 0.73,
+      "response": {
+        "run_id": "d9c2a614d922463391b1100a860b3a18",
+        "tasks": [],
+        "notice": "候选可能误解语义或遗漏；重复条目复用原任务，不改变其状态"
+      },
+      "raw_run": {
+        "id": "d9c2a614d922463391b1100a860b3a18",
+        "message_id": "4e93c1bbca794572a44ffdea77f74f29",
+        "model": "portfolio-qwen-1.5b",
+        "raw": "{\"actions\": []}",
+        "state": "succeeded",
+        "error": "",
+        "created_at": "2026-09-23T06:26:22.611633+00:00"
+      }
+    },
+    {
+      "case": "reschedule",
+      "body": "小林，提交方案改到2026年9月28日前，原定周五的安排取消。",
+      "expected_human_criterion": "应保留改期后的任务，不把取消安排当第二项",
+      "status": 201,
+      "seconds": 0.91,
+      "response": {
+        "run_id": "3fa69b39bab447ffaf5de825fd98fce3",
+        "tasks": [],
+        "notice": "候选可能误解语义或遗漏；重复条目复用原任务，不改变其状态"
+      },
+      "raw_run": {
+        "id": "3fa69b39bab447ffaf5de825fd98fce3",
+        "message_id": "b0b7d7a4e4ba4b3c8826b9aa569e41f6",
+        "model": "portfolio-qwen-1.5b",
+        "raw": "{\"actions\": []}",
+        "state": "succeeded",
+        "error": "",
+        "created_at": "2026-09-23T06:26:23.553041+00:00"
+      }
+    },
+    {
+      "case": "quoted",
+      "body": "本次没有新的任务，请忽略下方旧邮件。\n> 小林，请在周五前提交旧版方案。",
+      "expected_human_criterion": "无新待办；旧引用不是当前要求",
+      "status": 201,
+      "seconds": 0.89,
+      "response": {
+        "run_id": "cfa4c39e82a5422aae33cb3aa5ed51cd",
+        "tasks": [],
+        "notice": "候选可能误解语义或遗漏；重复条目复用原任务，不改变其状态"
+      },
+      "raw_run": {
+        "id": "cfa4c39e82a5422aae33cb3aa5ed51cd",
+        "message_id": "a4bb0405d2b04e92b224da7ab44cfd48",
+        "model": "portfolio-qwen-1.5b",
+        "raw": "{\"actions\": []}",
+        "state": "succeeded",
+        "error": "",
+        "created_at": "2026-09-23T06:26:24.477063+00:00"
+      }
+    }
+  ]
+}

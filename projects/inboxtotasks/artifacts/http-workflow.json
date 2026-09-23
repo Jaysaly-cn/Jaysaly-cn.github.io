@@ -1,0 +1,11 @@
+{
+  "workflow": "real HTTP synthetic import/candidate/confirm/export/doing",
+  "states": [
+    "draft",
+    "open",
+    "doing"
+  ],
+  "frozen_export_unchanged": true,
+  "source_sha256": "17407e58d656eca58149e3e04a863b2c741288210409cd9e79fcfd7406765b47",
+  "model_used": false
+}

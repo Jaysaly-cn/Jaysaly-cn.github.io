@@ -1,0 +1,6 @@
+{
+  "date": "2026-09-23",
+  "environment": "Local UI on 8791 with real Qwen 1.5B on 8771; synthetic emails",
+  "verified": ["Existing reschedule model omission shows empty candidate warning", "Manual evidence-linked task created in browser", "Owner Xiaolin and 2026-09-28 confirmed explicitly", "Original quote highlighted", "Task moved open to doing, version 3", "Inbox snapshot generated and download buttons listed", "Page reload preserves task state", "Real model call on negation email returned empty with omission warning", "Built-in synthetic EML imported through API", "390px viewport scrollWidth 375 after sidebar min-width fix", "No browser console errors"],
+  "limitations": ["Native file picker upload not tested in this run", "Download buttons visible; file save not verified in browser", "Local single-workspace service only; no public demo yet"]
+}
