@@ -2,7 +2,8 @@
 <aside class="rail"><a class="brand" href="/">E<span>EvalDesk</span></a><p class="rail-label">PREPARE / COMPARE / REVIEW</p><h1>测试集工作室</h1><p>让每一轮比较有据可查。</p><div class="rail-bottom"><a href="/">返回评测观察室 →</a><p>本地开发版 · 免费模型<br>保存测试集不会自动调用模型。</p></div></aside>
 <main><header><div><span class="eyebrow">DATASET / VERSION HISTORY</span><h2>先固定问题，再比较答案</h2><p>编写提示词与业务判据，每次保存留下一个新版本。</p></div><a href="/jobs.html" class="pill">运行评测 →</a></header>
 <div id="message" role="status" aria-live="polite"></div><button id="discard-draft" hidden class="secondary">丢弃未保存的修改</button>
-<section class="toolbar"><label>已保存的测试集<select id="suite-picker"><option value="">新建测试集</option></select></label><button id="reload-suite" class="secondary">重新载入</button><button id="new-suite" class="secondary">从示例新建</button></section>
+<section class="toolbar"><label>已保存的测试集<select id="suite-picker"><option value="">新建测试集</option></select></label><button id="reload-suite" class="secondary">重新载入</button><label>示例库<select id="sample-picker"><option value="ticket-routing">工单路由 · 4 例</option><option value="feedbacklens-regression">FeedbackLens 反馈回归 · 6 例</option><option value="changelens-regression">ChangeLens 变更回归 · 6 例</option></select></label><button id="new-suite" class="secondary">从示例新建</button></section>
+<p class="hint">回归样例来自已有产品的合成开发记录，全部为已知样例，不是独立盲测。统一使用 500 token 上限，自动门槛仅为有效 JSON；不能直接与原工具历史指标比较。</p>
 <section class="source-bar"><label>从历史评测复制<select id="run-source"><option value="">请选择运行记录</option></select></label><button id="copy-run" class="secondary">复制为新测试集</button></section>
 <p id="version-info" class="provenance">尚未保存</p>
 <form id="suite-form"><label>测试集名称<input id="suite-name" required maxlength="120"></label>

@@ -106,8 +106,8 @@ def create_app(path=None):
             return [store.get_suite(db, row['id']) for row in db.execute('SELECT id FROM suites ORDER BY rowid DESC')]
 
     @app.get('/api/suite-sample')
-    def sample():
-        return json.loads((store.ROOT / 'samples/ticket-routing.json').read_text(encoding='utf-8'))
+    def sample(name: Literal['ticket-routing', 'feedbacklens-regression', 'changelens-regression'] = 'ticket-routing'):
+        return json.loads((store.ROOT / 'samples' / (name + '.json')).read_text(encoding='utf-8'))
 
     @app.post('/api/suites', status_code=201)
     def create_suite(value: SuiteCreate):

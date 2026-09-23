@@ -50,7 +50,7 @@ python -m pytest -q --basetemp=data/pytest-temp
 
 ## 验证范围
 
-已完成 36 项测试及多轮真实本地模型调用。首轮两套提示词各 2/4 精确标签断言通过，0 个调用错误。逐例输出与限制见 [首轮验收](artifacts/engine-spike-review.md)。原始证据按字节保存，Git 不对该目录转换换行。
+已完成 37 项测试及多轮真实本地模型调用。首轮两套提示词各 2/4 精确标签断言通过，0 个调用错误。逐例输出与限制见 [首轮验收](artifacts/engine-spike-review.md)。原始证据按字节保存，Git 不对该目录转换换行。
 
 恢复验收见 [隔离故障模拟](artifacts/recovery-acceptance.json)：复制数据库后模拟导入中断，浏览器恢复十个真实结果，保留模拟错误历史。原数据库未改动，没有新建评测任务；测试同时禁止恢复路径调用引擎。该故障是主动模拟，不宣称自然发生过。手机诊断布局 390px / scrollWidth 375。
 
@@ -84,6 +84,10 @@ python -m uvicorn demo:app --host 127.0.0.1 --port 8804 --workers 1
 必须单个网页工作进程运行，状态和频率限制保存在内存。后台评测是独立子进程。私人数据库路径不会进入演示请求。
 
 公网 [HTTP 双访客验收](artifacts/public-demo-acceptance.json) 完成真实模型任务、复核、报告、跨访客 404 和跨站 403；[浏览器验收](artifacts/public-browser-acceptance.json) 完成另一轮真实任务与报告，手机导航已实际点击验证。两轮输出保存在 `artifacts/public-http-run` / `artifacts/public-browser-run`。TTL 和活动任务清理通过测试验证，未声称在浏览器等满 30 分钟。
+
+## 跨项目回归示例库
+
+测试集工作室可选择 FeedbackLens / ChangeLens 各六个已知失败样例，保存后按版本执行。24次真实模型调用及逐例复核见[新基线与边界](artifacts/portfolio-regression-review.md)。JSON检查和业务判断分别统计；本轮运行参数与原工具不同，不直接比较历史通过率。来源哈希见[samples/portfolio-provenance.json](samples/portfolio-provenance.json)。
 
 ## 后续交付
 

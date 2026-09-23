@@ -4,3 +4,6 @@ artifacts/review-report-first.json -text
 artifacts/suite-editor-run/* -text whitespace=cr-at-eol
 artifacts/job-run-*/* -text whitespace=cr-at-eol
 artifacts/public-*-run/* -text whitespace=cr-at-eol
+
+artifacts/*-regression-run/* -text whitespace=cr-at-eol
+artifacts/*-regression-review.json -text

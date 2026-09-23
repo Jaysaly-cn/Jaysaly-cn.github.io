@@ -1,0 +1,24 @@
+{
+  "scope": "Public HTTP sample library save acceptance; no model calls",
+  "samples": [
+    {
+      "sample": "feedbacklens-regression",
+      "cases": 6,
+      "saved_version": 1,
+      "suite_id": "3c97b032169d4a57b28fc76987238ef2"
+    },
+    {
+      "sample": "changelens-regression",
+      "cases": 6,
+      "saved_version": 1,
+      "suite_id": "2de43e405c3d49c5b5da7643f452289c"
+    }
+  ],
+  "jobs": 0,
+  "browser_local": {
+    "create_two_versions": true,
+    "dirty_switch_blocked": true,
+    "width": 390,
+    "scrollWidth": 375
+  }
+}

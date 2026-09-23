@@ -8,6 +8,25 @@ import store
 EVIDENCE = Path(__file__).parents[1] / 'artifacts/engine-spike'
 
 
+def test_regression_samples_are_valid_read_only_and_allowlisted(tmp_path):
+    from engine import compile_suite
+    with TestClient(create_app(tmp_path / 'samples.sqlite3')) as client:
+        for name in ('feedbacklens-regression', 'changelens-regression'):
+            response = client.get('/api/suite-sample', params={'name': name})
+            assert response.status_code == 200
+            suite = response.json()
+            assert len(suite['cases']) == 6
+            compile_suite(suite)
+            saved = client.post('/api/suites', json={'suite': suite, 'note': '保存回归样例的新版本'})
+            assert saved.status_code == 201
+            assert saved.json()['suite'] == suite
+        assert len(client.get('/api/suites').json()) == 2
+        assert client.get('/api/runs').json() == []
+        assert client.get('/api/jobs').json() == []
+        assert client.get('/api/suite-sample', params={'name': '../data/evaldesk'}).status_code == 422
+        assert client.get('/api/suite-sample', params={'name': 'portfolio-provenance'}).status_code == 422
+
+
 def test_versions_export_conflict_and_old_run_unchanged(tmp_path):
     db = tmp_path / 'db.sqlite3'
     rid = store.import_run(EVIDENCE, db)

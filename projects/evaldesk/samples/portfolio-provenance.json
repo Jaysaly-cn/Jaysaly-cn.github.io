@@ -1,0 +1,51 @@
+{
+  "scope": "Known synthetic development cases, not held-out or independent evaluation",
+  "runtime_differences": [
+    "EvalDesk max_tokens=500, original adapters 1500",
+    "EvalDesk does not request response_format=json_object",
+    "ChangeLens uses the candidate old_text/new_text input for both arms"
+  ],
+  "assertion_scope": "is-json only; does not validate schema, quotations or business meaning",
+  "sources": [
+    {
+      "project": "feedbacklens",
+      "commit": "9ae3a1c7237107d379caeee5bb20d262ee707465",
+      "path": "artifacts/prompt-comparison-v2.json",
+      "sha256": "09d0361a0d146eb95e8ca6d769d5cea4e9fac10d08f8d4becd0a4b150ce51c92",
+      "suite": "feedbacklens-regression.json",
+      "suite_sha256": "d641810eff5c4bdc31c93577ceabbb5e6c69081e4bfbfd702ffc6ef8d6c8eb78",
+      "case_ids": [
+        "known-negation",
+        "known-multiple",
+        "known-injection",
+        "new-condition",
+        "new-sarcasm",
+        "new-instruction"
+      ],
+      "prompt_hashes": {
+        "baseline": "7edb02401d932ff26339e4441f4a4d13a5f1103eae9ea2fff92b67dce248ebb8",
+        "candidate": "542e9b17029726e26fe5b7c4edfce90048d4a8dd012525e748194fc81093f93f"
+      }
+    },
+    {
+      "project": "changelens",
+      "commit": "db83b152c8444aa884e07f625d0437533cf605fe",
+      "path": "artifacts/prompt-comparison-v2.json",
+      "sha256": "bebb1fcd3ed636adfebf94ebb03ec60fdbe6a2974ab9074fe97dcb1040bbd125",
+      "suite": "changelens-regression.json",
+      "suite_sha256": "5486bc5b150cd8df3a0f068b7c93f1e5c8e32373cb9221e82cb6bf4f2611771f",
+      "case_ids": [
+        "known-permission-days",
+        "known-embedded-command",
+        "known-newline",
+        "new-negative-insertion",
+        "new-condition-exception",
+        "new-deleted-permission"
+      ],
+      "prompt_hashes": {
+        "baseline": "70ca9803c271160012c3549061846ca27e1b37b8af8668f6006c4b9db5ae3ef4",
+        "candidate": "239ba75ad257554e7a4bdf63afe1366b82f780dde925a2bcb2cd3e329fd8d3b2"
+      }
+    }
+  ]
+}
