@@ -179,3 +179,5 @@ body.coagents-page { --case-blue: #6049c9; --case-soft: #f0edfc; }
 }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } *,*::before,*::after { animation: none!important; transition: none!important; } }
 @media print { .case-page header,.case-toc,.case-actions,.case-next,video { display: none; } .case-container { width: 100%; } .case-grid article,.decision-sequence li { break-inside: avoid; } a { color: inherit!important; } }
+
+.product-screens{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.product-screens figure{margin:0;border:1px solid #d7dfeb;border-radius:16px;overflow:hidden;background:#fff}.product-screens img{display:block;width:100%;height:auto}.product-screens figcaption{padding:20px}.product-screens figcaption p{margin-bottom:0}.product-screens a:focus-visible{display:block;outline:3px solid #315d92;outline-offset:-3px}@media(max-width:720px){.product-screens{grid-template-columns:1fr}}
