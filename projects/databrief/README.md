@@ -10,7 +10,7 @@ API：POST `/api/datasets?name=名称` 上传CSV字节；GET `/api/datasets/{id}
 
 提议原文与实际执行SQL分别保留；修改查询不改写原提议。模型只接收列映射/名称/类型/缺失计数、总行数与问题，不发送单元格样例或行值。最多30次模型提议/数据集；协议错误保留raw。仅允许本机或明确OpenRouter免费型号，未自动购买额度。
 
-40项测试通过，`node --check web/app.js`语法通过。真实Qwen1.5B三条开发问题中有一条排序要求理解错误；人工修订后结果才与已知答案一致。记录见artifacts/live-proposals.json和live-reviewed-runs.json，不是盲测准确率。
+46项测试通过，`node --check web/app.js`语法通过。真实Qwen1.5B三条开发问题中有一条排序要求理解错误；人工修订后结果才与已知答案一致。记录见artifacts/live-proposals.json和live-reviewed-runs.json，不是盲测准确率。
 
 ```powershell
 python -m app.cli import samples/channels.csv
@@ -45,3 +45,14 @@ POST `/api/datasets/{id}/query-preview` 示例：`{"aggregate":"avg","metric":"c
 CSV 的 NULL 写为 `\N`；空字符串保持空单元格，同名列与顺序保留。文本中可能作为公式的前缀会加单引号，数值负数保持数字。CSV不是无损类型格式：原文本身为 `\N`、前导零编码、大整数、日期等请用JSON核对，并在表格软件中选择文本导入。JSON保留原值。失败查询仍可下载JSON，不能导出结果表；二进制SQL结果会被明确拒绝并记录失败。
 
 40项自动测试通过；真实HTTP导出及解包检查通过，浏览器按钮已发起下载且无错误日志，但浏览器最终文件落盘仍未确认。HTTP取得的合成样例包在工作区 portfolio-optimization/databrief-sample-result.zip。
+
+
+## 临时公开演示
+
+[打开临时工作台](https://ham-adware-ancient-moms.trycloudflare.com)。这是开发机上的短期演示，非稳定云托管；离线或隧道重启时可能失效。每位访客独立数据库、30分钟会话，预置合成渠道数据；可视化查询无需模型。请仅使用合成资料并及时导出结果。
+
+独立启动：`DBR_DEMO_HOST` 设置为确切公网域名，运行 `python -m uvicorn app.demo:app --host 127.0.0.1 --port 8793`，仅允许单进程。模型仍使用 DBR_MODEL 系列配置。不要将私有 app.main 进程直接接入公开隧道。演示目录默认 data/public-demo，和私有数据库分开；仅在该目录清理自身命名的会话文件。重启令所有会话失效。
+
+每会话最多60次写入、3次模型请求；全进程12个会话、每小时30次新会话及24次模型请求，单次输入40KB。模型失败也消耗配额；额度耗尽仍可使用可视化查询。限额依赖单进程内存，不是通用多租户生产系统。
+
+46项测试覆盖原有功能和新增的访客隔离、导出越权、伪造请求头、来源/域名校验、过期清理、容量与模型配额。公网验收 `python evals/public_smoke.py <公网地址> --model` 会创建两份合成会话；记录见 artifacts/public-acceptance.json。一次真实模型把忽略NULL写成COALESCE补零，全部NULL情况下语义不同，故未自动执行或计为正确。浏览器可视化查询实测合计60，无控制台错误。

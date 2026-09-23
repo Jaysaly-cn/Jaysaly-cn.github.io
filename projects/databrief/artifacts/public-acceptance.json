@@ -1,0 +1,31 @@
+{
+  "base_url": "https://ham-adware-ancient-moms.trycloudflare.com",
+  "synthetic": true,
+  "checks": {
+    "dataset_isolation": true,
+    "preview_does_not_execute": true,
+    "reviewed_result": [
+      [
+        60.0
+      ]
+    ],
+    "result_and_export_isolation": true,
+    "bundle_members": [
+      "snapshot.json",
+      "result.csv",
+      "query.sql",
+      "README.txt"
+    ],
+    "cross_origin_blocked": true,
+    "model_did_not_execute": true
+  },
+  "model_http_status": 201,
+  "model_response": {
+    "id": "a266fa41df2548beb583e44414fc5cd4",
+    "question": "请计算金额列的合计，忽略空值。",
+    "sql": "SELECT sum(coalesce(c3, 0)) FROM data",
+    "explanation": "计算金额列的合计，忽略空值。",
+    "limitations": "无法验证口径，因为没有行内容无法验证。",
+    "notice": "尚未执行；必须核对列名、过滤条件、空值与聚合口径"
+  }
+}

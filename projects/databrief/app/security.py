@@ -12,11 +12,12 @@ def install(app):
     @app.middleware('http')
     async def guard(request, call_next):
         if request.url.path.startswith('/api/'):
+            demo = request.scope.get('isolated_demo_session', False)
             token = os.getenv('DATABRIEF_ACCESS_TOKEN', '')
             supplied = request.headers.get('authorization', '').removeprefix('Bearer ')
-            if token and not hmac.compare_digest(token, supplied):
+            if not demo and token and not hmac.compare_digest(token, supplied):
                 return JSONResponse({'detail': '请输入工作台访问令牌'}, status_code=401)
-            if not token and (not request.client or request.client.host not in ('127.0.0.1', '::1', 'testclient')
+            if not demo and not token and (not request.client or request.client.host not in ('127.0.0.1', '::1', 'testclient')
                               or request.url.hostname not in ('localhost', '127.0.0.1', '::1', 'testserver')):
                 return JSONResponse({'detail': '远程工作台必须配置访问令牌'}, status_code=403)
             origin = request.headers.get('origin')
