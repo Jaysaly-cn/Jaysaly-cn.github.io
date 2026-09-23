@@ -11,14 +11,33 @@ function initialize(){
    dialog.setAttribute('aria-labelledby','archive-title');dialog.showModal();
   });
  }
- for(const button of document.querySelectorAll('[data-filter]')){
-  button.addEventListener('click',()=>{
-   let count=0;
-   for(const item of document.querySelectorAll('[data-room]')){item.hidden=button.dataset.filter!=='all'&&item.dataset.room!==button.dataset.filter;if(!item.hidden)count++;}
-   for(const b of document.querySelectorAll('[data-filter]'))b.setAttribute('aria-pressed',String(b===button));
-   document.querySelector('#filter-status').textContent='显示 '+count+' 件作品';
-  });
+ const search=document.querySelector('#project-search'),scene=document.querySelector('#scene-filter');
+ let room='all';
+ const normalize=value=>value.normalize('NFKC').toLocaleLowerCase().trim();
+ const catalogue=projects.map(p=>({project:p,element:document.getElementById(p.id),entry:document.querySelector(`[data-directory="${p.id}"]`),text:normalize([p.name,p.category,p.line,p.desc,p.engineering,p.keywords,...p.steps].join(' '))}));
+ function applyFilters(){
+  const terms=normalize(search.value).split(/\s+/).filter(Boolean);
+  let count=0;
+  for(const {project:p,element,entry,text} of catalogue){
+   const visible=(room==='all'||p.room===room)&&(scene.value==='all'||p.scenes.includes(scene.value))&&terms.every(term=>text.includes(term));
+   element.hidden=entry.hidden=!visible;
+   if(visible)count++;
+  }
+  for(const button of document.querySelectorAll('[data-filter]'))button.setAttribute('aria-pressed',String(button.dataset.filter===room));
+  document.querySelector('#filter-status').textContent=`显示 ${count} / ${projects.length} 件作品`+(room==='all'&&scene.value==='all'&&!terms.length?' · 按策展顺序陈列':' · 保留策展顺序');
+  document.querySelector('#directory-count').textContent=count;
+  document.querySelector('#empty-results').hidden=count!==0;
+  document.querySelector('.directory').hidden=count===0;
  }
+ function reset(){room='all';scene.value='all';search.value='';applyFilters();}
+ for(const button of document.querySelectorAll('[data-filter]'))button.addEventListener('click',()=>{room=button.dataset.filter;applyFilters();});
+ search.addEventListener('input',event=>{if(!event.isComposing)applyFilters();});
+ search.addEventListener('compositionend',applyFilters);
+ scene.addEventListener('change',applyFilters);
+ document.querySelector('#clear-filters').addEventListener('click',reset);
+ document.querySelector('#reset-empty').addEventListener('click',()=>{reset();search.focus();});
+ for(const {project:p,entry,element} of catalogue)entry.querySelector('a').addEventListener('click',()=>element.focus({preventScroll:true}));
+ applyFilters();
  document.body.classList.add('enhanced');
 }
 try{initialize();}catch{/* The static cases, source links and details remain usable. */}
