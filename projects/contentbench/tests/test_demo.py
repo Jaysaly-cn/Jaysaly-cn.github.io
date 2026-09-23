@@ -1,6 +1,8 @@
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 import threading
+import json
+import httpx
 from fastapi.testclient import TestClient
 from app.demo import create_demo_app, COOKIE
 from app.main import create_app
@@ -109,3 +111,33 @@ def test_global_attempt_budget(tmp_path,monkeypatch):
             for _ in range(3):assert c.post(f'/api/campaigns/{cid}/generate',json={'channel':'邮件'}).status_code==502
         c.cookies.clear();cid=enter(c)
         assert c.post(f'/api/campaigns/{cid}/generate',json={'channel':'邮件'}).status_code==429
+
+
+def test_expiry_during_slow_body_keeps_database_until_request_returns(tmp_path):
+    clock=[0]
+    app=create_demo_app(tmp_path,clock=lambda:clock[0])
+    with TestClient(app,base_url='https://testserver') as c:
+        cid=enter(c);cookie=c.cookies.get(COOKIE)
+        path=next(iter(app.state.demo_sessions.values()))['path']
+        async def probe():
+            started=asyncio.Event();release=asyncio.Event()
+            async def body():
+                data=json.dumps(COPY).encode()
+                yield data[:1]
+                started.set()
+                await release.wait()
+                yield data[1:]
+            async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app),base_url='https://testserver',
+                                          headers={'Cookie':COOKIE+'='+cookie}) as client:
+                pending=asyncio.create_task(client.post(f'/api/campaigns/{cid}/drafts',content=body(),
+                                                        headers={'Content-Type':'application/json'}))
+                try:
+                    await asyncio.wait_for(started.wait(),3)
+                    clock[0]=1801
+                    assert (await client.get('/api/campaigns')).status_code==401
+                    assert path.exists()
+                finally:release.set()
+                assert (await asyncio.wait_for(pending,3)).status_code==201
+                assert (await client.get('/api/campaigns')).status_code==401
+                assert not path.exists()
+        asyncio.run(probe())
