@@ -67,7 +67,7 @@ docker run --rm -p 127.0.0.1:8765:8765 -v supportops-data:/app/data \
   -e SUPPORTOPS_ACCESS_TOKEN="replace-with-your-random-token" supportops
 ```
 
-需在入口配置 HTTPS 反向代理、240KB 请求体限制、持久化磁盘与备份。使用单 worker；令牌是团队共享访问控制，**不是多租户、角色权限或客户隔离**。不要向公网匿名开放真实内部资料。云端 Demo 尚未部署，不将本地运行等同于在线服务。
+需在入口配置 HTTPS 反向代理、240KB 请求体限制、持久化磁盘与备份。使用单 worker；令牌是团队共享访问控制，**不是多租户、角色权限或客户隔离**。不要向公网匿名开放真实内部资料。已另设下文所述临时访客演示，尚无稳定云部署。
 
 当前提供的是小规模单团队版本：最多 100 篇、每篇 50000 字符；按请求重建检索索引；不支持 PDF/OCR/向量检索；文档“内部”仅用于检索范围筛选，授权用户仍能管理所有资料；文档删除后历史快照仍保留，尚无合规删除与数据保留策略。模型结构校验不能证明所有事实都由引用支持。
 
@@ -94,3 +94,15 @@ POST `/api/tickets/{id}/knowledge` 接收 version/title/content/review_note/revi
 人工选择证据更有帮助、更差、无明显变化或无法判断，并填写依据、确认后保存。单次复查判断不被覆盖；可以另做复查。每个原问题最多20次，列表显示最近50次。旧回答、负面反馈和工单状态均不改写。若旧记录包含模型答复，此处仍只比较检索证据，不比较生成质量。
 
 接口：POST `/api/runs/{id}/rechecks`；GET `/api/rechecks`；POST `/api/rechecks/{id}/review`，提交 verdict/note/reviewed。21测试通过，浏览器实测从旧反馈创建对照并保存判断；证据 artifacts/knowledge-recheck.json。由编程代理使用合成资料验收，不是客户评价或独立效果评估，新表单未单独完成手机验收。
+
+## 临时访客演示 · 2026-09-23
+
+[在线体验](https://entry-drill-quarterly-selected.trycloudflare.com)。每位访客独立 SQLite 空间，预置8篇合成知识。检索→反馈→工单认领与解决→人工审核知识回流→原问题复查均可操作。输入在演示服务器处理，请仅使用合成资料。演示依赖开发机与临时隧道，不是稳定托管。
+
+明确禁用模型生成：免费小模型实测有无依据承诺，所以演示显示真实BM25原文证据。即使服务器配置了模型，演示接口也拒绝use_model=true。已有模型接入与失败评测仍保留，不将检索当作模型答复。
+
+运行方式：设置 SO_DEMO_HOST 为确切演示域名，执行 python -m uvicorn app.demo:app --host 127.0.0.1 --port 8802。只运行单 worker；代理头仅信任实际反向代理。隔离入口复用本作品集 FeedbackLens MIT 代码，私人工作台仍使用原来的访问规则。
+
+30分钟会话、最多12个同时会话、每小时30个新会话、每会话60次写入、单次40KB。后台每20秒清理已过期且无活跃请求的数据库；重启失效。Cookie 使用HttpOnly、SameSite=Strict，HTTPS下Secure。跨站请求和未知域名拒绝。访客隔离不等于内部/对客知识的角色权限控制；当前访客能管理自己空间全部资料。
+
+26项测试通过，新增覆盖完整知识回流与复查隔离、过期清理、输入边界、模型禁用及私人令牌保护。公网HTTP双访客验收见 artifacts/public-demo-acceptance.json；浏览器实操和390px视口保存复查结论见 artifacts/public-browser-acceptance.json。初次问题只命中弱相关恢复窗口；新增合成知识后首位命中恢复步骤，旧记录和负面反馈保留，不据此宣称真实客户提效。

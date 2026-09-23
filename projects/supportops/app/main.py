@@ -70,12 +70,13 @@ class RecheckReview(StrictModel):
     reviewed: bool = False
 
 
-def create_app(db_path: str | None = None):
+def create_app(db_path=None, *, allow_model=True):
     path = db_path or os.getenv('SUPPORTOPS_DB', str(ROOT / 'data/supportops.sqlite3'))
 
     @asynccontextmanager
     async def lifespan(app):
-        initialize(path)
+        if not callable(path):
+            initialize(path)
         yield
 
     app = FastAPI(title='SupportOps', version='0.3.0', lifespan=lifespan)
@@ -85,14 +86,15 @@ def create_app(db_path: str | None = None):
     @app.middleware('http')
     async def guard(request: Request, call_next):
         if request.url.path.startswith('/api/'):
+            demo = request.scope.get('isolated_demo_session', False)
             token = os.getenv('SUPPORTOPS_ACCESS_TOKEN', '')
             supplied = request.headers.get('authorization', '').removeprefix('Bearer ')
             host = request.client.host if request.client else ''
-            if token and not hmac.compare_digest(supplied, token):
+            if not demo and token and not hmac.compare_digest(supplied, token):
                 return JSONResponse({'detail': '请输入此工作台的访问令牌'}, status_code=401)
-            if not token and host not in ('127.0.0.1', '::1', 'testclient'):
+            if not demo and not token and host not in ('127.0.0.1', '::1', 'testclient'):
                 return JSONResponse({'detail': '远程访问必须配置 SUPPORTOPS_ACCESS_TOKEN'}, status_code=403)
-            if not token and request.url.hostname not in ('127.0.0.1', 'localhost', '::1', 'testserver'):
+            if not demo and not token and request.url.hostname not in ('127.0.0.1', 'localhost', '::1', 'testserver'):
                 return JSONResponse({'detail': '本地模式不接受外部 Host'}, status_code=403)
             origin = request.headers.get('origin')
             if origin and origin.rstrip('/') != str(request.base_url).rstrip('/'):
@@ -133,8 +135,9 @@ def create_app(db_path: str | None = None):
     def health():
         with connect(path) as db:
             db.execute('SELECT 1')
-        return {'status': 'ok', 'model_configured': model.configured(),
-                'model': os.getenv('LLM_MODEL', '') if model.configured() else None,
+        return {'status': 'ok', 'model_configured': allow_model and model.configured(),
+                'model': os.getenv('LLM_MODEL', '') if allow_model and model.configured() else None,
+                'model_disabled_reason': '' if allow_model else '演示仅提供证据检索；小模型答复实测未达标',
                 'retrieval': 'BM25Plus / Chinese bigram', 'version': '0.3.0'}
 
     @app.get('/api/documents')
@@ -176,6 +179,8 @@ def create_app(db_path: str | None = None):
 
     @app.post('/api/ask', status_code=201)
     async def ask(body: Ask):
+        if body.use_model and not allow_model:
+            raise HTTPException(409, '演示仅提供证据检索；小模型答复实测未达标，请关闭模型生成')
         start = time.perf_counter()
         with connect(path) as db:
             docs = [dict(r) for r in db.execute(

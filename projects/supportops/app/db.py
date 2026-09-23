@@ -11,6 +11,7 @@ def now() -> str:
 
 @contextmanager
 def connect(path: str):
+    path = path() if callable(path) else path
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     db = sqlite3.connect(path, timeout=15)
     db.row_factory = sqlite3.Row

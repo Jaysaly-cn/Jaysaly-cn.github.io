@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-23",
+  "base": "https://entry-drill-quarterly-selected.trycloudflare.com",
+  "data": "Synthetic browser test; not customer feedback",
+  "question": "离线激活码如何恢复？",
+  "initial": "BM25 returned data export/deletion recovery-window evidence, insufficient for activation-code question",
+  "actions": ["Recorded unhelpful feedback", "Created ticket", "Assigned synthetic agent", "Moved to in-progress then resolved", "Edited general knowledge and confirmed publication", "Rechecked original question", "Saved human evidence judgment at 390px viewport"],
+  "ticket_id": "8f804f9eccb64ab4b58fb79627211250",
+  "result": "New activation-recovery knowledge became first evidence. Weakly related original evidence and negative feedback remained. Judgment saved as improved with remaining limitation noted.",
+  "model": "Disabled in demo, retrieval explicitly labelled non-generated",
+  "viewport_width": 390,
+  "document_scroll_width": 375,
+  "limitations": ["No physical phone certification", "No browser export download-to-disk check", "Temporary developer-machine tunnel"]
+}
