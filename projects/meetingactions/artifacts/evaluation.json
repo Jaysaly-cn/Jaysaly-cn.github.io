@@ -1,0 +1,77 @@
+{
+  "scope": "Synthetic date-rule development cases, not model accuracy",
+  "total": 10,
+  "passed": 10,
+  "results": [
+    {
+      "meeting_date": "2026-09-23",
+      "phrase": "今天",
+      "expected": "2026-09-23",
+      "actual": "2026-09-23",
+      "passed": true
+    },
+    {
+      "meeting_date": "2026-09-23",
+      "phrase": "明天",
+      "expected": "2026-09-24",
+      "actual": "2026-09-24",
+      "passed": true
+    },
+    {
+      "meeting_date": "2026-12-31",
+      "phrase": "后天",
+      "expected": "2027-01-02",
+      "actual": "2027-01-02",
+      "passed": true
+    },
+    {
+      "meeting_date": "2026-09-27",
+      "phrase": "下周一",
+      "expected": "2026-09-28",
+      "actual": "2026-09-28",
+      "passed": true
+    },
+    {
+      "meeting_date": "2026-09-23",
+      "phrase": "本周五",
+      "expected": "2026-09-25",
+      "actual": "2026-09-25",
+      "passed": true
+    },
+    {
+      "meeting_date": "2026-09-23",
+      "phrase": "下周五",
+      "expected": "2026-10-02",
+      "actual": "2026-10-02",
+      "passed": true
+    },
+    {
+      "meeting_date": "2026-09-23",
+      "phrase": "尽快",
+      "expected": "",
+      "actual": "",
+      "passed": true
+    },
+    {
+      "meeting_date": "2026-09-23",
+      "phrase": "周五",
+      "expected": "",
+      "actual": "",
+      "passed": true
+    },
+    {
+      "meeting_date": "2026-09-23",
+      "phrase": "2026-02-30",
+      "expected": "",
+      "actual": "",
+      "passed": true
+    },
+    {
+      "meeting_date": "2026-09-23",
+      "phrase": "2026-10-01",
+      "expected": "2026-10-01",
+      "actual": "2026-10-01",
+      "passed": true
+    }
+  ]
+}

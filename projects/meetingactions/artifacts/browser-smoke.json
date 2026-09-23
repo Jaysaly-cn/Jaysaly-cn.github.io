@@ -1,0 +1,39 @@
+{
+  "method": "Browser UI: actual local model, confirm two candidates, start and finish one task; read-only live export API validation",
+  "material": "Synthetic meeting only; review actions performed by development assistant",
+  "actions": [
+    {
+      "title": "完成接口文档",
+      "quote": "我明天完成接口文档",
+      "origin": "model",
+      "proposed_owner": "小林",
+      "proposed_due": "2026-09-24",
+      "owner": "小林",
+      "due_date": "2026-09-24",
+      "state": "done",
+      "completion_note": "合成验收：接口字段与错误说明已整理，作为完成流程演示"
+    },
+    {
+      "title": "检查发布清单",
+      "quote": "我下周一检查发布清单",
+      "origin": "model",
+      "proposed_owner": "小周",
+      "proposed_due": "2026-09-28",
+      "owner": "小周",
+      "due_date": "2026-09-28",
+      "state": "open",
+      "completion_note": ""
+    }
+  ],
+  "ics_event_count": 1,
+  "csv_rows": 2,
+  "ics_sha256": "2bd2bf2ce5eefb4ec1e816f755ed441d9094ee791b5ec71a3bfa3634b6e7c2cb",
+  "download_header": "attachment; filename=\"meeting-actions.ics\"",
+  "browser_download_acknowledged": false,
+  "browser_download_note": "IAB download-event wait timed out; HTTP content independently verified. No calendar-client import claim.",
+  "viewports": [
+    1440,
+    390
+  ],
+  "horizontal_overflow": false
+}
