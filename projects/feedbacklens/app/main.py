@@ -79,6 +79,8 @@ def create_app(path=None):
             CREATE TABLE IF NOT EXISTS duplicates(source_id TEXT PRIMARY KEY REFERENCES feedback(source_id),target_id TEXT REFERENCES feedback(source_id),version INTEGER,note TEXT,created_at TEXT);
             CREATE TABLE IF NOT EXISTS duplicate_events(id TEXT PRIMARY KEY,source_id TEXT REFERENCES feedback(source_id),snapshot TEXT,created_at TEXT);
             ''')
+            if 'metadata' not in {r['name'] for r in c.execute('PRAGMA table_info(model_runs)')}:
+                c.execute("ALTER TABLE model_runs ADD COLUMN metadata TEXT NOT NULL DEFAULT '{}'")
         yield
     app=FastAPI(title='FeedbackLens',version='0.1.0',lifespan=lifespan)
     security.install(app)
@@ -147,7 +149,7 @@ def create_app(path=None):
                 if not row:raise HTTPException(404,'反馈不存在')
                 if c.execute('SELECT count(*) FROM model_runs').fetchone()[0]>=100:raise HTTPException(409,'最多保存100次模型记录')
                 source=dict(row)
-            raw=None;error=None;code=502;identity=uuid4().hex;created=[]
+            raw=None;error=None;code=502;identity=uuid4().hex;created=[];metadata=model.provenance()
             try:
                 raw=await model.propose(source)
                 result=ModelResult.model_validate_json(raw)
@@ -165,7 +167,7 @@ def create_app(path=None):
                             aid=uuid4().hex
                             c.execute('INSERT INTO annotations VALUES(?,?,?,?,?,?,?)',(aid,item.source_id,s.theme,s.kind,s.quote,'draft',1))
                             created.append(aid)
-                c.execute('INSERT INTO model_runs VALUES(?,?,?,?,?,?,?)',(identity,item.source_id,raw,'failed' if error else 'saved',error,json.dumps(created),now()))
+                c.execute('INSERT INTO model_runs VALUES(?,?,?,?,?,?,?,?)',(identity,item.source_id,raw,'failed' if error else 'saved',error,json.dumps(created),now(),json.dumps(metadata)))
                 record=dict(c.execute('SELECT * FROM model_runs WHERE id=?',(identity,)).fetchone())
             if error:raise HTTPException(code,'模型建议未保存，原因见模型记录；可手工归类')
             return record

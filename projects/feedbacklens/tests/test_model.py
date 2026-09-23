@@ -57,3 +57,27 @@ def test_live_probe_replay_cannot_confirm_or_publish(tmp_path,monkeypatch,source
         assert c.get('/api/reports').json()==[]
         report=c.post('/api/reports',json={'title':'回放审核门槛','note':'所有模型建议尚未由人确认'}).json()
         assert report['confirmed_feedback']==0 and report['evidence']==[]
+
+def test_prompt_provenance_retained_on_failure(client,monkeypatch):
+    import hashlib
+    monkeypatch.setenv('FL_MODEL','synthetic-model')
+    mock(monkeypatch,[{'theme':'错误引用','kind':'problem','quote':'不在原文中'}])
+    assert client.post('/api/suggestions',json={'source_id':'a'}).status_code==422
+    record=client.get('/api/model-runs').json()[0]
+    saved=json.loads(record['metadata'])
+    assert saved['model']=='synthetic-model' and saved['prompt_version']=='v1'
+    assert saved['prompt_sha256']==hashlib.sha256(model.SYSTEM_PROMPT.encode()).hexdigest()
+    monkeypatch.setenv('FL_MODEL','changed-model')
+    assert json.loads(client.get('/api/model-runs').json()[0]['metadata'])==saved
+
+
+def test_legacy_run_migration_preserves_unknown_provenance(tmp_path):
+    import sqlite3
+    path=tmp_path/'legacy.db'
+    with sqlite3.connect(path) as c:
+        c.executescript("CREATE TABLE model_runs(id TEXT PRIMARY KEY,source_id TEXT,raw TEXT,status TEXT,error TEXT,annotation_ids TEXT,created_at TEXT); INSERT INTO model_runs VALUES('legacy','a','{}','saved',NULL,'[]','2026-09-23');")
+    with TestClient(create_app(path)) as client:
+        row=client.get('/api/model-runs').json()[0]
+        assert row['id']=='legacy' and row['raw']=='{}' and row['metadata']=='{}'
+    with TestClient(create_app(path)) as client:
+        assert client.get('/api/model-runs').json()[0]==row

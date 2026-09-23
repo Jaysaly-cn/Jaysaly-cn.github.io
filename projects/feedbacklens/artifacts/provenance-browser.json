@@ -1,0 +1,24 @@
+{
+  "date": "2026-09-23",
+  "data": "synthetic",
+  "verified": [
+    "browser submitted s1 model suggestion",
+    "new run shows model name v1 and SHA256",
+    "legacy s3 and s4 runs visibly marked missing provenance"
+  ],
+  "latest_run": {
+    "id": "48e2925ffe3542f59a3f2814b1915bc9",
+    "source_id": "s1",
+    "raw": "{\n  \"suggestions\": [\n    {\n      \"theme\": \"功能需求\",\n      \"kind\": \"request\",\n      \"quote\": \"希望增加离线导出功能\"\n    }\n  ]\n}",
+    "status": "saved",
+    "error": null,
+    "annotation_ids": "[\"9ba3c7bce9eb49e48657c7c2fe54790d\"]",
+    "created_at": "2026-09-23T09:15:07.542771+00:00",
+    "metadata": "{\"model\": \"portfolio-qwen-1.5b\", \"prompt_version\": \"v1\", \"prompt_sha256\": \"7edb02401d932ff26339e4441f4a4d13a5f1103eae9ea2fff92b67dce248ebb8\", \"temperature\": 0, \"max_tokens\": 1500}"
+  },
+  "legacy_metadata": [
+    {},
+    {}
+  ],
+  "scope": "local only, not independent user validation"
+}
