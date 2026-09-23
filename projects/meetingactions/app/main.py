@@ -194,6 +194,11 @@ def create_app(path=None):
                   **part, 'segmentation':segments.VERSION, 'sha256':meeting['sha256']}]
         start, rid = time.monotonic(), uuid4().hex
         async with busy:
+            # The demo counts actual attempts here, after successful-run reuse
+            # and the process-wide busy check, never based on a client header.
+            before_call = getattr(app.state, 'before_model_call', None)
+            if before_call:
+                before_call()
             try:
                 raw = await model.extract(meeting['transcript'][part['start']:part['end']],meeting['attendees'])
                 trace.append({'step':'model_output','candidates':raw})

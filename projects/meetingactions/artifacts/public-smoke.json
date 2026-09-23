@@ -1,0 +1,142 @@
+{
+  "url": "https://surrounded-symphony-summit-flags.trycloudflare.com",
+  "model": "local Qwen2.5 1.5B",
+  "synthetic_only": true,
+  "extraction": {
+    "status": 201,
+    "elapsed_ms": 4000,
+    "result": {
+      "id": "332c721dd61a4f6e96e46f42eac0814f",
+      "actions": [
+        {
+          "id": "1eeb367e8b934064b21579f4f8f46411",
+          "meeting_id": "1a36a6e0fd084bb68663afc15f1ae2ba",
+          "title": "完成接口文档",
+          "quote": "我明天完成接口文档",
+          "quote_start": 3,
+          "proposed_owner": "小林",
+          "proposed_due": "2026-09-24",
+          "due_phrase": "明天",
+          "owner": "",
+          "due_date": "",
+          "state": "draft",
+          "origin": "model",
+          "version": 1,
+          "review_note": "",
+          "completion_note": "",
+          "created_at": "2026-09-23T12:48:05.867858+00:00",
+          "updated_at": "2026-09-23T12:48:05.867858+00:00"
+        },
+        {
+          "id": "d1337e9b49694bc0937597124b03ca02",
+          "meeting_id": "1a36a6e0fd084bb68663afc15f1ae2ba",
+          "title": "检查发布清单",
+          "quote": "我下周一检查发布清单",
+          "quote_start": 17,
+          "proposed_owner": "小周",
+          "proposed_due": "2026-09-28",
+          "due_phrase": "下周一",
+          "owner": "",
+          "due_date": "",
+          "state": "draft",
+          "origin": "model",
+          "version": 1,
+          "review_note": "",
+          "completion_note": "",
+          "created_at": "2026-09-23T12:48:05.868901+00:00",
+          "updated_at": "2026-09-23T12:48:05.868901+00:00"
+        }
+      ],
+      "trace": [
+        {
+          "step": "read",
+          "processed": 49,
+          "total": 49,
+          "index": 0,
+          "start": 0,
+          "end": 49,
+          "chars": 49,
+          "hard_split": false,
+          "segmentation": "contiguous-v1",
+          "sha256": "3759aa5396b95a49fdc8149d8a5f843da28cccf743148192dd09ebabcc6b35e4"
+        },
+        {
+          "step": "model_output",
+          "candidates": [
+            {
+              "title": "完成接口文档",
+              "quote": "我明天完成接口文档",
+              "owner": "小林",
+              "due_phrase": "明天"
+            },
+            {
+              "title": "检查发布清单",
+              "quote": "我下周一检查发布清单",
+              "owner": "小周",
+              "due_phrase": "下周一"
+            }
+          ]
+        },
+        {
+          "step": "extract",
+          "model": "portfolio-qwen-1.5b",
+          "count": 2
+        },
+        {
+          "step": "validate",
+          "result": "all_valid"
+        },
+        {
+          "step": "review",
+          "result": "required",
+          "action_ids": [
+            "1eeb367e8b934064b21579f4f8f46411",
+            "d1337e9b49694bc0937597124b03ca02"
+          ]
+        },
+        {
+          "elapsed_ms": 3516
+        }
+      ],
+      "truncated": false,
+      "reused": false,
+      "segment": {
+        "index": 0,
+        "start": 0,
+        "end": 49,
+        "chars": 49,
+        "hard_split": false
+      }
+    }
+  },
+  "reused": true,
+  "isolation": {
+    "different_meeting_ids": true,
+    "cross_read": 404,
+    "cross_write": 404,
+    "other_board_empty": true
+  },
+  "exports": {
+    "json": {
+      "status": 200,
+      "bytes": 730,
+      "other_visitor_empty": true
+    },
+    "csv": {
+      "status": 200,
+      "bytes": 241,
+      "other_visitor_empty": true
+    },
+    "ics": {
+      "status": 200,
+      "bytes": 429,
+      "other_visitor_empty": true
+    }
+  },
+  "quota": {
+    "service": "MeetingActions temporary demo",
+    "temporary": true,
+    "session_minutes": 30
+  },
+  "run_count": 1
+}

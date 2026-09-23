@@ -44,5 +44,5 @@ action($('#extract'),async()=>{
  catch(e){if(current?.id===id)await load(id);throw e;}
 });
 document.querySelectorAll('[data-export]').forEach(b=>action(b,async()=>{const format=b.dataset.export;const r=await fetch('/api/export/'+format,{headers:{Authorization:'Bearer '+(sessionStorage.getItem('ma-token')||'')}});if(!r.ok)throw Error('导出失败，请检查访问令牌');const url=URL.createObjectURL(await r.blob());const a=el('a');a.href=url;a.download='meeting-actions.'+format;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}));
-$('#auth').onclick=()=>{const token=prompt('工作台令牌（仅当前标签页保存）');if(token!==null){sessionStorage.setItem('ma-token',token);location.reload();}};
+if($('#auth'))$('#auth').onclick=()=>{const token=prompt('工作台令牌（仅当前标签页保存）');if(token!==null){sessionStorage.setItem('ma-token',token);location.reload();}};
 (async()=>{try{const h=await api('/health');modelReady=h.model_configured;$('#model-status').textContent=modelReady?'免费模型已配置 · 每段最多 4000 字符，逐段核对':'模型未配置 · 可手工关联行动项';await list();}catch(e){notice(e.message,true);}})();
