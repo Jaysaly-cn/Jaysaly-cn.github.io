@@ -1,0 +1,55 @@
+{
+  "method": "Browser UI: create synthetic brief, actual local model, blocked approval, manual revision, approval, export",
+  "versions": [
+    {
+      "number": 1,
+      "title": "拾光任务本 · 合成产品示例",
+      "body": "支持手动添加任务和设置截止日期，支持按周查看任务清单",
+      "origin": "model",
+      "model": "portfolio-qwen",
+      "state": "draft",
+      "review_note": "",
+      "checks": {
+        "blockers": [
+          {
+            "code": "required",
+            "detail": "正文缺少必带说明：示例产品，仅供学习"
+          }
+        ],
+        "body_characters": 26,
+        "limit": 600,
+        "human_checks": [
+          "逐句核对事实含义、条件与来源",
+          "确认措辞、权益说明与目标渠道适用性"
+        ],
+        "semantic_verified": false
+      }
+    },
+    {
+      "number": 2,
+      "title": "把本周任务整理成清单",
+      "body": "拾光任务本支持手动添加任务、设置截止日期，也支持按周查看任务清单。\n示例产品，仅供学习",
+      "origin": "manual",
+      "model": "",
+      "state": "approved",
+      "review_note": "逐句对照合成规格 F1、F2，已补齐学习用途说明，无额外效果声明",
+      "checks": {
+        "blockers": [],
+        "body_characters": 43,
+        "limit": 600,
+        "human_checks": [
+          "逐句核对事实含义、条件与来源",
+          "确认措辞、权益说明与目标渠道适用性"
+        ],
+        "semantic_verified": false
+      }
+    }
+  ],
+  "export_count": 1,
+  "viewport_checks": [
+    1440,
+    390
+  ],
+  "horizontal_overflow": false,
+  "note": "Only synthetic test material; no external publishing occurred."
+}

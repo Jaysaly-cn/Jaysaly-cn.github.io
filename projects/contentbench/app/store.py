@@ -1,0 +1,40 @@
+import sqlite3
+from contextlib import contextmanager
+from datetime import datetime, timezone
+from pathlib import Path
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+@contextmanager
+def connect(path):
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    db = sqlite3.connect(path, timeout=15)
+    db.row_factory = sqlite3.Row
+    db.execute('PRAGMA foreign_keys=ON')
+    try:
+        with db:
+            yield db
+    finally:
+        db.close()
+
+
+def initialize(path):
+    with connect(path) as db:
+        db.executescript('''
+        PRAGMA journal_mode=WAL;
+        CREATE TABLE IF NOT EXISTS campaigns(id TEXT PRIMARY KEY, brief TEXT NOT NULL, created_at TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS drafts(id TEXT PRIMARY KEY, campaign_id TEXT NOT NULL REFERENCES campaigns(id),
+          channel TEXT NOT NULL, current_revision TEXT NOT NULL, created_at TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS revisions(id TEXT PRIMARY KEY, draft_id TEXT NOT NULL REFERENCES drafts(id),
+          number INTEGER NOT NULL, title TEXT NOT NULL, body TEXT NOT NULL, fact_ids TEXT NOT NULL,
+          origin TEXT NOT NULL, model TEXT NOT NULL, checks TEXT NOT NULL, state TEXT NOT NULL,
+          review_note TEXT NOT NULL DEFAULT '', version INTEGER NOT NULL DEFAULT 1, created_at TEXT NOT NULL,
+          UNIQUE(draft_id,number));
+        CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY AUTOINCREMENT, campaign_id TEXT NOT NULL,
+          action TEXT NOT NULL, detail TEXT NOT NULL, created_at TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS exports(id TEXT PRIMARY KEY, campaign_id TEXT NOT NULL,
+          snapshot TEXT NOT NULL, created_at TEXT NOT NULL);
+        ''')

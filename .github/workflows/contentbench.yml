@@ -1,0 +1,23 @@
+name: ContentBench verification
+on:
+  push:
+    paths: ['projects/contentbench/**', '.github/workflows/contentbench.yml']
+  pull_request:
+    paths: ['projects/contentbench/**', '.github/workflows/contentbench.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/contentbench
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-lock.txt
+      - run: python -m pytest -q
+      - run: python -m evals.run
+      - run: node --check app/web/app.js

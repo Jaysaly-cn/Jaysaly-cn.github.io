@@ -1,0 +1,96 @@
+{
+  "suite": "synthetic lexical guard development cases",
+  "passed": 10,
+  "total": 10,
+  "results": [
+    {
+      "case": "grounded",
+      "expected": [],
+      "actual": [],
+      "passed": true
+    },
+    {
+      "case": "missing_disclaimer",
+      "expected": [
+        "required"
+      ],
+      "actual": [
+        "required"
+      ],
+      "passed": true
+    },
+    {
+      "case": "invented_number",
+      "expected": [
+        "numbers"
+      ],
+      "actual": [
+        "numbers"
+      ],
+      "passed": true
+    },
+    {
+      "case": "wrong_fact",
+      "expected": [
+        "numbers"
+      ],
+      "actual": [
+        "numbers"
+      ],
+      "passed": true
+    },
+    {
+      "case": "fullwidth",
+      "expected": [],
+      "actual": [],
+      "passed": true
+    },
+    {
+      "case": "forbidden_word",
+      "expected": [
+        "forbidden"
+      ],
+      "actual": [
+        "forbidden"
+      ],
+      "passed": true
+    },
+    {
+      "case": "casefold",
+      "expected": [
+        "forbidden"
+      ],
+      "actual": [
+        "forbidden"
+      ],
+      "passed": true
+    },
+    {
+      "case": "no_refs",
+      "expected": [
+        "facts"
+      ],
+      "actual": [
+        "facts"
+      ],
+      "passed": true
+    },
+    {
+      "case": "length",
+      "expected": [
+        "length"
+      ],
+      "actual": [
+        "length"
+      ],
+      "passed": true
+    },
+    {
+      "case": "semantic_limit",
+      "expected": [],
+      "actual": [],
+      "passed": true
+    }
+  ],
+  "limitation": "semantic_limit intentionally demonstrates that invented capabilities can pass lexical checks; human review is required."
+}

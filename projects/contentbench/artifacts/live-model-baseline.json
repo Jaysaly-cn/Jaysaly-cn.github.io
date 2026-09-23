@@ -1,0 +1,123 @@
+{
+  "evaluated_at": "2026-09-23T04:10:01.945213+00:00",
+  "type": "real local inference on synthetic brief",
+  "model_file": "Qwen2.5-0.5B-Instruct Q4_K_M",
+  "runtime": "llama.cpp b11118 CPU, 4 threads, context 8192",
+  "brief": {
+    "name": "拾光任务本（合成产品）",
+    "audience": "职场新人",
+    "objective": "邀请体验任务整理功能",
+    "tone": "清晰、克制、友好",
+    "facts": [
+      {
+        "id": "F1",
+        "text": "支持手动添加任务和设置截止日期",
+        "source": "合成产品说明"
+      },
+      {
+        "id": "F2",
+        "text": "支持按周查看任务清单",
+        "source": "合成产品说明"
+      }
+    ],
+    "forbidden": [
+      "行业第一",
+      "保证",
+      "最强"
+    ],
+    "required_phrase": "示例产品，仅供学习"
+  },
+  "results": [
+    {
+      "channel": "小红书",
+      "output": {
+        "title": "拾光任务本（合成产品）：职场新人的必备任务整理神器",
+        "body": "在职场新人中，任务整理是必不可少的技能。拾光任务本（合成产品）是一款专为职场新人设计的任务整理工具，它支持手动添加任务和设置截止日期，以及按周查看任务清单。这款产品不仅功能强大，而且易于使用，非常适合职场新人学习和提升。",
+        "fact_ids": [
+          "F1",
+          "F2"
+        ]
+      },
+      "model": "portfolio-qwen",
+      "schema_valid": true,
+      "fact_ids_valid": true,
+      "checks": {
+        "blockers": [
+          {
+            "code": "required",
+            "detail": "正文缺少必带说明：示例产品，仅供学习"
+          }
+        ],
+        "body_characters": 110,
+        "limit": 600,
+        "human_checks": [
+          "逐句核对事实含义、条件与来源",
+          "确认措辞、权益说明与目标渠道适用性"
+        ],
+        "semantic_verified": false
+      },
+      "latency_seconds": 3.203
+    },
+    {
+      "channel": "邮件",
+      "output": {
+        "title": "拾光任务本（合成产品）",
+        "body": "欢迎加入我们的团队！我们提供了一个全新的任务整理功能，旨在帮助职场新人快速了解和管理任务。这个功能支持手动添加任务和设置截止日期，以及按周查看任务清单。通过这个功能，您将能够更有效地管理您的任务，提高工作效率。",
+        "fact_ids": [
+          "F1",
+          "F2"
+        ]
+      },
+      "model": "portfolio-qwen",
+      "schema_valid": true,
+      "fact_ids_valid": true,
+      "checks": {
+        "blockers": [
+          {
+            "code": "required",
+            "detail": "正文缺少必带说明：示例产品，仅供学习"
+          }
+        ],
+        "body_characters": 105,
+        "limit": 1200,
+        "human_checks": [
+          "逐句核对事实含义、条件与来源",
+          "确认措辞、权益说明与目标渠道适用性"
+        ],
+        "semantic_verified": false
+      },
+      "latency_seconds": 2.156
+    },
+    {
+      "channel": "短信",
+      "output": {
+        "title": "拾光任务本（合成产品）",
+        "body": "支持手动添加任务和设置截止日期，支持按周查看任务清单，邀请职场新人体验任务整理功能。",
+        "fact_ids": [
+          "F1",
+          "F2"
+        ]
+      },
+      "model": "portfolio-qwen",
+      "schema_valid": true,
+      "fact_ids_valid": true,
+      "checks": {
+        "blockers": [
+          {
+            "code": "required",
+            "detail": "正文缺少必带说明：示例产品，仅供学习"
+          }
+        ],
+        "body_characters": 42,
+        "limit": 70,
+        "human_checks": [
+          "逐句核对事实含义、条件与来源",
+          "确认措辞、权益说明与目标渠道适用性"
+        ],
+        "semantic_verified": false
+      },
+      "latency_seconds": 1.422
+    }
+  ],
+  "note": "Three development smoke cases, not benchmark accuracy. Rule checks do not establish semantic truth."
+}
