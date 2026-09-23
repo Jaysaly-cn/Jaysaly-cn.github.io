@@ -56,6 +56,12 @@ def markdown(snapshot):
         lines.append('| ' + escape(row['dimension']) + ' | ' + ' | '.join(values) + ' |')
     lines += ['', '## 待补资料', '']
     lines += [f'- {escape(g["entity"])} / {escape(g["dimension"])}' for g in snapshot['gaps']] or ['暂无空白单元格；不代表研究已完整。']
+    lines += ['', '## 模型处理范围', '', '分段成功表示已处理该范围，不代表事实完整召回；人工研究不受此覆盖计数限制。', '']
+    for source in snapshot['sources']:
+        coverage = source.get('extraction_coverage')
+        if coverage:
+            lines.append(f'- {escape(source["title"])}：{coverage["covered_characters"]}/{coverage["total_characters"]} 字符；'
+                         + ('全部段已处理' if coverage['complete'] else '仍有未成功处理的分段'))
     lines += ['', '## 引用与原文快照', '']
     sources = {s['id']: s for s in snapshot['sources']}
     for number, claim in refs.values():

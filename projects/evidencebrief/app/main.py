@@ -8,11 +8,11 @@ from pathlib import Path
 from typing import Annotated, Literal
 from uuid import uuid4
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, field_validator
-from . import collect, model, report, security
+from . import collect, model, report, security, segments
 from .store import connect, initialize, now
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -83,9 +83,10 @@ def create_app(db_path=None):
         initialize(path)
         yield
 
-    app = FastAPI(title='EvidenceBrief', version='0.1.0', lifespan=lifespan)
+    app = FastAPI(title='EvidenceBrief', version='0.2.0', lifespan=lifespan)
     security.install(app)
     slots = asyncio.Semaphore(2)
+    in_flight = set()  # Single-process workspace; no persisted running state to strand on restart.
 
     def project_row(db, identity):
         row = db.execute('SELECT * FROM projects WHERE id=?', (identity,)).fetchone()
@@ -124,15 +125,15 @@ def create_app(db_path=None):
             event(db, pid, 'source_added', f'{body.entity}：{body.title} ({method})')
             return source_row(db, pid, identity)
 
-    def add_claim(db, pid, body, origin='human'):
+    def add_claim(db, pid, body, origin='human', quote_start=None):
         p = project_row(db, pid)
         source = source_row(db, pid, body.source_id)
         if source['archived']:
             raise HTTPException(409, '已归档来源不能新增结论')
         if body.dimension not in p['dimensions']:
             raise HTTPException(422, '比较维度不属于此研究项目')
-        position = source['content'].find(body.quote)
-        if position < 0:
+        position = source['content'].find(body.quote) if quote_start is None else quote_start
+        if position < 0 or source['content'][position:position+len(body.quote)] != body.quote:
             raise HTTPException(422, '引用必须是此来源中的连续原文，不可改写')
         existing = db.execute('SELECT * FROM claims WHERE project_id=? AND source_id=? AND dimension=? AND statement=? AND quote=?',
                               (pid, body.source_id, body.dimension, body.statement, body.quote)).fetchone()
@@ -150,6 +151,8 @@ def create_app(db_path=None):
     def snapshot(db, pid):
         p = project_row(db, pid)
         sources = [dict(r) for r in db.execute('SELECT * FROM sources WHERE project_id=? ORDER BY captured_at', (pid,))]
+        for source in sources:
+            source['extraction_coverage'] = segment_state(db,pid,source['id'])
         claims = [dict(r) for r in db.execute('SELECT * FROM claims WHERE project_id=? ORDER BY created_at', (pid,))]
         return report.build(p, sources, claims)
 
@@ -157,7 +160,7 @@ def create_app(db_path=None):
     def health():
         with connect(path) as db:
             db.execute('SELECT 1')
-        return {'status': 'ok', 'version': '0.1.0', 'model_configured': model.configured(),
+        return {'status': 'ok', 'version': '0.2.0', 'model_configured': model.configured(),
                 'model_input_character_limit': model.input_limit()}
 
     @app.get('/api/projects')
@@ -238,8 +241,27 @@ def create_app(db_path=None):
             event(db, pid, 'claim_reviewed', f'{row["statement"]} → {label}；{body.note}')
             return dict(db.execute('SELECT * FROM claims WHERE id=?', (cid,)).fetchone())
 
+    def segment_state(db, pid, sid):
+        source = source_row(db, pid, sid)
+        rows = {r['segment_index']: dict(r) for r in db.execute(
+            'SELECT * FROM extraction_segments WHERE source_id=? AND plan_version=?', (sid, segments.VERSION))}
+        windows = []
+        for w in segments.plan(source['content']):
+            saved = rows.get(w['index'], {})
+            windows.append({**w, 'state': 'running' if (sid,w['index']) in in_flight else saved.get('state','pending'),
+                            'attempts': saved.get('attempts',0), 'error': saved.get('error',''),
+                            'claim_ids': json.loads(saved.get('claim_ids','[]'))})
+        processed = segments.covered([w for w in windows if w['state']=='success'])
+        return {'plan_version': segments.VERSION, 'segments': windows, 'covered_characters': processed,
+                'total_characters': len(source['content']), 'complete': processed==len(source['content'])}
+
+    @app.get('/api/projects/{pid}/sources/{sid}/segments')
+    def source_segments(pid: str, sid: str):
+        with connect(path) as db:
+            return segment_state(db,pid,sid)
+
     @app.post('/api/projects/{pid}/sources/{sid}/suggest', status_code=201)
-    async def suggestions(pid: str, sid: str):
+    async def suggestions(pid: str, sid: str, segment: int = Query(default=0, ge=0)):
         if not model.configured():
             raise HTTPException(409, '未配置免费/本地模型；可手工关联原文并继续研究')
         with connect(path) as db:
@@ -247,22 +269,56 @@ def create_app(db_path=None):
             source = source_row(db, pid, sid)
             if source['archived']:
                 raise HTTPException(409, '已归档来源不能抽取建议')
+            windows = segments.plan(source['content'])
+            if segment >= len(windows):
+                raise HTTPException(422, '分段不存在')
+            window = windows[segment]
+            prior = db.execute('SELECT * FROM extraction_segments WHERE source_id=? AND plan_version=? AND segment_index=?',
+                               (sid, segments.VERSION, segment)).fetchone()
+            if prior and prior['state']=='success':
+                return {'claims': [], 'cached': True, 'coverage': segment_state(db,pid,sid), 'segment': window}
+        key = (sid, segment)
+        if key in in_flight:
+            raise HTTPException(409, '此段正在处理，请等待当前请求完成')
+        in_flight.add(key)
+        excerpt = source['content'][window['start']:window['end']]
+        attempts = prior['attempts'] + 1 if prior else 1
+
+        def save_attempt(db, state, ids, error=''):
+            db.execute('INSERT OR REPLACE INTO extraction_segments VALUES(?,?,?,?,?,?,?,?,?,?,?)',
+                       (sid, segments.VERSION, segment, window['start'], window['end'], state, attempts,
+                        os.environ.get('EB_MODEL',''), json.dumps(ids), error, now()))
         try:
             async with slots:
-                proposed = await model.suggest(source, p['dimensions'])
+                proposed = await model.suggest({**source,'content':excerpt}, p['dimensions'])
             bodies = [Claim(source_id=sid, **item) for item in proposed]
+            offsets = []
+            for body in bodies:
+                position = excerpt.find(body.quote)
+                if position < 0 or excerpt.find(body.quote,position+1)>=0:
+                    raise ValueError('引用必须唯一定位在当前分段内')
+                offsets.append(window['start']+position)
             with connect(path) as db:
                 db.execute('BEGIN IMMEDIATE')
-                results = [add_claim(db, pid, body, 'model') for body in bodies]
-                processed = min(len(source['content']), model.input_limit())
-                event(db, pid, 'model_suggested', f'{len(results)} 条候选；处理来源前 {processed} 字符；均需人工审核')
-            return {'claims': results, 'model': os.environ['EB_MODEL'], 'scope': f'first {processed} characters',
+                if source_row(db,pid,sid)['archived']:
+                    raise ValueError('来源处理期间已归档')
+                results = [add_claim(db, pid, body, 'model', offset) for body,offset in zip(bodies,offsets)]
+                save_attempt(db,'success',[r['id'] for r in results])
+                processed = len(excerpt)
+                event(db, pid, 'model_suggested', f'第{segment+1}段 [{window["start"]},{window["end"]})：{len(results)} 条候选；均需人工审核')
+            in_flight.discard(key)
+            with connect(path) as db:
+                coverage = segment_state(db,pid,sid)
+            return {'claims': results, 'model': os.environ['EB_MODEL'], 'scope': f'characters {window["start"]}:{window["end"]}',
                     'processed_characters': processed, 'total_characters': len(source['content']),
-                    'truncated': processed < len(source['content'])}
+                    'truncated': not coverage['complete'], 'segment': window, 'coverage': coverage, 'cached': False}
         except Exception as exc:
             with connect(path) as db:
+                save_attempt(db,'failed',[],type(exc).__name__)
                 event(db, pid, 'model_failed', type(exc).__name__)
-            raise HTTPException(502, '模型建议未通过验证或调用失败；没有保存半成品，请继续手工研究')
+            raise HTTPException(502, '此段模型建议未通过验证或调用失败；未保存此段半成品，可重试；其他已成功分段保留')
+        finally:
+            in_flight.discard(key)
 
     @app.post('/api/projects/{pid}/reports', status_code=201)
     def create_report(pid: str):

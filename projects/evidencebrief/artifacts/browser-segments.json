@@ -1,0 +1,73 @@
+{
+  "scope": "Synthetic browser flow, no real customer data",
+  "source_sha256": "969fe925224bf870b6f9b6715a32857192bcff0295825d3436bd0f7b3e92b606",
+  "coverage_after_restart": {
+    "plan_version": "chars-v1",
+    "segments": [
+      {
+        "index": 0,
+        "start": 0,
+        "end": 3591,
+        "state": "failed",
+        "attempts": 1,
+        "error": "ValueError",
+        "claim_ids": []
+      },
+      {
+        "index": 1,
+        "start": 3351,
+        "end": 4624,
+        "state": "success",
+        "attempts": 1,
+        "error": "",
+        "claim_ids": [
+          "d422e26604d542818b84b1a42795f283",
+          "5bf1da10769f44efaf4d0e37ec33273b"
+        ]
+      }
+    ],
+    "covered_characters": 1273,
+    "total_characters": 4624,
+    "complete": false
+  },
+  "claims": [
+    {
+      "id": "d422e26604d542818b84b1a42795f283",
+      "project_id": "9119608b584945c5b21dcd63f471724a",
+      "source_id": "a2ba7517a8824d1aa756beec4f0a4aa6",
+      "entity": "Alpha",
+      "dimension": "价格",
+      "statement": "每月 19 元",
+      "quote": "Alpha 团队版每月 19 元，支持导入 Markdown 文档。",
+      "quote_start": 4590,
+      "state": "draft",
+      "origin": "model",
+      "review_note": "",
+      "version": 1,
+      "created_at": "2026-09-23T05:33:07.537590+00:00",
+      "updated_at": "2026-09-23T05:33:07.537590+00:00"
+    },
+    {
+      "id": "5bf1da10769f44efaf4d0e37ec33273b",
+      "project_id": "9119608b584945c5b21dcd63f471724a",
+      "source_id": "a2ba7517a8824d1aa756beec4f0a4aa6",
+      "entity": "Alpha",
+      "dimension": "导入格式",
+      "statement": "支持导入 Markdown 文档",
+      "quote": "Alpha 团队版每月 19 元，支持导入 Markdown 文档。",
+      "quote_start": 4590,
+      "state": "draft",
+      "origin": "model",
+      "review_note": "",
+      "version": 1,
+      "created_at": "2026-09-23T05:33:07.537590+00:00",
+      "updated_at": "2026-09-23T05:33:07.537590+00:00"
+    }
+  ],
+  "report_id": "a364dff186f8469cad6e1f3bacd69ad8",
+  "report_contains_coverage": true,
+  "mobile": {
+    "width": 390,
+    "scroll": 375
+  }
+}

@@ -46,4 +46,9 @@ def initialize(path):
         CREATE TABLE IF NOT EXISTS reports(
           id TEXT PRIMARY KEY,project_id TEXT NOT NULL REFERENCES projects(id),
           snapshot TEXT NOT NULL,markdown TEXT NOT NULL,created_at TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS extraction_segments(
+          source_id TEXT NOT NULL REFERENCES sources(id),plan_version TEXT NOT NULL,segment_index INTEGER NOT NULL,
+          start INTEGER NOT NULL,end INTEGER NOT NULL,state TEXT NOT NULL,attempts INTEGER NOT NULL,
+          model TEXT NOT NULL,claim_ids TEXT NOT NULL,error TEXT NOT NULL,updated_at TEXT NOT NULL,
+          PRIMARY KEY(source_id,plan_version,segment_index));
         ''')

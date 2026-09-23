@@ -38,7 +38,7 @@ python -m venv .venv
 
 已接入免费本机 Qwen2.5-1.5B-Instruct Q4_K_M，通过 llama.cpp CPU 运行，无 API Key。五条合成开发问题真实调用均返回可校验候选，但仍有否定信息和套餐限制漏提，不能称为 100% 准确率。0.5B / 1.5B 原始失败与提示迭代见 [模型评测](docs/MODEL_EVALUATION.md)。默认不自动调用，需点击提取按钮。
 
-本机启动前设置 `EB_MODEL_BASE_URL=http://127.0.0.1:8771/v1`、`EB_MODEL=portfolio-qwen-1.5b`。部署与哈希见 [本机模型说明](docs/LOCAL_MODEL.md)。本地处理来源前 4000 字符；界面明确显示覆盖范围与未处理部分。候选不会自动批准，不保证完整召回。
+本机启动前设置 `EB_MODEL_BASE_URL=http://127.0.0.1:8771/v1`、`EB_MODEL=portfolio-qwen-1.5b`。部署与哈希见 [本机模型说明](docs/LOCAL_MODEL.md)。v0.2 按最多3600字符、重叠240字符分段，支持逐段查看、批量继续、失败重试和停止。分段状态持久化；覆盖按成功范围的并集计算，报告冻结当时的处理范围。候选不会自动批准，不保证完整召回。
 
 启动前设置环境变量（`.env.example` 仅示例，不自动加载）：
 
@@ -58,7 +58,7 @@ python -m evals.run
 node --check web/app.js
 ```
 
-21 项自动测试覆盖研究流程、跨项目边界、原文校验、归档行为、历史报告冻结、审核版本冲突、模型整批回滚、URL 过滤和重定向。协议测试使用 mock；另运行 `python -m evals.live_model` 可重复真实本机模型开发评测。11 项合成工作流评测只验证应用不变量。
+31 项自动测试覆盖研究流程、跨项目边界、原文校验、归档行为、历史报告冻结、审核版本冲突、模型整批回滚、URL 过滤和重定向。协议测试使用 mock；另运行 `python -m evals.live_model` 可重复真实本机模型开发评测。11 项合成工作流评测只验证应用不变量。
 
 Dockerfile 为单服务部署入口。需要持久化 `/app/data`，远程必须设置 `EVIDENCEBRIEF_ACCESS_TOKEN`；不要信任所有来源的转发头，保持单 worker。公开部署应由 HTTPS 代理接入、限制请求体并建立磁盘备份。当前尚未提供公网动态服务。
 

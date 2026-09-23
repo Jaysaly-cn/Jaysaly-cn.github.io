@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-23T04:27:59.097124+00:00",
+  "generated_at": "2026-09-23T05:29:42.029960+00:00",
   "scope": "Synthetic development workflow; no live model evaluation",
   "total": 11,
   "passed": 11,
@@ -12,8 +12,8 @@
     },
     {
       "case": "相同材料去重",
-      "actual": "e6f89106cf774aefb124bfd31b74c471",
-      "expected": "e6f89106cf774aefb124bfd31b74c471",
+      "actual": "0de5d397cdd74f11aa7dfa1cbf3b760c",
+      "expected": "0de5d397cdd74f11aa7dfa1cbf3b760c",
       "pass": true
     },
     {
