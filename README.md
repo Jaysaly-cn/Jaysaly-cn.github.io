@@ -1,5 +1,7 @@
 # Jaysaly's personal homepage
 
+**AI 作品集第一辑已收尾。** [进入陈列馆](https://jaysaly-cn.github.io/ai/) · [交接说明](PORTFOLIO_HANDOFF.md)。11 款项目均有 GitHub Pages 网页交互演示与完整后端源码；旧临时隧道已停用。网页演示使用合成资料，不调用在线模型。
+
 俞凯杰的独立静态个人主页，部署目标为 `https://jaysaly-cn.github.io/`。
 
 ## 作品集结构

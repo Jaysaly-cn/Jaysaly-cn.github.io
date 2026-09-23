@@ -1,0 +1,13 @@
+{
+  "id": "evaldesk",
+  "name": "EvalDesk",
+  "title": "固定样例评测",
+  "source": "正向\n负向\n中性",
+  "candidates": [],
+  "steps": [
+    "测试集版本",
+    "任务执行",
+    "逐例复核",
+    "报告冻结"
+  ]
+}

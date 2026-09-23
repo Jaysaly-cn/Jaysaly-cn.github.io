@@ -1,0 +1,15 @@
+name: Browser demos
+on:
+  push:
+    paths: ['demos/ai/**', 'ai/**', 'assets/ai-covers/**', '.github/workflows/browser-demos.yml']
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check demos/ai/demo.js
+      - run: node --test demos/ai/demo.test.cjs

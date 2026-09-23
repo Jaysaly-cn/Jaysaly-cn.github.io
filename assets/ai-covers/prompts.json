@@ -1,0 +1,68 @@
+[
+  {
+    "id": "evidencebrief",
+    "file": "evidencebrief.png",
+    "method": "built-in image_gen",
+    "prompt": "Create an editorial 3D illustration for an AI portfolio project EvidenceBrief, landscape 3:2. A museum-quality miniature sculpture of layered ivory research papers linked by fine sage green threads to a clear glass prism, representing traceable evidence and human reviewed research. Warm off-white seamless background, soft daylight, sophisticated tactile paper and frosted glass, restrained sage palette, plenty of negative space, no text, no logos, no robot, no fake UI. Save as project cover."
+  },
+  {
+    "id": "supportops",
+    "file": "supportops.png",
+    "method": "built-in image_gen",
+    "prompt": "Use case: stylized-concept. Create a landscape 3:2 editorial 3D cover illustration for AI portfolio product supportops: blue porcelain speech bubble beside indexed knowledge cards and a small human handoff ticket. A refined miniature museum sculpture, warm off-white seamless background, tactile ivory paper and frosted glass, restrained accent color, soft daylight with delicate shadows, generous negative space. Consistent sophisticated design collection. No text, no letters, no logo, no robots, no fake interface."
+  },
+  {
+    "id": "meetingactions",
+    "file": "meetingactions.png",
+    "method": "built-in image_gen",
+    "prompt": "Use case: stylized-concept. Create a landscape 3:2 editorial 3D cover illustration for AI portfolio product meetingactions: ochre circular meeting table with paper action cards unfolding into a tiny calendar. A refined miniature museum sculpture, warm off-white seamless background, tactile ivory paper and frosted glass, restrained accent color, soft daylight with delicate shadows, generous negative space. Consistent sophisticated design collection. No text, no letters, no logo, no robots, no fake interface."
+  },
+  {
+    "id": "contentbench",
+    "file": "contentbench.png",
+    "method": "built-in image_gen",
+    "prompt": "Use case: stylized-concept. Create a landscape 3:2 editorial 3D cover illustration for AI portfolio product contentbench: rose pink printing press with layered draft sheets and one translucent approval seal. A refined miniature museum sculpture, warm off-white seamless background, tactile ivory paper and frosted glass, restrained accent color, soft daylight with delicate shadows, generous negative space. Consistent sophisticated design collection. No text, no letters, no logo, no robots, no fake interface."
+  },
+  {
+    "id": "applytrack",
+    "file": "applytrack.png",
+    "method": "built-in image_gen",
+    "prompt": "Use case: stylized-concept. Create a landscape 3:2 editorial 3D cover illustration for AI portfolio product applytrack: violet paper portfolio folder with evidence cards joined to a stepped career path. A refined miniature museum sculpture, warm off-white seamless background, tactile ivory paper and frosted glass, restrained accent color, soft daylight with delicate shadows, generous negative space. Consistent sophisticated design collection. No text, no letters, no logo, no robots, no fake interface."
+  },
+  {
+    "id": "inboxtotasks",
+    "file": "inboxtotasks.png",
+    "method": "built-in image_gen",
+    "prompt": "Use case: stylized-concept. Create a landscape 3:2 editorial 3D cover illustration for AI portfolio product inboxtotasks: pale blue open envelope with folded paper tasks arranged on a small tray. A refined miniature museum sculpture, warm off-white seamless background, tactile ivory paper and frosted glass, restrained accent color, soft daylight with delicate shadows, generous negative space. Consistent sophisticated design collection. No text, no letters, no logo, no robots, no fake interface."
+  },
+  {
+    "id": "databrief",
+    "file": "databrief.png",
+    "method": "built-in image_gen",
+    "prompt": "Use case: stylized-concept. Create a landscape 3:2 editorial 3D cover illustration for AI portfolio product databrief: sage translucent columns emerging from a gridded paper dataset with a small magnifying lens. A refined miniature museum sculpture, warm off-white seamless background, tactile ivory paper and frosted glass, restrained accent color, soft daylight with delicate shadows, generous negative space. Consistent sophisticated design collection. No text, no letters, no logo, no robots, no fake interface."
+  },
+  {
+    "id": "studydeck",
+    "file": "studydeck.png",
+    "method": "built-in image_gen",
+    "prompt": "Use case: stylized-concept. Create a landscape 3:2 editorial 3D cover illustration for AI portfolio product studydeck: ochre spaced flashcards arching like a gentle timeline beside a small open book. A refined miniature museum sculpture, warm off-white seamless background, tactile ivory paper and frosted glass, restrained accent color, soft daylight with delicate shadows, generous negative space. Consistent sophisticated design collection. No text, no letters, no logo, no robots, no fake interface."
+  },
+  {
+    "id": "feedbacklens",
+    "file": "feedbacklens.png",
+    "method": "built-in image_gen",
+    "prompt": "Use case: stylized-concept. Create a landscape 3:2 editorial 3D cover illustration for AI portfolio product feedbacklens: violet glass lens focusing diverse paper speech shapes into a carefully sorted cluster. A refined miniature museum sculpture, warm off-white seamless background, tactile ivory paper and frosted glass, restrained accent color, soft daylight with delicate shadows, generous negative space. Consistent sophisticated design collection. No text, no letters, no logo, no robots, no fake interface."
+  },
+  {
+    "id": "changelens",
+    "file": "changelens.png",
+    "method": "built-in image_gen",
+    "prompt": "Use case: stylized-concept. Create a landscape 3:2 editorial 3D cover illustration for AI portfolio product changelens: sage paired document sheets with different cutouts and a translucent bridge between versions. A refined miniature museum sculpture, warm off-white seamless background, tactile ivory paper and frosted glass, restrained accent color, soft daylight with delicate shadows, generous negative space. Consistent sophisticated design collection. No text, no letters, no logo, no robots, no fake interface."
+  },
+  {
+    "id": "evaldesk",
+    "file": "evaldesk.png",
+    "method": "built-in image_gen",
+    "prompt": "Use case: stylized-concept. Create a landscape 3:2 editorial 3D cover illustration for AI portfolio product evaldesk: blue precision balance weighing two prompt cards with small test tiles below. A refined miniature museum sculpture, warm off-white seamless background, tactile ivory paper and frosted glass, restrained accent color, soft daylight with delicate shadows, generous negative space. Consistent sophisticated design collection. No text, no letters, no logo, no robots, no fake interface."
+  }
+]
