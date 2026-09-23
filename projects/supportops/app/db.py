@@ -52,6 +52,10 @@ def initialize(path: str):
           ticket_version INTEGER NOT NULL, document_id TEXT NOT NULL,
           snapshot TEXT NOT NULL, created_at TEXT NOT NULL,
           UNIQUE(ticket_id,ticket_version));
+        CREATE TABLE IF NOT EXISTS rechecks (
+          id TEXT PRIMARY KEY, run_id TEXT NOT NULL REFERENCES runs(id),
+          snapshot TEXT NOT NULL, created_at TEXT NOT NULL,
+          verdict TEXT NOT NULL DEFAULT '', note TEXT NOT NULL DEFAULT '', reviewed_at TEXT NOT NULL DEFAULT '');
         ''')
 
 

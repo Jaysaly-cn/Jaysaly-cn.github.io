@@ -1,5 +1,6 @@
 import asyncio
 import hmac
+import hashlib
 import json
 import os
 import time
@@ -63,6 +64,11 @@ class PublishKnowledge(StrictModel):
     review_note: Annotated[str, StringConstraints(strip_whitespace=True, min_length=5, max_length=2000)]
     reviewed: bool = False
 
+class RecheckReview(StrictModel):
+    verdict: Literal['improved','regressed','unchanged','inconclusive']
+    note: Annotated[str,StringConstraints(strip_whitespace=True,min_length=5,max_length=2000)]
+    reviewed: bool = False
+
 
 def create_app(db_path: str | None = None):
     path = db_path or os.getenv('SUPPORTOPS_DB', str(ROOT / 'data/supportops.sqlite3'))
@@ -72,7 +78,7 @@ def create_app(db_path: str | None = None):
         initialize(path)
         yield
 
-    app = FastAPI(title='SupportOps', version='0.2.0', lifespan=lifespan)
+    app = FastAPI(title='SupportOps', version='0.3.0', lifespan=lifespan)
     model_slots = asyncio.Semaphore(2)
     requests = defaultdict(deque)
 
@@ -129,7 +135,7 @@ def create_app(db_path: str | None = None):
             db.execute('SELECT 1')
         return {'status': 'ok', 'model_configured': model.configured(),
                 'model': os.getenv('LLM_MODEL', '') if model.configured() else None,
-                'retrieval': 'BM25Plus / Chinese bigram', 'version': '0.2.0'}
+                'retrieval': 'BM25Plus / Chinese bigram', 'version': '0.3.0'}
 
     @app.get('/api/documents')
     def documents():
@@ -228,6 +234,40 @@ def create_app(db_path: str | None = None):
             db.execute('INSERT INTO feedback VALUES (?,?,?,?) ON CONFLICT(run_id) DO UPDATE SET rating=excluded.rating,note=excluded.note,updated_at=excluded.updated_at',
                        (run_id, body.rating, body.note, now()))
         return {'saved': True}
+
+    @app.post('/api/runs/{run_id}/rechecks',status_code=201)
+    def recheck(run_id: str):
+        before=get_run(run_id)
+        with connect(path) as db:
+            db.execute('BEGIN IMMEDIATE')
+            if db.execute('SELECT count(*) FROM rechecks WHERE run_id=?',(run_id,)).fetchone()[0]>=20:
+                raise HTTPException(409,'每个原问题最多保留20次复查')
+            documents=[dict(r) for r in db.execute('SELECT * FROM documents WHERE audience=? OR audience=?',('public',before['audience']))]
+            citations=search(documents,before['question'])
+            identity,stamp=uuid4().hex,now()
+            snapshot={'before':before,'after':{'question':before['question'],'audience':before['audience'],
+                'citations':citations,'documents_searched':len(documents),'created_at':stamp,
+                'manifest':[{'id':d['id'],'version':d['version'],'sha256':hashlib.sha256(d['content'].encode()).hexdigest()} for d in documents]},
+                'method':'Same BM25 retrieval; no model call; compare evidence only, not answer accuracy'}
+            db.execute('INSERT INTO rechecks(id,run_id,snapshot,created_at) VALUES(?,?,?,?)',
+                       (identity,run_id,json.dumps(snapshot,ensure_ascii=False),stamp))
+            return rowdict(db.execute('SELECT * FROM rechecks WHERE id=?',(identity,)).fetchone(),('snapshot',))
+
+    @app.get('/api/rechecks')
+    def rechecks():
+        with connect(path) as db:
+            return [rowdict(r,('snapshot',)) for r in db.execute('SELECT * FROM rechecks ORDER BY created_at DESC LIMIT 50')]
+
+    @app.post('/api/rechecks/{recheck_id}/review')
+    def review_recheck(recheck_id: str,body: RecheckReview):
+        if not body.reviewed:raise HTTPException(422,'请先核对前后证据与问题的关系')
+        with connect(path) as db:
+            db.execute('BEGIN IMMEDIATE')
+            check=db.execute('SELECT * FROM rechecks WHERE id=?',(recheck_id,)).fetchone()
+            if check is None:raise HTTPException(404,'复查记录不存在')
+            if check['verdict']:raise HTTPException(409,'该次复查判断已保存，不覆盖原结论；可重新复查')
+            db.execute('UPDATE rechecks SET verdict=?,note=?,reviewed_at=? WHERE id=?',(body.verdict,body.note,now(),recheck_id))
+            return rowdict(db.execute('SELECT * FROM rechecks WHERE id=?',(recheck_id,)).fetchone(),('snapshot',))
 
     @app.get('/api/badcases')
     def badcases():

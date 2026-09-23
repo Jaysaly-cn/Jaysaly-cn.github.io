@@ -219,3 +219,37 @@ def test_internal_knowledge_cannot_be_published_to_public_scope(client):
     internal=client.post('/api/ask',json={'question':'离线激活码如何恢复？','audience':'internal'}).json()
     assert public['mode']=='no_evidence'
     assert internal['citations'][0]['document_id']==publication['document_id']
+
+
+def test_recheck_records_changed_evidence_without_mutating_old_answer_or_feedback(client,monkeypatch):
+    old=client.post('/api/ask',json={'question':'离线激活码如何恢复？'}).json()
+    client.post('/api/runs/'+old['id']+'/feedback',json={'rating':'unhelpful','note':'缺少操作说明'})
+    async def forbidden(*args):raise AssertionError('Recheck must not call model')
+    monkeypatch.setattr(model,'generate',forbidden)
+    doc=client.post('/api/documents',json={'title':'激活码恢复','content':'离线激活码失效后，由管理员核对授权设备，再重新生成激活码。'}).json()
+    check=client.post('/api/runs/'+old['id']+'/rechecks').json()
+    assert check['snapshot']['before']==old and check['verdict']==''
+    assert check['snapshot']['after']['citations'][0]['document_id']==doc['id']
+    assert len(check['snapshot']['after']['manifest'][0]['sha256'])==64
+    client.delete('/api/documents/'+doc['id'])
+    assert client.get('/api/rechecks').json()[0]==check
+    review={'verdict':'improved','note':'新资料覆盖授权核验与重发步骤','reviewed':True}
+    endpoint='/api/rechecks/'+check['id']+'/review'
+    assert client.post(endpoint,json={**review,'reviewed':False}).status_code==422
+    reviewed=client.post(endpoint,json=review).json()
+    assert reviewed['snapshot']==check['snapshot'] and reviewed['reviewed_at']
+    assert client.post(endpoint,json=review).status_code==409
+    assert client.get('/api/runs/'+old['id']).json()==old
+    assert client.get('/api/badcases').json()[0]['note']=='缺少操作说明'
+
+
+def test_recheck_preserves_scope_and_bounds_history(client):
+    old=client.post('/api/ask',json={'question':'离线激活码如何恢复？','audience':'public'}).json()
+    client.post('/api/documents',json={'title':'激活码内部流程','content':'离线激活码失效后由内部管理员核对授权设备。','audience':'internal'})
+    route='/api/runs/'+old['id']+'/rechecks'
+    for _ in range(20):
+        response=client.post(route);assert response.status_code==201
+        assert response.json()['snapshot']['after']['documents_searched']==0
+    assert client.post(route).status_code==409
+    assert client.post('/api/runs/missing/rechecks').status_code==404
+    assert client.post('/api/rechecks/missing/review',json={'verdict':'inconclusive','note':'未找到可核对的记录','reviewed':True}).status_code==404

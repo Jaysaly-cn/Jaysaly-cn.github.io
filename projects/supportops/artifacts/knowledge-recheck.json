@@ -1,0 +1,135 @@
+{
+  "synthetic": true,
+  "browser_verified": true,
+  "original_run_unchanged": true,
+  "original_feedback_preserved": true,
+  "console_errors": [],
+  "reviewer": "AI coding agent executing synthetic acceptance, not real customer feedback",
+  "record": {
+    "id": "c1aca3803af2474dbae73aa52c806b01",
+    "run_id": "def3000f63504616bdd90d252eecf5f5",
+    "snapshot": {
+      "before": {
+        "id": "def3000f63504616bdd90d252eecf5f5",
+        "question": "离线激活码如何恢复？",
+        "audience": "public",
+        "answer": "以下为关键词检索得到的原文片段，尚未经模型判断是否足以回答问题：\n\n[1] 数据导出与删除\n项目管理员可在设置中的数据管理导出 CSV。导出仅包含当前项目有权限查看的任务。单次导出上限 10000 条，超过上限请按日期拆分。删除项目需二次确认，删除后有 30 天恢复窗口。超过窗口无法通过界面自行恢复。",
+        "mode": "extractive",
+        "citations": [
+          {
+            "document_id": "kb-export",
+            "title": "数据导出与删除",
+            "version": 1,
+            "chunk": 0,
+            "content": "项目管理员可在设置中的数据管理导出 CSV。导出仅包含当前项目有权限查看的任务。单次导出上限 10000 条，超过上限请按日期拆分。删除项目需二次确认，删除后有 30 天恢复窗口。超过窗口无法通过界面自行恢复。",
+            "source": "合成示例 / 星河协作 SaaS",
+            "score": 2.9387,
+            "matched_terms": [
+              "恢复"
+            ]
+          }
+        ],
+        "trace": [
+          {
+            "step": "retrieve",
+            "status": "ok",
+            "documents_searched": 7,
+            "chunks_returned": 1,
+            "method": "BM25Plus; lexical relevance is not confidence"
+          },
+          {
+            "step": "review",
+            "status": "human_required",
+            "reason": "答复建议不会自动发送给客户"
+          }
+        ],
+        "elapsed_ms": 7,
+        "usage": {},
+        "created_at": "2026-09-23T07:28:58.248306+00:00"
+      },
+      "after": {
+        "question": "离线激活码如何恢复？",
+        "audience": "public",
+        "citations": [
+          {
+            "document_id": "af9f1eba3b08428494885b47c8699bee",
+            "title": "离线激活码恢复流程（合成）",
+            "version": 1,
+            "chunk": 0,
+            "content": "离线激活码失效时，由管理员先核对设备标识与授权状态，再通过管理后台重新生成激活码。此条为合成测试流程。",
+            "source": "人工审核工单 acc1bf03dbc8499f9d7cd83e9b1acfc4 / 版本 3",
+            "score": 16.7294,
+            "matched_terms": [
+              "恢复",
+              "活码",
+              "激活",
+              "离线",
+              "线激"
+            ]
+          },
+          {
+            "document_id": "kb-export",
+            "title": "数据导出与删除",
+            "version": 1,
+            "chunk": 0,
+            "content": "项目管理员可在设置中的数据管理导出 CSV。导出仅包含当前项目有权限查看的任务。单次导出上限 10000 条，超过上限请按日期拆分。删除项目需二次确认，删除后有 30 天恢复窗口。超过窗口无法通过界面自行恢复。",
+            "source": "合成示例 / 星河协作 SaaS",
+            "score": 2.0939,
+            "matched_terms": [
+              "恢复"
+            ]
+          }
+        ],
+        "documents_searched": 8,
+        "created_at": "2026-09-23T07:36:08.141401+00:00",
+        "manifest": [
+          {
+            "id": "kb-refund",
+            "version": 1,
+            "sha256": "7ead14817efdfb935ad5cd0b58644422a80b31092f2f9ab7517b9021f365dffe"
+          },
+          {
+            "id": "kb-login",
+            "version": 1,
+            "sha256": "ef066c4a25b5f80832d5523104a3d5ca535b40f4cc456d5abbbbccc98b2d54db"
+          },
+          {
+            "id": "kb-invoice",
+            "version": 1,
+            "sha256": "0397e14a80d5037a83a70614e4fc70c82bdab3298cf0893460fb088f2815ffe1"
+          },
+          {
+            "id": "kb-export",
+            "version": 1,
+            "sha256": "be2bb9354af630d5227423965963064368424f837ce3bc8c3776e170f70142a6"
+          },
+          {
+            "id": "kb-api",
+            "version": 1,
+            "sha256": "c2272e43b5ae5bed9a41e42499c7ddb9baf475506b6c68173fbdf845744c2738"
+          },
+          {
+            "id": "kb-plan",
+            "version": 1,
+            "sha256": "b0461eb33a3dee6683272f3dde9fb17a9dc17fb8604f3882f7c639d7810f315a"
+          },
+          {
+            "id": "kb-upload",
+            "version": 1,
+            "sha256": "3e8a7183e2c1b60086180b778cabfdc41035e3c28e9b698f8828e15c24701249"
+          },
+          {
+            "id": "af9f1eba3b08428494885b47c8699bee",
+            "version": 1,
+            "sha256": "bed8846b11514e40c4f7929b0d9f90f45d2ea453e542cb0cb3261da3028af7d8"
+          }
+        ]
+      },
+      "method": "Same BM25 retrieval; no model call; compare evidence only, not answer accuracy"
+    },
+    "created_at": "2026-09-23T07:36:08.141401+00:00",
+    "verdict": "improved",
+    "note": "新增首条证据覆盖授权核验与重发激活码；仍附带无关的数据删除说明，不能直接拼接为客户答复。仅为合成资料复盘。",
+    "reviewed_at": "2026-09-23T07:36:17.426950+00:00"
+  }
+}
