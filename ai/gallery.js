@@ -1,7 +1,5 @@
-async function initialize(){
- const response=await fetch('projects.json');
- if(!response.ok)throw Error('Project catalogue unavailable');
- const projects=await response.json();
+function initialize(){
+ const projects=JSON.parse(document.querySelector('#project-catalogue').textContent);
  const dialog=document.querySelector('#archive');
  for(const button of document.querySelectorAll('[data-detail]')){
   button.addEventListener('click',()=>{
@@ -23,4 +21,4 @@ async function initialize(){
  }
  document.body.classList.add('enhanced');
 }
-initialize().catch(()=>{/* The static cases, source links and details remain usable. */});
+try{initialize();}catch{/* The static cases, source links and details remain usable. */}
