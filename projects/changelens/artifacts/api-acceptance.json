@@ -1,0 +1,44 @@
+{
+  "data": "synthetic",
+  "verified": "real HTTP document/version/compare/read flow",
+  "comparison": {
+    "id": "cd45e30da98b418ca4cc5e8873d4f6f9",
+    "old_version": {
+      "id": "f16b4b0833de472097b51064fbc510e1",
+      "document_id": "6e7a181680fd401e9009d836fb4eb26e",
+      "number": 1,
+      "label": "2026-09 初版",
+      "text": "所有成员允许导出。\n导出文件保留7天。\n",
+      "sha256": "99ba05810af84f778d1a2094a34dabb9e0b9cdd2f7def8ff879eaf5451260dfd",
+      "created_at": "2026-09-23T09:37:05.013248+00:00"
+    },
+    "new_version": {
+      "id": "554ad2cecbcf424b8578fde69b95aa47",
+      "document_id": "6e7a181680fd401e9009d836fb4eb26e",
+      "number": 2,
+      "label": "2026-09 修订",
+      "text": "仅管理员允许导出。\n导出文件保留3天。\n新增下载审计记录。\n",
+      "sha256": "29503b0c6aba165c4a2d079ccf38a3a4fd2b2e88e3449810795774affdcd2ac8",
+      "created_at": "2026-09-23T09:37:05.020595+00:00"
+    },
+    "diff": {
+      "algorithm": "difflib.SequenceMatcher lines, autojunk=False",
+      "offset_unit": "Unicode code points, zero-based, end-exclusive",
+      "old_sha256": "99ba05810af84f778d1a2094a34dabb9e0b9cdd2f7def8ff879eaf5451260dfd",
+      "new_sha256": "29503b0c6aba165c4a2d079ccf38a3a4fd2b2e88e3449810795774affdcd2ac8",
+      "operations": [
+        {
+          "kind": "replace",
+          "old_start": 0,
+          "old_end": 20,
+          "new_start": 0,
+          "new_end": 30,
+          "old_text": "所有成员允许导出。\n导出文件保留7天。\n",
+          "new_text": "仅管理员允许导出。\n导出文件保留3天。\n新增下载审计记录。\n"
+        }
+      ],
+      "change_count": 1
+    },
+    "created_at": "2026-09-23T09:37:05.037725+00:00"
+  }
+}

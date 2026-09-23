@@ -1,0 +1,22 @@
+{
+  "method": "real HTTP download to filesystem; browser download persistence not verified",
+  "brief_id": "d5808feb40a64f328da9f62b3bcda62c",
+  "bytes": 3241,
+  "sha256": "978822ce7a89e4918c10c7b7fde8498223f62e684f8636d7b3719bc784da3fd8",
+  "manifest_verified": true,
+  "frozen_brief_matches": true,
+  "files": [
+    "brief.html",
+    "brief.json",
+    "old-version.txt",
+    "new-version.txt",
+    "README.txt",
+    "manifest.json"
+  ],
+  "browser_verified": [
+    "extracted HTML renders frozen confirmed wording and unreviewed operation2",
+    "390px viewport document375px",
+    "zero script nodes despite literal script tag in source",
+    "workspace download link targets correct frozen brief"
+  ]
+}

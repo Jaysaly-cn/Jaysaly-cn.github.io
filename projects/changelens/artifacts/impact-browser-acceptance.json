@@ -1,0 +1,125 @@
+{
+  "data": "synthetic",
+  "verified": [
+    "manual impact with two-sided quotes",
+    "confirm impact v1 to v2",
+    "freeze brief with operation2 explicitly unreviewed",
+    "real model generated operation2 draft",
+    "revise confirmed impact back to draft v3",
+    "old brief retains prior confirmed wording",
+    "compare/revise work with disabled input guard after form collection fix"
+  ],
+  "impacts": [
+    {
+      "id": "01781d592e624f9a872400e0aea01476",
+      "comparison_id": "7ee2e9d89fd44e809ac8a2f1b5aa94b1",
+      "operation": 0,
+      "summary": "新版禁止导出，文件保留期限缩短至3天。具体执行范围待业务确认。",
+      "old_quote": "允许导出。\n保留7天。",
+      "new_quote": "不允许导出。\n保留3天。",
+      "state": "draft",
+      "version": 3
+    },
+    {
+      "id": "89101616cbe64e578dff0edc427176fc",
+      "comparison_id": "7ee2e9d89fd44e809ac8a2f1b5aa94b1",
+      "operation": 2,
+      "summary": "新增审计记录",
+      "old_quote": "",
+      "new_quote": "新增审计记录。",
+      "state": "draft",
+      "version": 1
+    }
+  ],
+  "runs": [
+    {
+      "id": "d03ace3b66834cd6aa2f38575d3e20ab",
+      "comparison_id": "7ee2e9d89fd44e809ac8a2f1b5aa94b1",
+      "operation": 2,
+      "raw": "{\n  \"summary\": \"新增审计记录\",\n  \"old_quote\": \"\",\n  \"new_quote\": \"新增审计记录。\"\n}",
+      "error": null,
+      "impact_id": "89101616cbe64e578dff0edc427176fc",
+      "metadata": "{\"model\": \"portfolio-qwen-1.5b\", \"prompt_version\": \"v1\", \"prompt_sha256\": \"70ca9803c271160012c3549061846ca27e1b37b8af8668f6006c4b9db5ae3ef4\", \"temperature\": 0, \"max_tokens\": 1500}",
+      "created_at": "2026-09-23T09:49:16.783551+00:00"
+    }
+  ],
+  "brief": {
+    "id": "d5808feb40a64f328da9f62b3bcda62c",
+    "title": "浏览器变更简报验收",
+    "note": "合成验收：仅复核替换块，新增审计条款待核对。",
+    "comparison_id": "7ee2e9d89fd44e809ac8a2f1b5aa94b1",
+    "comparison": {
+      "old_version": {
+        "id": "b58b5db611784804a5fe771066456bb4",
+        "document_id": "bb0cfe58f99c472aa6511756bbeba107",
+        "number": 1,
+        "label": "初版",
+        "text": "允许导出。\n保留7天。\n<script>alert(1)</script>\n",
+        "sha256": "0a83f6838910163e6a65c83a4bf3b872334a178999a734c108452f53447238a5",
+        "created_at": "2026-09-23T09:39:36.343686+00:00"
+      },
+      "new_version": {
+        "id": "cec2fe0741d2454dbed50d43262c371f",
+        "document_id": "bb0cfe58f99c472aa6511756bbeba107",
+        "number": 2,
+        "label": "修订版",
+        "text": "不允许导出。\n保留3天。\n<script>alert(1)</script>\n新增审计记录。\n",
+        "sha256": "5a059bf8d8fdbda31e2646627d356e52692fe697a90d7e29f7561068e292bffc",
+        "created_at": "2026-09-23T09:39:55.949243+00:00"
+      },
+      "diff": {
+        "algorithm": "difflib.SequenceMatcher lines, autojunk=False",
+        "offset_unit": "Unicode code points, zero-based, end-exclusive",
+        "old_sha256": "0a83f6838910163e6a65c83a4bf3b872334a178999a734c108452f53447238a5",
+        "new_sha256": "5a059bf8d8fdbda31e2646627d356e52692fe697a90d7e29f7561068e292bffc",
+        "operations": [
+          {
+            "kind": "replace",
+            "old_start": 0,
+            "old_end": 12,
+            "new_start": 0,
+            "new_end": 13,
+            "old_text": "允许导出。\n保留7天。\n",
+            "new_text": "不允许导出。\n保留3天。\n"
+          },
+          {
+            "kind": "equal",
+            "old_start": 12,
+            "old_end": 38,
+            "new_start": 13,
+            "new_end": 39,
+            "old_text": "<script>alert(1)</script>\n",
+            "new_text": "<script>alert(1)</script>\n"
+          },
+          {
+            "kind": "insert",
+            "old_start": 38,
+            "old_end": 38,
+            "new_start": 39,
+            "new_end": 47,
+            "old_text": "",
+            "new_text": "新增审计记录。\n"
+          }
+        ],
+        "change_count": 2
+      },
+      "created_at": "2026-09-23T09:40:06.346934+00:00"
+    },
+    "confirmed_impacts": [
+      {
+        "id": "01781d592e624f9a872400e0aea01476",
+        "comparison_id": "7ee2e9d89fd44e809ac8a2f1b5aa94b1",
+        "operation": 0,
+        "summary": "新版禁止导出，保留期由7天缩短到3天；执行范围仍需业务确认。",
+        "old_quote": "允许导出。\n保留7天。",
+        "new_quote": "不允许导出。\n保留3天。",
+        "state": "confirmed",
+        "version": 2
+      }
+    ],
+    "unreviewed_operations": [
+      2
+    ],
+    "created_at": "2026-09-23T09:49:06.705910+00:00"
+  }
+}
