@@ -1,0 +1,22 @@
+name: ApplyTrack verification
+on:
+  push:
+    paths: ['projects/applytrack/**', '.github/workflows/applytrack.yml']
+  pull_request:
+    paths: ['projects/applytrack/**', '.github/workflows/applytrack.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/applytrack
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-lock.txt
+      - run: python -m pytest -q
+      - run: node --check web/app.js

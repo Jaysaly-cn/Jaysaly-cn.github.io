@@ -1,0 +1,30 @@
+{
+  "scope": "Synthetic browser workflow performed by development assistant; no real employer contacted",
+  "job_id": "e5d4167b-d8a0-4262-935a-a6c111394289",
+  "live_stage": "applied",
+  "coverage": {
+    "approved_requirements": 1,
+    "linked_requirements": 1,
+    "gaps": [],
+    "meaning": "人工关联覆盖，非胜任度或录用概率"
+  },
+  "packet_sha256": "3e464ec041e5a62b713f7c53eb35c00a97a02015cd665ad433bfc49f4beb0fb0",
+  "frozen_stage": "saved",
+  "events": [
+    "created",
+    "requirement_added",
+    "requirement_reviewed",
+    "evidence_linked",
+    "packet_frozen",
+    "stage_changed"
+  ],
+  "desktop": {
+    "width": 1440,
+    "scroll": 1425
+  },
+  "mobile": {
+    "width": 390,
+    "scroll": 375
+  },
+  "export_verified": "Live HTTP content and SHA256; browser download receipt not tested"
+}
