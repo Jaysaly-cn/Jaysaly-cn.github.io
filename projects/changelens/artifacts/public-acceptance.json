@@ -1,0 +1,96 @@
+{
+  "base": "https://listprice-cancellation-airline-natural.trycloudflare.com",
+  "synthetic": true,
+  "model_status": 422,
+  "model_response": {
+    "detail": "建议未保存，请查看模型记录"
+  },
+  "model_runs": [
+    {
+      "id": "5d38ae04e2f2443d832736d88bda3be2",
+      "comparison_id": "47c124f58c6a433f9f7294dacf510fbb",
+      "operation": 1,
+      "raw": "{\n  \"summary\": \"文件保留天数从7天更改为3天，新增审计记录。\",\n  \"old_quote\": \"文件保留7天。\",\n  \"new_quote\": \"文件保留3天。新增审计记录。\"\n}",
+      "error": "new_quote_mismatch",
+      "impact_id": null,
+      "metadata": "{\"model\": \"portfolio-qwen-1.5b\", \"prompt_version\": \"v1\", \"prompt_sha256\": \"70ca9803c271160012c3549061846ca27e1b37b8af8668f6006c4b9db5ae3ef4\", \"temperature\": 0, \"max_tokens\": 1500}",
+      "created_at": "2026-09-23T10:09:40.021777+00:00"
+    }
+  ],
+  "brief": {
+    "id": "9692f00c341f41da92de0df50f0589f3",
+    "title": "公网合成验收",
+    "note": "仅用于验证独立访客与交付流程",
+    "comparison_id": "47c124f58c6a433f9f7294dacf510fbb",
+    "comparison": {
+      "old_version": {
+        "id": "776926e8e7964585acf0e833a2b0e7fe",
+        "document_id": "bf2ad4747d974e4fabd423096e4f6656",
+        "number": 1,
+        "label": "初版",
+        "text": "仅管理员允许导出。\n文件保留7天。\n",
+        "sha256": "061e26559c2c7dca00b61bb29f5df4d8b87fe6176199029e81a45ca7a9e2c679",
+        "created_at": "2026-09-23T10:09:32.902300+00:00"
+      },
+      "new_version": {
+        "id": "9c5a54af688249e78356e02551d90f97",
+        "document_id": "bf2ad4747d974e4fabd423096e4f6656",
+        "number": 2,
+        "label": "修订版",
+        "text": "仅管理员允许导出。\n文件保留3天。\n新增审计记录。\n",
+        "sha256": "fb893d17afcb317e7631a86fbe3e6bcf6e2d1e49863177d80ddf1ffec0c5cb56",
+        "created_at": "2026-09-23T10:09:32.902300+00:00"
+      },
+      "diff": {
+        "algorithm": "difflib.SequenceMatcher lines, autojunk=False",
+        "offset_unit": "Unicode code points, zero-based, end-exclusive",
+        "old_sha256": "061e26559c2c7dca00b61bb29f5df4d8b87fe6176199029e81a45ca7a9e2c679",
+        "new_sha256": "fb893d17afcb317e7631a86fbe3e6bcf6e2d1e49863177d80ddf1ffec0c5cb56",
+        "operations": [
+          {
+            "kind": "equal",
+            "old_start": 0,
+            "old_end": 10,
+            "new_start": 0,
+            "new_end": 10,
+            "old_text": "仅管理员允许导出。\n",
+            "new_text": "仅管理员允许导出。\n"
+          },
+          {
+            "kind": "replace",
+            "old_start": 10,
+            "old_end": 18,
+            "new_start": 10,
+            "new_end": 26,
+            "old_text": "文件保留7天。\n",
+            "new_text": "文件保留3天。\n新增审计记录。\n"
+          }
+        ],
+        "change_count": 1
+      },
+      "created_at": "2026-09-23T10:09:36.527065+00:00"
+    },
+    "confirmed_impacts": [
+      {
+        "id": "3d951b1761de4dbf8781d63b9bf8a69f",
+        "comparison_id": "47c124f58c6a433f9f7294dacf510fbb",
+        "operation": 1,
+        "summary": "文件保留时间从7天缩短至3天，新增审计记录。",
+        "old_quote": "文件保留7天。\n",
+        "new_quote": "文件保留3天。\n新增审计记录。\n",
+        "state": "confirmed",
+        "version": 2
+      }
+    ],
+    "unreviewed_operations": [],
+    "created_at": "2026-09-23T10:09:41.964519+00:00"
+  },
+  "other_visitor_status": {
+    "versions/776926e8e7964585acf0e833a2b0e7fe": 404,
+    "comparisons/47c124f58c6a433f9f7294dacf510fbb": 404,
+    "comparisons/47c124f58c6a433f9f7294dacf510fbb/model-runs": 404,
+    "briefs/9692f00c341f41da92de0df50f0589f3/export": 404
+  },
+  "foreign_origin_status": 403,
+  "zip_bytes": 3030
+}

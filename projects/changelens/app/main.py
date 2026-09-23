@@ -31,25 +31,34 @@ class Comparison(Strict):
     new_id:str=Field(min_length=1,max_length=100)
 
 
+def initialize(path):
+    path=Path(path)
+    path.parent.mkdir(parents=True,exist_ok=True)
+    conn=sqlite3.connect(path)
+    try:
+        with conn:
+            conn.executescript('''
+            CREATE TABLE IF NOT EXISTS documents(id TEXT PRIMARY KEY,title TEXT,created_at TEXT);
+            CREATE TABLE IF NOT EXISTS versions(id TEXT PRIMARY KEY,document_id TEXT REFERENCES documents(id),number INTEGER,label TEXT,text TEXT,sha256 TEXT,created_at TEXT,UNIQUE(document_id,number),UNIQUE(document_id,sha256));
+            CREATE TABLE IF NOT EXISTS comparisons(id TEXT PRIMARY KEY,document_id TEXT REFERENCES documents(id),old_id TEXT REFERENCES versions(id),new_id TEXT REFERENCES versions(id),snapshot TEXT,created_at TEXT,UNIQUE(old_id,new_id));
+            ''')
+            conn.executescript(SCHEMA)
+    finally:
+        conn.close()
+
+
 def create_app(path=None):
-    path=Path(path or os.getenv('CHANGELENS_DB',str(ROOT/'data/change.sqlite3')))
+    path=path if callable(path) else Path(path or os.getenv('CHANGELENS_DB',str(ROOT/'data/change.sqlite3')))
     @contextmanager
     def db():
-        conn=sqlite3.connect(path,timeout=10);conn.row_factory=sqlite3.Row
+        conn=sqlite3.connect(path() if callable(path) else path,timeout=10);conn.row_factory=sqlite3.Row
         conn.execute('PRAGMA foreign_keys=ON')
         try:
             with conn:yield conn
         finally:conn.close()
     @asynccontextmanager
     async def lifespan(app):
-        path.parent.mkdir(parents=True,exist_ok=True)
-        with db() as c:
-            c.executescript('''
-            CREATE TABLE IF NOT EXISTS documents(id TEXT PRIMARY KEY,title TEXT,created_at TEXT);
-            CREATE TABLE IF NOT EXISTS versions(id TEXT PRIMARY KEY,document_id TEXT REFERENCES documents(id),number INTEGER,label TEXT,text TEXT,sha256 TEXT,created_at TEXT,UNIQUE(document_id,number),UNIQUE(document_id,sha256));
-            CREATE TABLE IF NOT EXISTS comparisons(id TEXT PRIMARY KEY,document_id TEXT REFERENCES documents(id),old_id TEXT REFERENCES versions(id),new_id TEXT REFERENCES versions(id),snapshot TEXT,created_at TEXT,UNIQUE(old_id,new_id));
-            ''')
-            c.executescript(SCHEMA)
+        if not callable(path):initialize(path)
         yield
     app=FastAPI(title='ChangeLens',version='0.1.0',lifespan=lifespan)
     install(app)
