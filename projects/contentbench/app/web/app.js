@@ -78,11 +78,17 @@ function renderDraft(d) {
   const r = d.revisions[0], card = el('article', undefined, 'draft'), head = el('div', undefined, 'section-head');
   head.append(el('h2', r.title), el('span', `${d.channel} · v${r.number} · ${{draft:'待审核',approved:'已批准',rejected:'已退回'}[r.state]}`, 'tag')); card.append(head, el('p', `${r.origin === 'model' ? '模型起草 · ' + r.model : '人工录入/修订'} · 关联 ${r.fact_ids.join('、') || '无事实'}`, 'muted'), el('div', r.body, 'body'));
   const issues = r.checks.blockers; card.append(el('p', issues.length ? issues.map(i => i.detail).join('；') : '规则检查通过；仍需逐句核对事实含义与条件。', issues.length ? 'issues' : 'good'));
-  const edit = el('button', '创建修订版', 'secondary'); action(edit, () => {
+  function beginRevision(body = r.body) {
     editing = {draft:d.id, revision:r.id}; $('#editor-title').textContent = `修订 v${r.number} → v${r.number+1}`; $('#channel').value = d.channel; $('#channel').disabled = true;
-    $('#copy-form').elements.title.value = r.title; $('#copy-form').elements.body.value = r.body;
+    $('#copy-form').elements.title.value = r.title; $('#copy-form').elements.body.value = body;
     document.querySelectorAll('#fact-choices input').forEach(i => i.checked = r.fact_ids.includes(i.value)); $('#cancel-edit').hidden = false; $('#save-copy').textContent = '保存新版本（重新审核）'; updateLimit(); $('#editor-title').scrollIntoView({behavior:'smooth'});
-  }); card.append(edit);
+  }
+  const edit = el('button', '创建修订版', 'secondary'); action(edit, () => beginRevision()); card.append(edit);
+  if (issues.some(i => i.code === 'required') && current.brief.required_phrase) {
+    const repair = el('button', '补入必带说明后编辑', 'secondary');
+    action(repair, () => {beginRevision(r.body + '\n' + current.brief.required_phrase); notice('已把活动原文说明补入修订编辑器；尚未保存。请核对正文、字数与事实后保存新版本，仍需重新审核。');});
+    card.append(repair);
+  }
   if (r.state === 'draft') {
     const review = el('div', undefined, 'review'), label = el('label', '审核说明（至少 5 字）'), note = el('textarea'); note.rows = 2; label.append(note);
     const confirm = el('label', undefined, 'check'), checked = el('input'); checked.type='checkbox'; confirm.append(checked, el('span', '我已逐句核对关联事实、来源、条件与措辞'));

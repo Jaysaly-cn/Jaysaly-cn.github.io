@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-23",
+  "campaign": "51e3e3912a4945f1a86de60c5be14553",
+  "draft": "530bb839be2d4f51aee8db9194a2fa1a",
+  "old_revision": "95d5e67a17b64937842d780da57e4e0c",
+  "new_revision": "92712bf16c7b40e7a2a2a336800e6439",
+  "old_body": "邮件任务整理功能是邮件营销中非常实用的工具，它允许用户在每周任务清单中添加任务和设置截止日期，帮助他们更好地管理任务。用户可以通过邮件任务整理功能邀请体验任务，从而更好地组织和管理他们的任务。",
+  "new_body": "邮件任务整理功能是邮件营销中非常实用的工具，它允许用户在每周任务清单中添加任务和设置截止日期，帮助他们更好地管理任务。用户可以通过邮件任务整理功能邀请体验任务，从而更好地组织和管理他们的任务。\n示例产品，仅供学习",
+  "state": "draft",
+  "checks": {
+    "blockers": [],
+    "body_characters": 106,
+    "limit": 1200,
+    "human_checks": [
+      "逐句核对事实含义、条件与来源",
+      "确认措辞、权益说明与目标渠道适用性"
+    ],
+    "semantic_verified": false
+  },
+  "frozen_unchanged": true,
+  "browser": "repair filled unsaved editor; save created manual v2; no approval",
+  "semantic_note": "Channel-as-product error intentionally remains in this unapproved draft; adding disclosure is not a semantic correction."
+}
