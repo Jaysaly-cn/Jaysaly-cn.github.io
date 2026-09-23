@@ -163,3 +163,59 @@ def test_local_model_does_not_need_key(monkeypatch):
     monkeypatch.setenv('LLM_MODEL', 'local')
     monkeypatch.delenv('LLM_API_KEY', raising=False)
     assert model.configured()
+
+
+def resolved_ticket(client,audience='public'):
+    run=client.post('/api/ask',json={'question':'离线激活码如何恢复？','audience':audience}).json()
+    ticket=client.post('/api/tickets',json={'run_id':run['id'],'title':'离线激活码恢复'}).json()
+    endpoint='/api/tickets/'+ticket['id']
+    client.patch(endpoint,json={'version':1,'status':'in_progress','assignee':'合成测试员'})
+    response=client.patch(endpoint,json={'version':2,'status':'resolved','assignee':'合成测试员','resolution':'合成个案：管理员已核对设备标识，重新发放离线激活码。'})
+    assert response.status_code==200
+    return run,response.json()
+
+
+def knowledge_payload():
+    return {'version':3,'title':'离线激活码恢复流程','content':'离线激活码失效时，由管理员先核对设备标识与授权状态，再通过管理后台重新生成激活码。',
+            'review_note':'合成流程，仅适用于管理员核验后的设备，已移除个案信息','reviewed':True}
+
+
+def test_resolved_ticket_knowledge_is_retrievable_without_rewriting_old_run(client):
+    old,ticket=resolved_ticket(client)
+    assert old['mode']=='no_evidence'
+    response=client.post('/api/tickets/'+ticket['id']+'/knowledge',json=knowledge_payload())
+    assert response.status_code==201
+    publication=response.json()
+    current=client.post('/api/ask',json={'question':'离线激活码如何恢复？'}).json()
+    assert current['citations'][0]['document_id']==publication['document_id']
+    assert client.get('/api/runs/'+old['id']).json()==old
+    detail=client.get('/api/tickets/'+ticket['id']).json()
+    snapshot=detail['publications'][0]['snapshot']
+    assert snapshot['ticket']['version']==3 and snapshot['run']==old
+    assert snapshot['review_note']==knowledge_payload()['review_note']
+    assert detail['events'][-1]['event']=='knowledge_published'
+
+
+def test_publication_requires_review_current_resolved_version_and_is_not_duplicated(client):
+    _,ticket=resolved_ticket(client);route='/api/tickets/'+ticket['id'];payload=knowledge_payload()
+    assert client.post(route+'/knowledge',json={**payload,'reviewed':False}).status_code==422
+    assert client.post(route+'/knowledge',json={**payload,'version':2}).status_code==409
+    assert client.post(route+'/knowledge',json=payload).status_code==201
+    assert client.post(route+'/knowledge',json=payload).status_code==409
+    before=client.get(route).json()['publications']
+    doc=before[0]['document_id']
+    assert client.delete('/api/documents/'+doc).status_code==200
+    assert client.get(route).json()['publications']==before
+    assert client.patch(route,json={'version':3,'status':'open','resolution':''}).status_code==200
+    assert client.post(route+'/knowledge',json={**payload,'version':4}).status_code==409
+
+
+def test_internal_knowledge_cannot_be_published_to_public_scope(client):
+    _,ticket=resolved_ticket(client,'internal');route='/api/tickets/'+ticket['id']+'/knowledge'
+    assert client.post(route,json={**knowledge_payload(),'audience':'public'}).status_code==422
+    publication=client.post(route,json=knowledge_payload()).json()
+    assert publication['audience']=='internal'
+    public=client.post('/api/ask',json={'question':'离线激活码如何恢复？','audience':'public'}).json()
+    internal=client.post('/api/ask',json={'question':'离线激活码如何恢复？','audience':'internal'}).json()
+    assert public['mode']=='no_evidence'
+    assert internal['citations'][0]['document_id']==publication['document_id']

@@ -56,6 +56,13 @@ class UpdateTicket(StrictModel):
     assignee: Annotated[str, StringConstraints(strip_whitespace=True, max_length=100)] = ''
     resolution: Annotated[str, StringConstraints(strip_whitespace=True, max_length=4000)] = ''
 
+class PublishKnowledge(StrictModel):
+    version: int = Field(ge=1)
+    title: Short
+    content: Annotated[str, StringConstraints(strip_whitespace=True, min_length=20, max_length=50000)]
+    review_note: Annotated[str, StringConstraints(strip_whitespace=True, min_length=5, max_length=2000)]
+    reviewed: bool = False
+
 
 def create_app(db_path: str | None = None):
     path = db_path or os.getenv('SUPPORTOPS_DB', str(ROOT / 'data/supportops.sqlite3'))
@@ -65,7 +72,7 @@ def create_app(db_path: str | None = None):
         initialize(path)
         yield
 
-    app = FastAPI(title='SupportOps', version='0.1.0', lifespan=lifespan)
+    app = FastAPI(title='SupportOps', version='0.2.0', lifespan=lifespan)
     model_slots = asyncio.Semaphore(2)
     requests = defaultdict(deque)
 
@@ -122,7 +129,7 @@ def create_app(db_path: str | None = None):
             db.execute('SELECT 1')
         return {'status': 'ok', 'model_configured': model.configured(),
                 'model': os.getenv('LLM_MODEL', '') if model.configured() else None,
-                'retrieval': 'BM25Plus / Chinese bigram', 'version': '0.1.0'}
+                'retrieval': 'BM25Plus / Chinese bigram', 'version': '0.2.0'}
 
     @app.get('/api/documents')
     def documents():
@@ -259,8 +266,35 @@ def create_app(db_path: str | None = None):
             if result is None:
                 raise HTTPException(404, '工单不存在')
             result['events'] = [dict(r) for r in db.execute('SELECT * FROM events WHERE ticket_id=? ORDER BY id', (ticket_id,))]
+            result['publications'] = [rowdict(r,('snapshot',)) for r in db.execute(
+                'SELECT * FROM knowledge_publications WHERE ticket_id=? ORDER BY created_at',(ticket_id,))]
         result['run'] = get_run(result['run_id'])
         return result
+
+    @app.post('/api/tickets/{ticket_id}/knowledge',status_code=201)
+    def publish_knowledge(ticket_id: str, body: PublishKnowledge):
+        if not body.reviewed:raise HTTPException(422,'请确认已删除个案隐私并核对通用知识适用范围')
+        with connect(path) as db:
+            db.execute('BEGIN IMMEDIATE')
+            ticket=db.execute('SELECT * FROM tickets WHERE id=?',(ticket_id,)).fetchone()
+            if ticket is None:raise HTTPException(404,'工单不存在')
+            if ticket['version']!=body.version:raise HTTPException(409,'工单版本已变化，请重新核对')
+            if ticket['status']!='resolved':raise HTTPException(409,'只有已解决工单可以沉淀知识')
+            if db.execute('SELECT 1 FROM knowledge_publications WHERE ticket_id=? AND ticket_version=?',
+                          (ticket_id,body.version)).fetchone():raise HTTPException(409,'此工单版本已经发布过知识，请查看原记录')
+            if db.execute('SELECT count(*) FROM documents').fetchone()[0]>=100:raise HTTPException(409,'知识库已达到100篇上限')
+            run=rowdict(db.execute('SELECT * FROM runs WHERE id=?',(ticket['run_id'],)).fetchone(),('citations','trace','usage'))
+            audience=run['audience']
+            document_id,publication_id,stamp=uuid4().hex,uuid4().hex,now()
+            source=f'人工审核工单 {ticket_id} / 版本 {body.version}'
+            document={'id':document_id,'title':body.title,'content':body.content,'source':source,'audience':audience,'version':1,'created_at':stamp}
+            snapshot={'ticket':dict(ticket),'run':run,'document':document,'review_note':body.review_note}
+            db.execute('INSERT INTO documents VALUES(?,?,?,?,?,?,?)',tuple(document.values()))
+            db.execute('INSERT INTO knowledge_publications VALUES(?,?,?,?,?,?)',
+                       (publication_id,ticket_id,body.version,document_id,json.dumps(snapshot,ensure_ascii=False),stamp))
+            db.execute('INSERT INTO events(ticket_id,event,detail,created_at) VALUES(?,?,?,?)',
+                       (ticket_id,'knowledge_published',f'已发布知识：{body.title}；范围继承原问题：{audience}；工单版本{body.version}',stamp))
+            return {'id':publication_id,'document_id':document_id,'audience':audience,'ticket_version':body.version}
 
     @app.patch('/api/tickets/{ticket_id}')
     def update_ticket(ticket_id: str, body: UpdateTicket):

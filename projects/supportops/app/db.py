@@ -47,6 +47,11 @@ def initialize(path: str):
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           ticket_id TEXT NOT NULL REFERENCES tickets(id),
           event TEXT NOT NULL, detail TEXT NOT NULL, created_at TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS knowledge_publications (
+          id TEXT PRIMARY KEY, ticket_id TEXT NOT NULL REFERENCES tickets(id),
+          ticket_version INTEGER NOT NULL, document_id TEXT NOT NULL,
+          snapshot TEXT NOT NULL, created_at TEXT NOT NULL,
+          UNIQUE(ticket_id,ticket_version));
         ''')
 
 

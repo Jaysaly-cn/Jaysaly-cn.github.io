@@ -1,0 +1,169 @@
+{
+  "ticket_id": "acc1bf03dbc8499f9d7cd83e9b1acfc4",
+  "original_run": {
+    "id": "def3000f63504616bdd90d252eecf5f5",
+    "question": "离线激活码如何恢复？",
+    "audience": "public",
+    "answer": "以下为关键词检索得到的原文片段，尚未经模型判断是否足以回答问题：\n\n[1] 数据导出与删除\n项目管理员可在设置中的数据管理导出 CSV。导出仅包含当前项目有权限查看的任务。单次导出上限 10000 条，超过上限请按日期拆分。删除项目需二次确认，删除后有 30 天恢复窗口。超过窗口无法通过界面自行恢复。",
+    "mode": "extractive",
+    "citations": [
+      {
+        "document_id": "kb-export",
+        "title": "数据导出与删除",
+        "version": 1,
+        "chunk": 0,
+        "content": "项目管理员可在设置中的数据管理导出 CSV。导出仅包含当前项目有权限查看的任务。单次导出上限 10000 条，超过上限请按日期拆分。删除项目需二次确认，删除后有 30 天恢复窗口。超过窗口无法通过界面自行恢复。",
+        "source": "合成示例 / 星河协作 SaaS",
+        "score": 2.9387,
+        "matched_terms": [
+          "恢复"
+        ]
+      }
+    ],
+    "trace": [
+      {
+        "step": "retrieve",
+        "status": "ok",
+        "documents_searched": 7,
+        "chunks_returned": 1,
+        "method": "BM25Plus; lexical relevance is not confidence"
+      },
+      {
+        "step": "review",
+        "status": "human_required",
+        "reason": "答复建议不会自动发送给客户"
+      }
+    ],
+    "elapsed_ms": 7,
+    "usage": {},
+    "created_at": "2026-09-23T07:28:58.248306+00:00"
+  },
+  "preparation": "HTTP created question and resolved synthetic ticket; UI publication pending",
+  "publication": {
+    "id": "d4366fb95f094321aed03e6c257b0196",
+    "ticket_id": "acc1bf03dbc8499f9d7cd83e9b1acfc4",
+    "ticket_version": 3,
+    "document_id": "af9f1eba3b08428494885b47c8699bee",
+    "snapshot": {
+      "ticket": {
+        "id": "acc1bf03dbc8499f9d7cd83e9b1acfc4",
+        "run_id": "def3000f63504616bdd90d252eecf5f5",
+        "title": "合成验收：离线激活码恢复",
+        "category": "一般咨询",
+        "priority": "normal",
+        "status": "resolved",
+        "assignee": "合成测试员",
+        "resolution": "合成个案：管理员已核对设备标识，重新发放离线激活码。",
+        "version": 3,
+        "created_at": "2026-09-23T07:28:58.272964+00:00",
+        "updated_at": "2026-09-23T07:28:58.308097+00:00"
+      },
+      "run": {
+        "id": "def3000f63504616bdd90d252eecf5f5",
+        "question": "离线激活码如何恢复？",
+        "audience": "public",
+        "answer": "以下为关键词检索得到的原文片段，尚未经模型判断是否足以回答问题：\n\n[1] 数据导出与删除\n项目管理员可在设置中的数据管理导出 CSV。导出仅包含当前项目有权限查看的任务。单次导出上限 10000 条，超过上限请按日期拆分。删除项目需二次确认，删除后有 30 天恢复窗口。超过窗口无法通过界面自行恢复。",
+        "mode": "extractive",
+        "citations": [
+          {
+            "document_id": "kb-export",
+            "title": "数据导出与删除",
+            "version": 1,
+            "chunk": 0,
+            "content": "项目管理员可在设置中的数据管理导出 CSV。导出仅包含当前项目有权限查看的任务。单次导出上限 10000 条，超过上限请按日期拆分。删除项目需二次确认，删除后有 30 天恢复窗口。超过窗口无法通过界面自行恢复。",
+            "source": "合成示例 / 星河协作 SaaS",
+            "score": 2.9387,
+            "matched_terms": [
+              "恢复"
+            ]
+          }
+        ],
+        "trace": [
+          {
+            "step": "retrieve",
+            "status": "ok",
+            "documents_searched": 7,
+            "chunks_returned": 1,
+            "method": "BM25Plus; lexical relevance is not confidence"
+          },
+          {
+            "step": "review",
+            "status": "human_required",
+            "reason": "答复建议不会自动发送给客户"
+          }
+        ],
+        "elapsed_ms": 7,
+        "usage": {},
+        "created_at": "2026-09-23T07:28:58.248306+00:00"
+      },
+      "document": {
+        "id": "af9f1eba3b08428494885b47c8699bee",
+        "title": "离线激活码恢复流程（合成）",
+        "content": "离线激活码失效时，由管理员先核对设备标识与授权状态，再通过管理后台重新生成激活码。此条为合成测试流程。",
+        "source": "人工审核工单 acc1bf03dbc8499f9d7cd83e9b1acfc4 / 版本 3",
+        "audience": "public",
+        "version": 1,
+        "created_at": "2026-09-23T07:29:29.332871+00:00"
+      },
+      "review_note": "仅适用于管理员核验后的授权设备，已去除个案信息"
+    },
+    "created_at": "2026-09-23T07:29:29.332871+00:00"
+  },
+  "new_run": {
+    "id": "610135b2f36b4d37af50c430f72d1b89",
+    "question": "离线激活码如何恢复？",
+    "audience": "public",
+    "answer": "以下为关键词检索得到的原文片段，尚未经模型判断是否足以回答问题：\n\n[1] 离线激活码恢复流程（合成）\n离线激活码失效时，由管理员先核对设备标识与授权状态，再通过管理后台重新生成激活码。此条为合成测试流程。\n\n[2] 数据导出与删除\n项目管理员可在设置中的数据管理导出 CSV。导出仅包含当前项目有权限查看的任务。单次导出上限 10000 条，超过上限请按日期拆分。删除项目需二次确认，删除后有 30 天恢复窗口。超过窗口无法通过界面自行恢复。",
+    "mode": "extractive",
+    "citations": [
+      {
+        "document_id": "af9f1eba3b08428494885b47c8699bee",
+        "title": "离线激活码恢复流程（合成）",
+        "version": 1,
+        "chunk": 0,
+        "content": "离线激活码失效时，由管理员先核对设备标识与授权状态，再通过管理后台重新生成激活码。此条为合成测试流程。",
+        "source": "人工审核工单 acc1bf03dbc8499f9d7cd83e9b1acfc4 / 版本 3",
+        "score": 16.7294,
+        "matched_terms": [
+          "恢复",
+          "活码",
+          "激活",
+          "离线",
+          "线激"
+        ]
+      },
+      {
+        "document_id": "kb-export",
+        "title": "数据导出与删除",
+        "version": 1,
+        "chunk": 0,
+        "content": "项目管理员可在设置中的数据管理导出 CSV。导出仅包含当前项目有权限查看的任务。单次导出上限 10000 条，超过上限请按日期拆分。删除项目需二次确认，删除后有 30 天恢复窗口。超过窗口无法通过界面自行恢复。",
+        "source": "合成示例 / 星河协作 SaaS",
+        "score": 2.0939,
+        "matched_terms": [
+          "恢复"
+        ]
+      }
+    ],
+    "trace": [
+      {
+        "step": "retrieve",
+        "status": "ok",
+        "documents_searched": 8,
+        "chunks_returned": 2,
+        "method": "BM25Plus; lexical relevance is not confidence"
+      },
+      {
+        "step": "review",
+        "status": "human_required",
+        "reason": "答复建议不会自动发送给客户"
+      }
+    ],
+    "elapsed_ms": 6,
+    "usage": {},
+    "created_at": "2026-09-23T07:29:37.126650+00:00"
+  },
+  "original_run_unchanged": true,
+  "browser": "Edited knowledge, confirmed publication, asked again and verified first citation. No console errors.",
+  "limits": "Original workspace returned weakly related evidence before publication; after publication one weakly related extra citation remains. Not a model accuracy test."
+}
