@@ -1,0 +1,18 @@
+{
+  "checked_at": "2026-09-23T06:06:28.798279+00:00",
+  "workflow_passed": true,
+  "checks": [
+    "separate visitors cannot read each other projects",
+    "external fetch and cross-origin write blocked",
+    "unapproved model candidates do not fill evidence gaps",
+    "approved synthetic evidence exported with source hash; report isolated",
+    "source archival changes current matrix, preserves frozen report"
+  ],
+  "model": {
+    "attempted": true,
+    "status": 201,
+    "draft_count": 2
+  },
+  "limits": "Synthetic acceptance only; no accuracy or uptime claim. Sessions expire normally.",
+  "url": "https://functional-better-subsequently-paste.trycloudflare.com"
+}

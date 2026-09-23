@@ -16,6 +16,16 @@ Use the official cloudflared client to run `cloudflared tunnel --no-autoupdate -
 
 ## Verification
 
+Repeat the full synthetic acceptance against a running sandbox:
+
+```powershell
+python -m evals.public_smoke https://YOUR-DEMO-HOST --model --output artifacts/public-acceptance.json
+```
+
+Omit `--model` to check the workflow without consuming model quota. The script verifies the sandbox identity before creating two visitor sessions. It checks cross-visitor isolation, disabled collection, cross-origin writes, draft exclusion, known synthetic evidence review, Markdown download, and report immutability after source archival. It never approves generated claims. Failures exit nonzero; model failure is reported separately from workflow success. Session data expires using normal cleanup. Do not run repeatedly as a frequent uptime probe; use `/demo/status` for that.
+
+42 automated tests now include this same acceptance workflow against an isolated local sandbox. Real model output is a development sample, not an accuracy benchmark.
+
 2026-09-23: 41 automated tests passed, including visitor isolation, forged cookies, expiry cleanup, cross-origin writes, body limits and model quotas. Public HTTPS returned 200 and a Secure cookie.
 
 Official tunnel documentation: https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/
