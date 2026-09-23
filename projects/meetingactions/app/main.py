@@ -12,7 +12,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, field_validator
-from . import anchors, dates, exports, model, security
+from . import anchors, dates, exports, model, security, segments
 from .store import connect, initialize, now
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -43,6 +43,11 @@ class Candidate(Strict):
     quote: Annotated[str,StringConstraints(strip_whitespace=True,min_length=4,max_length=2000)]
     owner: Annotated[str,StringConstraints(strip_whitespace=True,max_length=120)] = ''
     due_phrase: Annotated[str,StringConstraints(strip_whitespace=True,max_length=80)] = ''
+
+
+class Extract(Strict):
+    segment: int = Field(default=0, ge=0)
+    rerun: bool = False
 
 
 class Review(Strict):
@@ -124,6 +129,15 @@ def create_app(path=None):
     def health():
         return {'status':'ok','model_configured':model.configured(),'input_limit':4000}
 
+    def segment_plan(meeting, runs):
+        plan = segments.split(meeting['transcript'])
+        for part in plan:
+            latest = segments.matching_run(runs, part, meeting['sha256'])
+            run = segments.matching_run([r for r in runs if r['state']=='success'], part, meeting['sha256']) or latest
+            part.update(state=run['state'] if run else 'pending', run_id=run['id'] if run else None,
+                        last_attempt=latest['state'] if latest else None)
+        return plan
+
     @app.post('/api/meetings',status_code=201)
     def meeting(body:Meeting):
         with connect(path) as db:
@@ -148,6 +162,7 @@ def create_app(path=None):
             result['actions'] = [dict(r) for r in db.execute('SELECT * FROM actions WHERE meeting_id=? ORDER BY created_at',(mid,))]
             result['events'] = [dict(r) for r in db.execute('SELECT * FROM events WHERE meeting_id=? ORDER BY id DESC LIMIT 100',(mid,))]
             result['runs'] = [{**dict(r),'trace':json.loads(r['trace'])} for r in db.execute('SELECT * FROM runs WHERE meeting_id=? ORDER BY created_at DESC',(mid,))]
+            result['segments'] = segment_plan(result, result['runs'])
             return result
 
     @app.post('/api/meetings/{mid}/candidates',status_code=201)
@@ -157,27 +172,42 @@ def create_app(path=None):
             return add(db,mid,body,'manual')
 
     @app.post('/api/meetings/{mid}/extract',status_code=201)
-    async def extract(mid:str):
+    async def extract(mid:str, body:Extract = Extract()):
         with connect(path) as db:
             meeting = get(db,'meetings',mid)
+            parts = segments.split(meeting['transcript'])
+            if body.segment >= len(parts):
+                raise HTTPException(422,'分段不存在，请刷新原文范围')
+            part = parts[body.segment]
+            runs = [{**dict(r),'trace':json.loads(r['trace'])} for r in db.execute(
+                "SELECT * FROM runs WHERE meeting_id=? AND state='success' ORDER BY created_at DESC", (mid,))]
+            previous = segments.matching_run(runs, part, meeting['sha256'])
+            if previous and not body.rerun:
+                ids = next((t['action_ids'] for t in previous['trace'] if 'action_ids' in t), [])
+                return {'id':previous['id'], 'actions':[get(db,'actions',aid) for aid in ids],
+                        'trace':previous['trace'], 'reused':True, 'truncated':len(parts)>1, 'segment':part}
         if not model.configured():
             raise HTTPException(503,'免费模型未配置，可先手工关联行动项')
         if busy.locked():
             raise HTTPException(409,'模型正在处理，请完成后再试')
-        trace = [{'step':'read','processed':min(len(meeting['transcript']),4000),'total':len(meeting['transcript'])}]
+        trace = [{'step':'read','processed':part['chars'],'total':len(meeting['transcript']),
+                  **part, 'segmentation':segments.VERSION, 'sha256':meeting['sha256']}]
         start, rid = time.monotonic(), uuid4().hex
         async with busy:
             try:
-                raw = await model.extract(meeting['transcript'],meeting['attendees'])
+                raw = await model.extract(meeting['transcript'][part['start']:part['end']],meeting['attendees'])
+                trace.append({'step':'model_output','candidates':raw})
                 bodies = [Candidate.model_validate(x) for x in raw]
+                if any(b.quote not in meeting['transcript'][part['start']:part['end']] for b in bodies):
+                    raise ValueError('引用必须属于当前处理段')
                 trace.append({'step':'extract','model':os.environ['MA_MODEL'],'count':len(bodies)})
                 with connect(path) as db:
                     db.execute('BEGIN IMMEDIATE')
                     results = [add(db,mid,b,'model') for b in bodies]
-                    trace += [{'step':'validate','result':'all_valid'}, {'step':'review','result':'required'},
+                    trace += [{'step':'validate','result':'all_valid'}, {'step':'review','result':'required', 'action_ids':[a['id'] for a in results]},
                               {'elapsed_ms':round((time.monotonic()-start)*1000)}]
                     db.execute('INSERT INTO runs VALUES(?,?,?,?,?)',(rid,mid,'success',dump(trace),now()))
-                return {'id':rid,'actions':results,'trace':trace,'truncated':len(meeting['transcript'])>4000}
+                return {'id':rid,'actions':results,'trace':trace,'truncated':len(parts)>1,'reused':False,'segment':part}
             except Exception as exc:
                 trace.append({'step':'failed','error_type':type(exc).__name__})
                 with connect(path) as db:
