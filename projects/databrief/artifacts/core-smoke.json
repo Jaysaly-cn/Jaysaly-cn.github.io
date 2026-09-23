@@ -1,0 +1,25 @@
+{
+  "dataset": "synthetic channels.csv",
+  "test_count": 21,
+  "result": {
+    "id": "d17b494730844e898a211ca38a52c92b",
+    "state": "succeeded",
+    "columns": [
+      "total_rows",
+      "known_orders",
+      "amount"
+    ],
+    "rows": [
+      [
+        3,
+        2,
+        60.0
+      ]
+    ],
+    "truncated": false,
+    "source_sha256": "4d291ee335fe95e2f3fb21d1deed9fc8bc5d25693707eae9d622ef4c073227ce",
+    "sql": "SELECT count(*) AS total_rows, count(c2) AS known_orders, sum(c3) AS amount FROM data",
+    "notice": "最多展示200行；未排序查询无稳定顺序。SQL可执行不代表业务口径正确。"
+  },
+  "model_used": false
+}

@@ -1,0 +1,146 @@
+{
+  "dataset_id": "618b5f42f4b7434284e55de03fd53f70",
+  "notice": "Three synthetic development cases reviewed by coding agent; second SQL required ORDER BY correction. Not a blind benchmark.",
+  "cases": [
+    {
+      "question": "金额列合计是多少？",
+      "status": 201,
+      "seconds": 4.56,
+      "response": {
+        "id": "cee9567168604b7b84ee9b47acbf31e3",
+        "question": "金额列合计是多少？",
+        "sql": "SELECT SUM(c3) AS total FROM data",
+        "explanation": "计算金额列的合计。",
+        "limitations": "无法验证口径，因为没有行内容。",
+        "notice": "尚未执行；必须核对列名、过滤条件、空值与聚合口径"
+      },
+      "execution": {
+        "id": "cd63437b04db40d087cf6548cc0dd597",
+        "state": "succeeded",
+        "columns": [
+          "total"
+        ],
+        "rows": [
+          [
+            60.0
+          ]
+        ],
+        "truncated": false,
+        "source_sha256": "4d291ee335fe95e2f3fb21d1deed9fc8bc5d25693707eae9d622ef4c073227ce",
+        "sql": "SELECT SUM(c3) AS total FROM data",
+        "notice": "最多展示200行；未排序查询无稳定顺序。SQL可执行不代表业务口径正确。",
+        "review_context": {
+          "note": "开发验收：核对c3对应金额，SUM结果应为60。",
+          "proposal_id": "cee9567168604b7b84ee9b47acbf31e3",
+          "origin": "model-reviewed",
+          "question": "金额列合计是多少？",
+          "proposed_sql": "SELECT SUM(c3) AS total FROM data"
+        }
+      },
+      "expected_rows": [
+        [
+          60.0
+        ]
+      ],
+      "rows_match": true,
+      "sql_corrected": false
+    },
+    {
+      "question": "按渠道分别计算金额总和，并按渠道排序。",
+      "status": 201,
+      "seconds": 4.12,
+      "response": {
+        "id": "775c51bd1742438a847bb296a959a2d6",
+        "question": "按渠道分别计算金额总和，并按渠道排序。",
+        "sql": "SELECT c1, SUM(c3) AS total FROM data GROUP BY c1 ORDER BY total DESC",
+        "explanation": "此查询按渠道分组并计算每个渠道的金额总和。结果按总和降序排序。",
+        "limitations": "无法确定总和为0的渠道，因为总和为0可能是因为所有渠道的金额都为0。",
+        "notice": "尚未执行；必须核对列名、过滤条件、空值与聚合口径"
+      },
+      "execution": {
+        "id": "2a1b6ec81f63457c9123352e935243ae",
+        "state": "succeeded",
+        "columns": [
+          "c1",
+          "total"
+        ],
+        "rows": [
+          [
+            "搜索",
+            30.0
+          ],
+          [
+            "社交",
+            30.0
+          ]
+        ],
+        "truncated": false,
+        "source_sha256": "4d291ee335fe95e2f3fb21d1deed9fc8bc5d25693707eae9d622ef4c073227ce",
+        "sql": "SELECT c1, SUM(c3) AS total FROM data GROUP BY c1 ORDER BY c1",
+        "notice": "最多展示200行；未排序查询无稳定顺序。SQL可执行不代表业务口径正确。",
+        "review_context": {
+          "note": "开发验收：模型错误按金额排序，修订为按渠道c1排序。",
+          "proposal_id": "775c51bd1742438a847bb296a959a2d6",
+          "origin": "model-reviewed",
+          "question": "按渠道分别计算金额总和，并按渠道排序。",
+          "proposed_sql": "SELECT c1, SUM(c3) AS total FROM data GROUP BY c1 ORDER BY total DESC"
+        }
+      },
+      "expected_rows": [
+        [
+          "搜索",
+          30.0
+        ],
+        [
+          "社交",
+          30.0
+        ]
+      ],
+      "rows_match": true,
+      "sql_corrected": true
+    },
+    {
+      "question": "订单数列排除缺失值后的平均值是多少？",
+      "status": 201,
+      "seconds": 3.33,
+      "response": {
+        "id": "5bcbdd5300114a94a79d52727d2e46cf",
+        "question": "订单数列排除缺失值后的平均值是多少？",
+        "sql": "SELECT AVG(c2) FROM data",
+        "explanation": "计算订单数列（c2）中排除缺失值后的平均值。",
+        "limitations": "无法确定渠道列（c1）和编码列（c4）是否包含缺失值。",
+        "notice": "尚未执行；必须核对列名、过滤条件、空值与聚合口径"
+      },
+      "execution": {
+        "id": "bfb7e2d59c14440eb16bd2000db8cd7b",
+        "state": "succeeded",
+        "columns": [
+          "AVG(c2)"
+        ],
+        "rows": [
+          [
+            2.5
+          ]
+        ],
+        "truncated": false,
+        "source_sha256": "4d291ee335fe95e2f3fb21d1deed9fc8bc5d25693707eae9d622ef4c073227ce",
+        "sql": "SELECT AVG(c2) FROM data",
+        "notice": "最多展示200行；未排序查询无稳定顺序。SQL可执行不代表业务口径正确。",
+        "review_context": {
+          "note": "开发验收：核对AVG忽略NULL，预期为2.5。",
+          "proposal_id": "5bcbdd5300114a94a79d52727d2e46cf",
+          "origin": "model-reviewed",
+          "question": "订单数列排除缺失值后的平均值是多少？",
+          "proposed_sql": "SELECT AVG(c2) FROM data"
+        }
+      },
+      "expected_rows": [
+        [
+          2.5
+        ]
+      ],
+      "rows_match": true,
+      "sql_corrected": false
+    }
+  ]
+}

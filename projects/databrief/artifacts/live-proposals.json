@@ -1,0 +1,45 @@
+{
+  "dataset_id": "618b5f42f4b7434284e55de03fd53f70",
+  "notice": "Synthetic development cases; proposals not yet executed",
+  "cases": [
+    {
+      "question": "金额列合计是多少？",
+      "status": 201,
+      "seconds": 4.56,
+      "response": {
+        "id": "cee9567168604b7b84ee9b47acbf31e3",
+        "question": "金额列合计是多少？",
+        "sql": "SELECT SUM(c3) AS total FROM data",
+        "explanation": "计算金额列的合计。",
+        "limitations": "无法验证口径，因为没有行内容。",
+        "notice": "尚未执行；必须核对列名、过滤条件、空值与聚合口径"
+      }
+    },
+    {
+      "question": "按渠道分别计算金额总和，并按渠道排序。",
+      "status": 201,
+      "seconds": 4.12,
+      "response": {
+        "id": "775c51bd1742438a847bb296a959a2d6",
+        "question": "按渠道分别计算金额总和，并按渠道排序。",
+        "sql": "SELECT c1, SUM(c3) AS total FROM data GROUP BY c1 ORDER BY total DESC",
+        "explanation": "此查询按渠道分组并计算每个渠道的金额总和。结果按总和降序排序。",
+        "limitations": "无法确定总和为0的渠道，因为总和为0可能是因为所有渠道的金额都为0。",
+        "notice": "尚未执行；必须核对列名、过滤条件、空值与聚合口径"
+      }
+    },
+    {
+      "question": "订单数列排除缺失值后的平均值是多少？",
+      "status": 201,
+      "seconds": 3.33,
+      "response": {
+        "id": "5bcbdd5300114a94a79d52727d2e46cf",
+        "question": "订单数列排除缺失值后的平均值是多少？",
+        "sql": "SELECT AVG(c2) FROM data",
+        "explanation": "计算订单数列（c2）中排除缺失值后的平均值。",
+        "limitations": "无法确定渠道列（c1）和编码列（c4）是否包含缺失值。",
+        "notice": "尚未执行；必须核对列名、过滤条件、空值与聚合口径"
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+name: DataBrief verification
+on:
+  push:
+    paths: ['projects/databrief/**', '.github/workflows/databrief.yml']
+  pull_request:
+    paths: ['projects/databrief/**', '.github/workflows/databrief.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/databrief
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-lock.txt
+      - run: python -m pytest -q
+      - run: node --check web/app.js
