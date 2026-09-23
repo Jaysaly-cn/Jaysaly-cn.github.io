@@ -15,20 +15,26 @@ $('#export').onclick=()=>{if(!current)return;const url=URL.createObjectURL(new B
 window.addEventListener('beforeunload',e=>{if(dirty()){e.preventDefault();e.returnValue='';}});
 documents().then(()=>$('#notice').textContent='请选择文档。正文保存在当前工作台，AI说明需人工审核。').catch(e=>$('#notice').textContent=e.message);
 
-function values(form){return Object.fromEntries([...form.elements].filter(node=>node.name).map(node=>[node.name,node.value]));}
+function setFieldValue(input,value){input.value=value;if(input.name==='old_quote'||input.name==='new_quote'){input.dataset.rawQuote=value;input.dataset.displayQuote=input.value;}}
+function values(form){return Object.fromEntries([...form.elements].filter(node=>node.name).map(node=>[node.name,node.dataset.rawQuote!==undefined&&node.value===node.dataset.displayQuote?node.dataset.rawQuote:node.value]));}
 function reviewDirty(except=null){return [...document.querySelectorAll('[data-baseline]')].some(f=>f!==except&&JSON.stringify(values(f))!==f.dataset.baseline);}
 function cleanOthers(form=null){if(reviewDirty(form))throw Error('还有未保存的说明，请保存或撤销编辑');}
 function impactFields(form,item={},withNote=false){
  for(const [name,title,max] of [['summary','影响说明',1500],['old_quote','旧版连续引用（本侧空白时留空）',4000],['new_quote','新版连续引用（本侧空白时留空）',4000],...(withNote?[['note','审核或修订理由',1000]]:[])]){
- const label=el('label',title),input=el('textarea','');input.name=name;input.maxLength=max;input.value=item[name]||'';input.required=name==='summary'||name==='note';if(input.required)input.minLength=5;label.append(input);form.append(label);
+ const label=el('label',title),input=el('textarea','');input.name=name;input.maxLength=max;setFieldValue(input,item[name]||'');input.required=name==='summary'||name==='note';if(input.required)input.minLength=5;label.append(input);form.append(label);
  }
  form.dataset.baseline=JSON.stringify(values(form));
- const reset=el('button','撤销未保存编辑');reset.type='button';reset.onclick=()=>{if(busy)return;for(const [key,value] of Object.entries(JSON.parse(form.dataset.baseline)))form.elements.namedItem(key).value=value;};form.append(reset);
+ const reset=el('button','撤销未保存编辑');reset.type='button';reset.onclick=()=>{if(busy)return;for(const [key,value] of Object.entries(JSON.parse(form.dataset.baseline)))setFieldValue(form.elements.namedItem(key),value);};form.append(reset);
 }
 async function loadReview(){
  const cid=current.id;const [items,runs,briefs]=await Promise.all([api('comparisons/'+cid+'/impacts'),api('comparisons/'+cid+'/model-runs'),api('comparisons/'+cid+'/briefs')]);if(current?.id!==cid)return;
  const select=$('#operation'),previous=select.value;select.replaceChildren();for(const [i,op] of current.diff.operations.entries()){if(op.kind==='equal')continue;const option=el('option',`变更块 #${i} · ${labels[op.kind]}`);option.value=i;select.append(option);}if([...select.options].some(o=>o.value===previous))select.value=previous;
- const manual=$('#manual-impact');manual.replaceChildren(el('h3','手工补充说明'));impactFields(manual);manual.append(el('button','保存说明草稿'));
+ const manual=$('#manual-impact');manual.replaceChildren(el('h3','手工补充说明'));impactFields(manual);
+ let draftOperation=select.value;
+ select.onchange=()=>{if(JSON.stringify(values(manual))!==manual.dataset.baseline){select.value=draftOperation;$('#notice').textContent='当前变更块还有未保存的说明，请先保存或撤销编辑再切换';return;}draftOperation=select.value;};
+ const quoteButton=el('button','填入此块原文引用');quoteButton.type='button';
+ quoteButton.onclick=()=>{if(busy)return;const op=current.diff.operations[select.value];if(!op){$('#notice').textContent='没有可引用的变更块';return;}if([...op.old_text].length>4000||[...op.new_text].length>4000){$('#notice').textContent='变更块超过单侧4000字符引用限制，请手工选择连续片段';return;}setFieldValue(manual.elements.namedItem('old_quote'),op.old_text);setFieldValue(manual.elements.namedItem('new_quote'),op.new_text);$('#notice').textContent='已填入当前块的完整原文引用。请补充说明，核对否定、条件和数字后保存。';};
+ manual.append(quoteButton,el('button','保存说明草稿'));
  manual.onsubmit=e=>{e.preventDefault();act(async()=>{cleanOthers(manual);await api(`comparisons/${cid}/operations/${select.value}/impacts`,values(manual));await loadReview();});};
  $('#impact-list').replaceChildren();for(const item of items){const form=el('form','');form.className='impact-card';form.append(el('h3',`变更块 #${item.operation} · ${{draft:'待审核',confirmed:'已确认',rejected:'已拒绝'}[item.state]} · v${item.version}`));impactFields(form,item,true);form.append(el('button','保存修订并重新审核'));
  form.onsubmit=e=>{e.preventDefault();act(async()=>{cleanOthers(form);await api('impacts/'+item.id+'/revise',{...values(form),version:item.version});await loadReview();});};

@@ -1,0 +1,33 @@
+{
+  "date": "2026-09-23",
+  "method": "Actual browser actions followed by HTTP stored-value verification",
+  "switch_guard": {
+    "attempted": "0 to 2 with unsaved quotes",
+    "observed": "selection remained 0 and quotes unchanged",
+    "after_discard": "selection 2; old quote empty, new quote exact insertion"
+  },
+  "crlf": {
+    "comparison_id": "c40de7b03c1048d683c4b1a8745d4048",
+    "impact": {
+      "id": "c2ac713f39dc4f06b393fb7103317357",
+      "comparison_id": "c40de7b03c1048d683c4b1a8745d4048",
+      "operation": 0,
+      "summary": "规则改为禁止导出，保留期缩短至3天；执行范围待确认。",
+      "old_quote": "允许导出。\r\n保留7天。\r\n",
+      "new_quote": "禁止导出。\r\n保留3天。\r\n",
+      "state": "confirmed",
+      "version": 3
+    },
+    "flow": [
+      "fill original quotes",
+      "save draft",
+      "revise summary without changing quotes",
+      "confirm version3"
+    ],
+    "raw_crlf_preserved": true
+  },
+  "limitations": [
+    "No model accuracy claim",
+    "Manual edits use actual textarea text; browser may normalize its newlines"
+  ]
+}

@@ -52,3 +52,9 @@ python -m uvicorn app.main:app --host 127.0.0.1 --port 8798
 ## 来源
 
 借助 AI 编程协作开发。研究了 [Redlines](https://github.com/houfu/redlines) 的文本差异形式，没有复制或安装其代码；差异使用 Python 标准库 difflib。模型适配、服务保护及访客隔离复用本作品集已有 MIT 项目，保留项目 LICENSE。源码作为个人主页仓库 projects/changelens 的项目目录发布。
+
+## 提示词对比与原文辅助
+
+对六条预先固定的合成样例做12次真实调用，候选方案格式/引用门槛5/6、基线4/6，但仍存在指令污染和条件漏提，故保留默认v1。见 artifacts/prompt-comparison-review.md 与 prompt-comparison-v2.json；不是独立盲测或语义准确率。可设置上述本地模型环境变量后执行 python -m evals.compare_prompt artifacts/new-comparison.json 重跑，脚本拒绝覆盖已有证据。
+
+手工说明新增“填入此块原文引用”。未编辑引用保留原始CRLF等换行，浏览器显示可能标准化；编辑后按实际输入校验。说明未保存时阻止切换变更块，撤销后可切换。单侧超过4000码点需手选片段。实际浏览器保存、修订及确认后，通过HTTP核对CRLF仍在，见 artifacts/quote-helper-browser.json。
