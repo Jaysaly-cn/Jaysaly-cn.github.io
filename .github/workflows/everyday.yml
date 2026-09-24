@@ -23,6 +23,7 @@ jobs:
       - run: node --check clipscribe.js
       - run: node --check readalong.js
       - run: node --check pantry.js
+      - run: node --check dayplan.js
       - run: npm run build:semantic
       - run: git diff --exit-code -- vendor/semantic-worker.bundle.js vendor/semantic-worker.bundle.js.LEGAL.txt
       - run: npm run build:readalong

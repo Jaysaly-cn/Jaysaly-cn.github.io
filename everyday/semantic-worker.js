@@ -10,7 +10,7 @@ self.onmessage=async({data})=>{
   const embed=await pipeline('feature-extraction','Xenova/paraphrase-multilingual-MiniLM-L12-v2',{revision:'d56d66f3a4258284c268d113e0202d7ec9078f6c',device:'wasm',dtype:'q8',progress_callback:p=>self.postMessage({type:'progress',message:p.status==='progress'?`下载 ${p.file} · ${Math.round(p.progress)}%`:'正在准备语义模型…'})});
   const options={pooling:'mean',normalize:true};
   for(const text of [data.query,...data.candidates.map(c=>c.text)]){
-   if(embed.tokenizer(text,{truncation:false}).input_ids.data.length>128)throw Error('文本超过语义模型的 128 token 范围，请缩短偏好描述。');
+   if(embed.tokenizer(text,{truncation:false}).input_ids.data.length>128)throw Error('文本超过语义模型的 128 token 范围，请缩短偏好或候选描述。');
   }
   const query=await embed(data.query,options),scores=[];
   for(let i=0;i<data.candidates.length;i++){
