@@ -1,3 +1,4 @@
 vendor/** -text
+data/pantry-sources/** -text
 artifacts/*.png binary
 artifacts/*.wav binary

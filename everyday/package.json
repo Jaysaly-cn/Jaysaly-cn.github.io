@@ -8,7 +8,8 @@
     "vendor": "node scripts/vendor.cjs",
     "build:cutout": "node scripts/build-cutout.cjs",
     "build:clipscribe": "node scripts/build-clipscribe.cjs",
-    "build:readalong": "node scripts/build-readalong.cjs"
+    "build:readalong": "node scripts/build-readalong.cjs",
+    "build:semantic": "node scripts/build-semantic.cjs"
   },
   "dependencies": {
     "@huggingface/transformers": "3.8.1",

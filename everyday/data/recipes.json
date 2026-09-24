@@ -1,0 +1,1093 @@
+{
+  "sourceCommit": "a2d45c6984dff9ee941da0e7c452f7965965d962",
+  "recipes": [
+    {
+      "id": "tomato-eggs",
+      "name": "西红柿炒鸡蛋",
+      "minutes": 15,
+      "tools": [
+        "炒锅"
+      ],
+      "portion": "原方 1 份约供 1 人",
+      "description": "酸甜多汁的番茄配嫩鸡蛋，简单下饭的家常炒菜。",
+      "ingredients": [
+        {
+          "name": "西红柿",
+          "quantity": 1,
+          "unit": "个",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "鸡蛋",
+          "quantity": 1.5,
+          "unit": "个",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": "ceil"
+        },
+        {
+          "name": "食用油",
+          "quantity": 6,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "盐",
+          "quantity": 1.5,
+          "unit": "g",
+          "maximum": 2,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "糖",
+          "quantity": 2,
+          "unit": "g",
+          "maximum": null,
+          "optional": true,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "葱",
+          "quantity": 10,
+          "unit": "g",
+          "maximum": null,
+          "optional": true,
+          "offset": 0,
+          "rounding": null
+        }
+      ],
+      "notes": [
+        "油按原方每个鸡蛋 4 ml 计算，随鸡蛋向上取整；不按固定 6 ml 倍增。"
+      ],
+      "source": "https://github.com/Anduin2017/HowToCook/blob/a2d45c6984dff9ee941da0e7c452f7965965d962/dishes/vegetable_dish/西红柿炒鸡蛋.md",
+      "sourceSha256": "6ef54c60c7701866ba212e3e7cbc19a2d84c109e142824084d1f467dc701dc2f",
+      "sourceFile": "data/pantry-sources/西红柿炒鸡蛋.md",
+      "instructions": "1. 西红柿洗净\n2. 可选：去掉西红柿的外表皮\n\n  - 开水烫表皮，然后将西红柿放入冷水，剥去外皮\n\n3. 西红柿去蒂，切成边长不超过 4cm 的小块，即为 `西红柿块`\n4. 将鸡蛋打入碗中，加入 `1g * 份数` 的盐，搅匀，即为 `鸡蛋液`\n\n  - 可以考虑向鸡蛋中加入 1ml 醋，这可以去除腥味，令鸡蛋更蓬松\n\n5. 热锅，加入食用油\n6. 油热后，倒入 `鸡蛋液`。翻炒至鸡蛋结为固体且颜色微微发黄，即为 `半熟鸡蛋`\n7. 关火。将 `半熟鸡蛋` 盛盘，重新开火\n\n  - 注意：不要洗锅\n\n8. 加入 `西红柿块`，锅铲拍打并翻炒 20 秒，或至西红柿软烂\n9. 向锅中加入 `半熟鸡蛋`，翻炒均匀\n\n  - 可以考虑加入 10ml 番茄酱和 50ml 清水，增加汤汁\n  - 可以额外加入一些其它熟肉和材料\n\n10. 加入剩余的盐、糖（可选，如果倾向于甜味版本）、葱花（可选），翻炒均匀\n11. 关火，盛盘",
+      "allergens": [
+        "蛋"
+      ]
+    },
+    {
+      "id": "cucumber",
+      "name": "凉拌黄瓜",
+      "minutes": 20,
+      "tools": [
+        "菜刀与碗"
+      ],
+      "portion": "原方 1 份约供 1 人",
+      "description": "清爽酸香的凉菜，拍黄瓜加蒜醋调味，需要腌制。",
+      "ingredients": [
+        {
+          "name": "黄瓜",
+          "quantity": 200,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "醋",
+          "quantity": 4,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 7.5,
+          "rounding": null
+        },
+        {
+          "name": "酱油",
+          "quantity": 2.5,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 5,
+          "rounding": null
+        },
+        {
+          "name": "蒜",
+          "quantity": 3,
+          "unit": "瓣",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "盐",
+          "quantity": 0.2,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0.4,
+          "rounding": null
+        },
+        {
+          "name": "香油",
+          "quantity": 2,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 5,
+          "rounding": null
+        },
+        {
+          "name": "蚝油",
+          "quantity": 0,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 5,
+          "rounding": null
+        },
+        {
+          "name": "糖",
+          "quantity": 0,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 5,
+          "rounding": null
+        }
+      ],
+      "notes": [
+        "糖来自操作第 4 步；醋、酱油、盐、香油按原方固定量加份数量计算，蚝油与糖为固定量。"
+      ],
+      "source": "https://github.com/Anduin2017/HowToCook/blob/a2d45c6984dff9ee941da0e7c452f7965965d962/dishes/vegetable_dish/凉拌黄瓜.md",
+      "sourceSha256": "2b1798821af132fdaf09cfae8381513dfcdbe2810288e1012137c93d8d82eea7",
+      "sourceFile": "data/pantry-sources/凉拌黄瓜.md",
+      "instructions": "1. 用菜刀将黄瓜拍扁，再剁成长 3 厘米的碎块\n2. 将碎黄瓜装入碗中\n3. 将蒜拍碎切成碎末\n4. 将碗中放入 5 克白糖，搅拌均匀腌制 15 分钟（用糖腌制更好吃，且成色更好不会蔫）\n5. 将醋，酱油，盐，蚝油和蒜依次倒入碗中搅拌均匀\n6. 将香油倒入碗中并均匀搅拌",
+      "allergens": [
+        "大豆",
+        "小麦",
+        "芝麻",
+        "贝类"
+      ]
+    },
+    {
+      "id": "broccoli",
+      "name": "蒜蓉西兰花",
+      "minutes": 15,
+      "tools": [
+        "炒锅"
+      ],
+      "portion": "计算表每份 200 g，原文称供 2 人",
+      "description": "蒜香清淡的蔬菜，西兰花焯水后淋蒜蓉汁。",
+      "ingredients": [
+        {
+          "name": "西兰花",
+          "quantity": 200,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "蒜",
+          "quantity": 3,
+          "unit": "瓣",
+          "maximum": 4,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "生抽",
+          "quantity": 10,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "蚝油",
+          "quantity": 5,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "糖",
+          "quantity": 2,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "食用油",
+          "quantity": 10,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        }
+      ],
+      "notes": [
+        "原料列表写 1 个，计算表写 200 g；此处采用计算表。油来自操作第 6 步。含蚝油，并非严格素食。"
+      ],
+      "source": "https://github.com/Anduin2017/HowToCook/blob/a2d45c6984dff9ee941da0e7c452f7965965d962/dishes/vegetable_dish/蒜蓉西兰花.md",
+      "sourceSha256": "59a8c2a875182a8a59dd253e58a7c26c66fb03448891bb025ec0189e4baab940",
+      "sourceFile": "data/pantry-sources/蒜蓉西兰花.md",
+      "instructions": "1. 将 西兰花 切成小朵，清洗干净。\n2. 将 大蒜 去皮，切成蒜末，备用。\n3. 锅中加入 1000 ml 饮用水，大火烧开。\n4. 放入 西兰花，保持大火 **煮 2-3 分钟**，至 西兰花 颜色变翠绿，口感变软。\n5. 将 煮好的 西兰花 捞出，沥干水分，摆入盘中，备用。\n6. 热锅，加入 10 ml 食用油。油温升高后，放入 大蒜末，小火煸炒出香味。\n7. 加入 10 ml 生抽，5 ml 蚝油，2 g 白糖，加入 30 ml 饮用水。\n8. 将锅中汤汁烧开。\n9. 将烧好的蒜蓉汁 均匀淋在盘中的 西兰花 上。",
+      "allergens": [
+        "大豆",
+        "小麦",
+        "贝类"
+      ]
+    },
+    {
+      "id": "seaweed-soup",
+      "name": "紫菜蛋花汤",
+      "minutes": 20,
+      "tools": [
+        "汤锅"
+      ],
+      "portion": "原文标注 1 人份，水量见原步骤",
+      "description": "温热清淡的紫菜鸡蛋汤，适合配餐，有葱香和蛋花。",
+      "ingredients": [
+        {
+          "name": "紫菜",
+          "quantity": 10,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "鸡蛋",
+          "quantity": 2,
+          "unit": "个",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "盐",
+          "quantity": 2,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "食用油",
+          "quantity": 5,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "葱",
+          "quantity": null,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "香油",
+          "quantity": null,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "虾仁",
+          "quantity": null,
+          "unit": "g",
+          "maximum": null,
+          "optional": true,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "虾皮",
+          "quantity": null,
+          "unit": "g",
+          "maximum": null,
+          "optional": true,
+          "offset": 0,
+          "rounding": null
+        }
+      ],
+      "notes": [
+        "油量取自步骤；葱、香油未明确数值，不虚构克数。原方水量 1.5 L。可选虾仁/虾皮不自动加入采购清单。"
+      ],
+      "source": "https://github.com/Anduin2017/HowToCook/blob/a2d45c6984dff9ee941da0e7c452f7965965d962/dishes/soup/紫菜蛋花汤.md",
+      "sourceSha256": "8b83438660e9d15b9658644b4b9c8d16eecf1207cf33ac7e2fd526aa3f760020",
+      "sourceFile": "data/pantry-sources/紫菜蛋花汤.md",
+      "instructions": "1. 干紫菜用清水泡 15 分钟，捞起沥干水份备用。\n2. 热锅，倒入 1.5 升清水、5ml 油、2g 盐。待水开后放入紫菜。\n3. 紫菜烧开后 3 分钟，将打好的蛋液徐徐倒入锅内，30 秒既可起锅。\n4. 撒上葱花，转小火 20 秒。\n5. 关火，出锅前放入几滴香油，也有的会放入一点虾皮，味道也不错。",
+      "allergens": [
+        "甲壳类",
+        "芝麻",
+        "蛋"
+      ]
+    },
+    {
+      "id": "steamed-eggs",
+      "name": "鸡蛋羹",
+      "minutes": 20,
+      "tools": [
+        "蒸锅"
+      ],
+      "portion": "原方约供 1 人",
+      "description": "软嫩清淡的水蒸鸡蛋，蒸制的蛋羹，早餐或配餐。",
+      "ingredients": [
+        {
+          "name": "鸡蛋",
+          "quantity": 2,
+          "unit": "个",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "盐",
+          "quantity": 3,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "香油",
+          "quantity": 2,
+          "unit": "ml",
+          "maximum": 4,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "生抽",
+          "quantity": 8,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "白醋",
+          "quantity": 2,
+          "unit": "ml",
+          "maximum": null,
+          "optional": true,
+          "offset": 0,
+          "rounding": null
+        }
+      ],
+      "notes": [
+        "原文简介约 15 分钟；考虑备料与蒸焖，本工具预估 20 分钟。蒸制时间不随份数线性放大，须按原步骤确认熟度。"
+      ],
+      "source": "https://github.com/Anduin2017/HowToCook/blob/a2d45c6984dff9ee941da0e7c452f7965965d962/dishes/vegetable_dish/鸡蛋羹/鸡蛋羹.md",
+      "sourceSha256": "315fa22701bdabd3a35de3546f3f3a08fe325ff75b5dc70c1f519d5e8254d248",
+      "sourceFile": "data/pantry-sources/鸡蛋羹.md",
+      "instructions": "1. 两个鸡蛋放入碗中打散\n2. 加入食用盐 3g\n\n  - 盐起到了重要的增加底味和凝固作用\n\n3. 加入 2ml 白醋，去除鸡蛋的腥味（可选）\n\n  - 加入米醋也行，但米醋的颜色会使鸡蛋微微发黑\n  - 还可以加入料酒，同样具有去腥的作用，且没有醋的酸味\n\n4. 向碗中加入鸡蛋体积 1-1.5 倍的 70 度纯净水，并且搅拌均匀\n\n  - 1 倍的水鸡蛋更弹，1.5 倍的水鸡蛋更嫩\n\n5. 过滤蛋液，去掉蛋液中的浮沫（可选，不过滤蒸出来的蛋会有气泡导致不好看）\n6. 向任意一口锅中加入 300-500ml 清水，水烧开后，放入盛有鸡蛋液的碗\n\n  - 蒸碗要盖上一个盖子，倒扣一个有凹槽的铁碟子，或者使用保鲜膜来减少水汽进入，这是为了避免其变成蜂窝状\n\n7. 蒸煮步骤（二选一）\n1. 开**中火**蒸**10 分钟**, 10 分钟之后关火再闷上**5 分钟**。\n2. 开**大火**蒸**5 分钟**，要保持锅中水一直处于沸腾状态，否则要延长时间。每隔**2 分钟**开盖一次释放水蒸气，开盖过晚蛋羹容易变成蜂窝状；开盖太早/频繁蒸的时间需要久一些。\n8. 如何判断已经熟了？\n\n  - 晃动碗，蛋羹不再处于液体状态，拥有类似果冻的 Q 弹状态即可出锅。\n\n9. 出锅\n10. 加入香油和生抽即可享用\n\n  - 也可用藤椒油代替香油，增加麻爽口感",
+      "allergens": [
+        "大豆",
+        "小麦",
+        "芝麻",
+        "蛋"
+      ]
+    },
+    {
+      "id": "tofu",
+      "name": "葱煎豆腐",
+      "minutes": 30,
+      "tools": [
+        "平底锅"
+      ],
+      "portion": "原方 1 份约供 1 人，豆腐块大小未定义",
+      "description": "外焦里嫩的煎豆腐，葱香微辣，搭配青椒。",
+      "ingredients": [
+        {
+          "name": "豆腐",
+          "quantity": 0.8,
+          "unit": "块",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": "ceil"
+        },
+        {
+          "name": "青椒",
+          "quantity": 0.5,
+          "unit": "个",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "葱",
+          "quantity": 0.6666666666666666,
+          "unit": "根",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "盐",
+          "quantity": 3,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "鸡精",
+          "quantity": 1.5,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "食用油",
+          "quantity": 9,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        }
+      ],
+      "notes": [
+        "原方还要求补油至覆盖锅底，采购表 9 ml/份仅为首次用油，下锅时另检查余量。"
+      ],
+      "source": "https://github.com/Anduin2017/HowToCook/blob/a2d45c6984dff9ee941da0e7c452f7965965d962/dishes/vegetable_dish/葱煎豆腐.md",
+      "sourceSha256": "e9be582d6f84daf9c638c2b3f6fe238c28eea106ff4f69a2d4c568d4aa2bf811",
+      "sourceFile": "data/pantry-sources/葱煎豆腐.md",
+      "instructions": "1. 豆腐洗净。切约 5 mm 厚度，置于碟中。\n2. 葱洗净，除去根部，切成葱花，备用。\n3. 辣椒洗净，切开，去籽，切成 1cm * 1cm 状，备用、\n4. 热锅，加入份数 * 9ml 油。\n5. 油入锅后，使其均匀布于锅底，均匀放入豆腐，小火煎至金黄翻面。\n6. 待两面金黄，盛入碟中备用。\n7. 补油至覆盖锅底，倒入辣椒大火翻炒，并铲碾 3 分钟。\n8. 倒入豆腐，翻炒，加入盐与鸡精，中火翻炒 1 分钟后倒入 10 ML 水，大火收汁。\n9. 出锅前撒上之前计算好的葱花，起锅盛盘。",
+      "allergens": [
+        "复合调料",
+        "大豆"
+      ]
+    },
+    {
+      "id": "cabbage",
+      "name": "手撕包菜",
+      "minutes": 20,
+      "tools": [
+        "炒锅"
+      ],
+      "portion": "原方每份：包菜 1 颗、五花肉 200 g",
+      "description": "酸辣脆爽的包菜炒五花肉，荤菜，下饭，需大火快炒。",
+      "ingredients": [
+        {
+          "name": "包菜",
+          "quantity": 1,
+          "unit": "颗",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "猪肉",
+          "quantity": 200,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "小米辣",
+          "quantity": 2,
+          "unit": "根",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "食用油",
+          "quantity": 60,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "料酒",
+          "quantity": 5,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "生抽",
+          "quantity": 5,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "醋",
+          "quantity": 5,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "鸡精",
+          "quantity": 2,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "姜",
+          "quantity": 2,
+          "unit": "片",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "蒜",
+          "quantity": 2,
+          "unit": "瓣",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "蒜苗",
+          "quantity": 0.5,
+          "unit": "根",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "盐",
+          "quantity": 5,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        }
+      ],
+      "notes": [
+        "这是含五花肉的版本；原方最后一步料酒重复出现，未重复计量。"
+      ],
+      "source": "https://github.com/Anduin2017/HowToCook/blob/a2d45c6984dff9ee941da0e7c452f7965965d962/dishes/vegetable_dish/手撕包菜/手撕包菜.md",
+      "sourceSha256": "47368bd94f44883f9b2bfc8dac2b8a5378f9ec466d26001ca9383cff71e23a4b",
+      "sourceFile": "data/pantry-sources/手撕包菜.md",
+      "instructions": "1. 包菜对半切开，去掉中间白色部分【参见图一】\n2. 手撕包菜，碗中放入 2 g 盐，清洗包菜并沥干备用【参见图二】\n3. 姜片、蒜头、小米辣、蒜苗处理后备用【参见图三】\n4. 五花肉切片，清水清洗后备用\n5. 锅中加入 30 ml 食用油，倒入包菜翻炒，大火翻炒 1 分钟 后，加入 3 g 盐 ，继续翻炒 2 分钟 后取出备用\n6. 锅中加入 30 ml 食用油，倒入五花肉，大火翻炒 1 分钟\n7. 倒入姜片等材料，翻炒 1 分钟\n8. 倒入包菜翻炒后，加入 香醋、料酒、鸡精、料酒，大火继续翻炒，2 分钟 后出锅",
+      "allergens": [
+        "复合调料",
+        "大豆",
+        "小麦"
+      ]
+    },
+    {
+      "id": "onion-eggs",
+      "name": "洋葱炒鸡蛋",
+      "minutes": 5,
+      "tools": [
+        "炒锅"
+      ],
+      "portion": "原方 1 份，未定义人数",
+      "description": "洋葱清甜与鸡蛋咸香，快速家常炒菜。",
+      "ingredients": [
+        {
+          "name": "鸡蛋",
+          "quantity": 2,
+          "unit": "个",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "洋葱",
+          "quantity": 50,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "食用油",
+          "quantity": 50,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "盐",
+          "quantity": 2,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "葱",
+          "quantity": 0.5,
+          "unit": "根",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "料酒",
+          "quantity": 2,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        }
+      ],
+      "notes": [
+        "时长和油量照原方记录，实际备料时间及用油可自行调整。"
+      ],
+      "source": "https://github.com/Anduin2017/HowToCook/blob/a2d45c6984dff9ee941da0e7c452f7965965d962/dishes/vegetable_dish/洋葱炒鸡蛋/洋葱炒鸡蛋.md",
+      "sourceSha256": "d744b2afa5588f756970ee237cbe0393434eaac84d4d0f04f15c773afb9c85b2",
+      "sourceFile": "data/pantry-sources/洋葱炒鸡蛋.md",
+      "instructions": "1. 鸡蛋打入大碗中，加入洋葱片、盐后搅拌 60 S\n2. 起锅烧油，倒入鸡蛋，一面煎炸 30-45 S ，翻面继续翻炒，反复 2-3 分钟 后散上料酒出锅\n3. 鸡蛋装盘，散上葱花",
+      "allergens": [
+        "蛋"
+      ]
+    },
+    {
+      "id": "zucchini-eggs",
+      "name": "西葫芦炒鸡蛋",
+      "minutes": 15,
+      "tools": [
+        "炒锅"
+      ],
+      "portion": "原方约供 2 人",
+      "description": "清爽软嫩的西葫芦炒蛋，可加番茄带酸甜味。",
+      "ingredients": [
+        {
+          "name": "西葫芦",
+          "quantity": 500,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "鸡蛋",
+          "quantity": 3,
+          "unit": "个",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "西红柿",
+          "quantity": 100,
+          "unit": "g",
+          "maximum": null,
+          "optional": true,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "食用油",
+          "quantity": 10,
+          "unit": "ml",
+          "maximum": 20,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "盐",
+          "quantity": 6,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        }
+      ],
+      "notes": [
+        "番茄在原方标为可选；不选时跳过相关处理步骤。"
+      ],
+      "source": "https://github.com/Anduin2017/HowToCook/blob/a2d45c6984dff9ee941da0e7c452f7965965d962/dishes/vegetable_dish/西葫芦炒鸡蛋/西葫芦炒鸡蛋.md",
+      "sourceSha256": "84c063778e12767e012fe968536af526e75645750b33e20df7aa9f05246c5302",
+      "sourceFile": "data/pantry-sources/西葫芦炒鸡蛋.md",
+      "instructions": "1. 西红柿洗净，切成小块，备用\n2. 西葫芦洗净，切成边长约为 4cm 的菱形，备用\n3. 打三个鸡蛋到碗里，打散搅匀，备用\n4. 热锅，锅内放入 5ml - 10ml 食用油\n5. 倒入鸡蛋，保持翻炒至鸡蛋成固体，用锅铲分成小块后盛到碗里，备用\n6. 锅内放入 5ml - 10ml 食用油，倒入西红柿，炒至变软\n7. 倒入西葫芦一起翻炒均匀，放入 6g 食用盐，将火调小然后**等待 4 - 5 分钟**\n8. 倒入备用的鸡蛋，中火翻炒 15 秒\n9. 关火，盛盘",
+      "allergens": [
+        "蛋"
+      ]
+    },
+    {
+      "id": "oat-pancake",
+      "name": "燕麦鸡蛋饼",
+      "minutes": 20,
+      "tools": [
+        "平底锅"
+      ],
+      "portion": "原方 1 份早餐，未明确人数",
+      "description": "燕麦蛋奶早餐饼，小火平底锅煎，软嫩谷物口感。",
+      "ingredients": [
+        {
+          "name": "鸡蛋",
+          "quantity": 2,
+          "unit": "个",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "燕麦",
+          "quantity": 50,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "牛奶",
+          "quantity": 250,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "黄油",
+          "quantity": null,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "菠菜",
+          "quantity": 50,
+          "unit": "g",
+          "maximum": null,
+          "optional": true,
+          "offset": 0,
+          "rounding": null
+        }
+      ],
+      "notes": [
+        "250 ml 牛奶包含配餐饮用部分；原文提示约 50–100 g 用来拌燕麦，其余随餐。黄油来自步骤但无定量。20 分钟为本工具保守估计。"
+      ],
+      "source": "https://github.com/Anduin2017/HowToCook/blob/a2d45c6984dff9ee941da0e7c452f7965965d962/dishes/breakfast/燕麦鸡蛋饼.md",
+      "sourceSha256": "d006d502a2ee2da36da4a6a9252180b7bb4a5fced5bbb8efc5cce42439ae70d6",
+      "sourceFile": "data/pantry-sources/燕麦鸡蛋饼.md",
+      "instructions": "1. 将牛奶与干燕麦混合搅拌均匀至黏稠状。\n2. 将鸡蛋搅拌均匀至颜色单一程度。\n3. 将鸡蛋液倒入燕麦牛奶中继续搅拌至黏稠、均匀。\n4. 平底锅中加入一层黄油并覆盖均匀。\n5. 下入搅拌好的食材，并摊开至饼状。\n6. 小火加热两到三分钟。如想要加入蔬菜，可以在加热过程中加入碎菜叶。\n7. 翻面继续加热两分钟。\n8. 出锅，搭配剩下的牛奶作为早餐。",
+      "allergens": [
+        "乳",
+        "燕麦",
+        "蛋"
+      ]
+    },
+    {
+      "id": "tomato-noodles",
+      "name": "西红柿鸡蛋挂面",
+      "minutes": 20,
+      "tools": [
+        "炒锅",
+        "汤锅"
+      ],
+      "portion": "原方约供 1 人",
+      "description": "酸甜咸鲜的番茄鸡蛋拌面，热食主食，带青椒与葱香。",
+      "ingredients": [
+        {
+          "name": "挂面",
+          "quantity": 50,
+          "unit": "g",
+          "maximum": 100,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "西红柿",
+          "quantity": 200,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "鸡蛋",
+          "quantity": 1,
+          "unit": "个",
+          "maximum": 2,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "盐",
+          "quantity": 5,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "蚝油",
+          "quantity": 5,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "糖",
+          "quantity": 2,
+          "unit": "g",
+          "maximum": null,
+          "optional": true,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "酱油",
+          "quantity": 5,
+          "unit": "g",
+          "maximum": 8,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "食用油",
+          "quantity": 20,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "香油",
+          "quantity": 5,
+          "unit": "g",
+          "maximum": null,
+          "optional": true,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "青椒",
+          "quantity": null,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "葱",
+          "quantity": null,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "蒜",
+          "quantity": null,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        }
+      ],
+      "notes": [
+        "采用蚝油版本，不自动替换鸡精。青椒、葱、蒜在步骤出现但无定量。原方正文的调料范围不完全一致，按计算表展示并保留原文。"
+      ],
+      "source": "https://github.com/Anduin2017/HowToCook/blob/a2d45c6984dff9ee941da0e7c452f7965965d962/dishes/staple/西红柿鸡蛋挂面/西红柿鸡蛋挂面.md",
+      "sourceSha256": "f3084cc2ebfcc50d29dc0ca9f7c137d54b760b78d1dcaad9cd67a01dc72f75c1",
+      "sourceFile": "data/pantry-sources/西红柿鸡蛋挂面.md",
+      "instructions": "### 食材的预处理\n\n食材预处理很重要，无论做什么菜提前进行处理，在菜肴制作过程中才不会慌乱，并且制作是个很舒心的过程，这……可能就是为什么后厨需要一个单独的打荷岗位吧\n\n1. 小葱洗净并切成葱花\n2. 西红柿切块儿，如果不太会切建议先百度一下~\n3. 青椒切成菱形块\n4. 生鸡蛋打入一个小碗并打散，如果鸡蛋有点腥味可以加 2g 白醋去腥\n\n\n\n### 鸡蛋的预处理\n\n1. 起锅烧热，倒入 15~20g 食用油，鸡蛋炒嫩滑就得多一点油，同时为后面煸炒西红柿留一些底油\n2. 待油温到七成热时（手掌隔大概 10cm，能感觉到热），倒入蛋液快速划散\n3. 鸡蛋滑到凝固后，一点不会有蛋液了后倒入小碗备用，此处留一些底油\n\n\n> 鸡蛋没有拍照用网图来代替吧\n\n### 制作西红柿鸡蛋臊子\n\n1. 锅中留底油后先加入葱白、蒜末炒香\n2. 加入西红柿块、青椒，待西红柿炒出一点汁水\n3. 此时速速加入 5g 酱油和 2g 白砂糖\n4. 翻炒十几秒后加入一碗清水（刚刚好即将没过西红柿即可）\n5. 煮沸后加入炒好的鸡蛋，加入蚝油 5g 或者 2g 鸡精用于提鲜\n6. 中小火收汁，期间要搅拌防止粘锅，收汁到下图后加一点葱花（剩下的葱绿部分）和香油（不加也可以），臊子制作完成\n\n\n\n### 最后煮面条\n\n1. 可以不用洗锅，直接加清水 500ml\n2. 煮沸加入挂面，挂面煮软后加入 100ml 清水\n3. 再次煮沸后，若面条飘起来了，再加入 100ml 清水\n4. 煮沸后看面条两侧是否呈透明状，透明状则熟了\n5. 捞面到臊子碗中，拌面即可啦~",
+      "allergens": [
+        "大豆",
+        "小麦",
+        "芝麻",
+        "蛋",
+        "贝类"
+      ]
+    },
+    {
+      "id": "egg-rice",
+      "name": "蛋炒饭",
+      "minutes": 25,
+      "tools": [
+        "炒锅"
+      ],
+      "portion": "原方 1 份约供 1–2 人",
+      "description": "有火腿的咸香蛋炒饭，主食，使用冷饭，可加胡萝卜黄瓜。",
+      "ingredients": [
+        {
+          "name": "米饭",
+          "quantity": 500,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "鸡蛋",
+          "quantity": 1.5,
+          "unit": "个",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": "floor"
+        },
+        {
+          "name": "火腿",
+          "quantity": 2,
+          "unit": "根",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "黄瓜",
+          "quantity": 30,
+          "unit": "g",
+          "maximum": null,
+          "optional": true,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "胡萝卜",
+          "quantity": 30,
+          "unit": "g",
+          "maximum": null,
+          "optional": true,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "食用油",
+          "quantity": 12,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "盐",
+          "quantity": 4,
+          "unit": "g",
+          "maximum": 6,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "胡椒粉",
+          "quantity": 8,
+          "unit": "g",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "葱",
+          "quantity": 1,
+          "unit": "根",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        },
+        {
+          "name": "生抽",
+          "quantity": 10,
+          "unit": "ml",
+          "maximum": null,
+          "optional": false,
+          "offset": 0,
+          "rounding": null
+        }
+      ],
+      "notes": [
+        "鸡蛋依原方 1.5×份数向下取整。胡椒粉原方写 8 g/份，风味较重，实际请先核对并按口味调整。此工具不自动替原方改写用量。"
+      ],
+      "source": "https://github.com/Anduin2017/HowToCook/blob/a2d45c6984dff9ee941da0e7c452f7965965d962/dishes/staple/蛋炒饭.md",
+      "sourceSha256": "4b061d24b4e8c6a3dd3791f84de5303b3ff38ab41f8560c5226d76a3e56554e1",
+      "sourceFile": "data/pantry-sources/蛋炒饭.md",
+      "instructions": "1. 米饭提前用铲子铲成小块\n2. 火腿肠、胡萝卜、黄瓜等根据需求切片或者块状\n3. 如果家里有熟肉 准备好味道更佳\n4. 将蛋白，蛋黄分开，分别打入一个大碗里，各自搅匀。注意，不要在这一步加盐。\n5. 大火热锅，待锅里冒烟放入食用油，放入蛋白，待主体凝固后盛出备用。\n6. 如果油够，则直接放入蛋黄，如果油不够则放入食用油并等其升温到大火热锅\n7. 待主体凝固后，将火调至中小火，倒入火腿肠、熟肉，胡萝卜、黄瓜等备料、翻炒 10 秒钟（到爆香）\n8. 重新倒入蛋白，翻炒 5s 钟，迅速倒入米饭大火翻炒，为的就是每一粒饭都裹上鸡蛋。\n9. 翻炒过程中将米饭的块状捣碎、这一步过程会比较长、待米饭全部捣碎再翻炒均匀即可\n10. 调至小火、加盐、胡椒粉、生抽\n11. 进一步翻炒均匀，能看到一些米饭在锅里有“跳起来”的时候其实就已经差不多了\n12. 最后倒入香葱再翻炒 10s\n13. 关火、盛入碗中",
+      "allergens": [
+        "复合加工品",
+        "大豆",
+        "小麦",
+        "蛋"
+      ]
+    }
+  ]
+}

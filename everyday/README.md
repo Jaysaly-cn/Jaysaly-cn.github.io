@@ -1,6 +1,6 @@
 # 日用 AI / Everyday AI
 
-面向个人日常任务的工具页面。SnapText 使用浏览器神经网络 OCR，Cutout 使用本地图片分割模型，ClipScribe 使用本地语音识别模型，ReadAlong 使用本地英译中模型；另外两款目前只有规划卡片，不是已交付产品。
+面向个人日常任务的工具页面。SnapText 使用浏览器神经网络 OCR，Cutout 使用本地图片分割模型，ClipScribe 使用本地语音识别模型，ReadAlong 使用本地英译中模型，Pantry 使用本地语义模型推荐有来源的菜谱；DayPlan 目前只有规划卡片，不是已交付产品。
 
 ## 本机运行
 
@@ -45,3 +45,11 @@ SnapText 支持单图、印刷简体中文和英文、粘贴截图、旋转、�
 `npm run build:readalong` 构建真实英译中 Worker。固定版本 `563922a09e0e294a0f5785bffdaa758732da3714` 的 Xenova/opus-mt-en-zh q8，从 ModelScope 直接下载约 120 MB；运行引擎来自固定版本 jsDelivr。模型不会预加载，输入不上传。`python scripts/fetch-readalong.py` 可根据保留的 manifest 下载并逐文件校验；较大权重不重复存入本站仓库。
 
 支持最多 4000 字符、40 段，逐段译文、修订保护、取消后保留已完成段落、双语 TXT 导出，手动词语笔记只在明确保存时写入 localStorage。页面显示已知实质误译，不承诺逐句正确。桌面浏览器首次远程模型下载加两句翻译实测 195.2 秒；网络和缓存会显著影响耗时。23 项目录测试通过；长文、部分完成取消、缺失引擎恢复、词语笔记刷新留存、390px 布局已有验证，详见 artifacts/READALONG_CHECK.md。
+
+## 今晚吃什么 Pantry
+
+`npm run build:semantic` 构建语义 Worker。ModelScope 固定版本多语言 MiniLM q8，模型与词表约 135.4 MB，固定来源和文件哈希见 `data/semantic-model.json`。用户点击后下载，输入只在本机进行特征提取。不是聊天生成：真实向量相关度结合食材覆盖率排序，厨具、时间与排除材料先确定性过滤。
+
+`data/recipes.json` 为人工对照来源整理的 12 道菜，原文与上游许可位于 `data/pantry-sources/`。保留源份数、计算表与步骤的差异，支持 1–4 份备料、最多 4 道菜、合并缺料清单及完整 TXT 导出。库存只记录有无；不承诺过敏安全，不虚构未定量材料或营养数值。
+
+29 项目录测试通过。中文偏好更换实际改变首选，首轮含下载 41.3 秒、缓存后 1.3 秒；餐单下载、无结果、取消重试、引擎缺失及 390px 布局有实测记录。详见 `artifacts/PANTRY_CHECK.md`。

@@ -22,6 +22,9 @@ jobs:
       - run: node --check cutout.js
       - run: node --check clipscribe.js
       - run: node --check readalong.js
+      - run: node --check pantry.js
+      - run: npm run build:semantic
+      - run: git diff --exit-code -- vendor/semantic-worker.bundle.js vendor/semantic-worker.bundle.js.LEGAL.txt
       - run: npm run build:readalong
       - run: git diff --exit-code -- vendor/readalong-worker.bundle.js vendor/readalong-worker.bundle.js.LEGAL.txt
       - run: npm run build:clipscribe
