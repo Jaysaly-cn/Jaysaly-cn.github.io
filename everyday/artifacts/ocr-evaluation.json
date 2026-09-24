@@ -1,0 +1,66 @@
+{
+  "date": "2026-09-24T10:21:32.364Z",
+  "scope": "Five synthetic development fixtures including tilt and blur; not a real-world accuracy benchmark. CER removes whitespace and retains punctuation.",
+  "results": [
+    {
+      "id": "english",
+      "language": "eng",
+      "expected": "Reading list\nBring water at 15:00.\nTicket A2026-0924",
+      "file": "english.png",
+      "actual": "Reading list\nBring water at 15:00.\nTicket A2026-0924\n",
+      "confidence": 94,
+      "elapsedMs": 317,
+      "normalizedEditDistance": 0,
+      "normalizedCER": 0,
+      "blankCorrect": null
+    },
+    {
+      "id": "chinese",
+      "language": "eng+chi_sim",
+      "expected": "周末出行清单\n带上水杯和雨伞\n下午三点出发",
+      "file": "chinese.png",
+      "actual": "周末 出 行 清单\n带 上 水 杯 和 雨伞\n下 午 三 点 出 发\n",
+      "confidence": 86,
+      "elapsedMs": 480,
+      "normalizedEditDistance": 0,
+      "normalizedCER": 0,
+      "blankCorrect": null
+    },
+    {
+      "id": "blank",
+      "language": "eng",
+      "expected": "",
+      "file": "blank.png",
+      "actual": "",
+      "confidence": 0,
+      "elapsedMs": 220,
+      "normalizedEditDistance": 0,
+      "normalizedCER": null,
+      "blankCorrect": true
+    },
+    {
+      "id": "tilted",
+      "language": "eng",
+      "expected": "Reading list\nBring water at 15:00.\nTicket A2026-0924",
+      "file": "tilted.png",
+      "actual": "",
+      "confidence": 0,
+      "elapsedMs": 253,
+      "normalizedEditDistance": 45,
+      "normalizedCER": 1,
+      "blankCorrect": null
+    },
+    {
+      "id": "blurred",
+      "language": "eng",
+      "expected": "Reading list\nBring water at 15:00.\nTicket A2026-0924",
+      "file": "blurred.png",
+      "actual": "benny\nWg nr 15008\nTener Asi one\n",
+      "confidence": 30,
+      "elapsedMs": 260,
+      "normalizedEditDistance": 34,
+      "normalizedCER": 0.7555555555555555,
+      "blankCorrect": null
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "english",
+    "language": "eng",
+    "expected": "Reading list\nBring water at 15:00.\nTicket A2026-0924",
+    "file": "english.png"
+  },
+  {
+    "id": "chinese",
+    "language": "eng+chi_sim",
+    "expected": "周末出行清单\n带上水杯和雨伞\n下午三点出发",
+    "file": "chinese.png"
+  },
+  {
+    "id": "blank",
+    "language": "eng",
+    "expected": "",
+    "file": "blank.png"
+  },
+  {
+    "id": "tilted",
+    "language": "eng",
+    "expected": "Reading list\nBring water at 15:00.\nTicket A2026-0924",
+    "file": "tilted.png"
+  },
+  {
+    "id": "blurred",
+    "language": "eng",
+    "expected": "Reading list\nBring water at 15:00.\nTicket A2026-0924",
+    "file": "blurred.png"
+  }
+]

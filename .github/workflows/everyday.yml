@@ -1,0 +1,26 @@
+name: Everyday AI
+on:
+  push:
+    paths: ['everyday/**', '.github/workflows/everyday.yml']
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: everyday
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: everyday/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - run: node --check snaptext.js
+      - run: node scripts/evaluate.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ocr-development-evaluation
+          path: everyday/artifacts/ocr-evaluation.json
