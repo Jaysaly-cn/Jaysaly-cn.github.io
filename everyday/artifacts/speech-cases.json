@@ -1,0 +1,33 @@
+{
+  "source": "Self-authored text synthesized locally with Windows System.Speech. Not recordings of real users.",
+  "cases": [
+    {
+      "file": "speech-en.wav",
+      "voice": "Microsoft Zira Desktop",
+      "language": "english",
+      "reference": "Tomorrow morning, bring water and meet at the library at nine."
+    },
+    {
+      "file": "speech-zh.wav",
+      "voice": "Microsoft Huihui Desktop",
+      "language": "chinese",
+      "reference": "明天上午九点，我们在图书馆门口见面，请记得带上水杯。"
+    },
+    {
+      "file": "speech-silence.wav",
+      "source": "three seconds of PCM zero samples, 16 kHz, mono, 16-bit",
+      "expected": "reject before model inference"
+    },
+    {
+      "file": "speech-long.wav",
+      "voice": "Microsoft Zira Desktop, rate -1",
+      "language": "english",
+      "reference": "This is a short walking plan for Saturday. First, leave home at nine in the morning and bring a bottle of water. Walk to the library and return the two books you borrowed last week. After that, meet your friend outside the station. You can take the bus to the park, but check the weather before you go. At the park, find a quiet place to sit and have lunch. Please keep the area clean and take your rubbish home. In the afternoon, visit the small museum near the river. The final stop is the bakery, where you can buy some bread for breakfast. Go home before six and write down what you enjoyed about the day."
+    },
+    {
+      "file": "speech-noise.wav",
+      "source": "3 seconds seeded uniform PCM noise; Python random.Random(42), integer [-1000,1000], 16kHz mono int16",
+      "expected": "no speech; observed model hallucination (water running)"
+    }
+  ]
+}

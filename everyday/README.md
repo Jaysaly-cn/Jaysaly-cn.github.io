@@ -1,6 +1,6 @@
 # 日用 AI / Everyday AI
 
-面向个人日常任务的工具页面。SnapText 使用浏览器神经网络 OCR，Cutout 使用本地图片分割模型；另外四款目前只有规划卡片，不是已交付产品。
+面向个人日常任务的工具页面。SnapText 使用浏览器神经网络 OCR，Cutout 使用本地图片分割模型；ClipScribe 使用本地语音识别模型；另外三款目前只有规划卡片，不是已交付产品。
 
 ## 本机运行
 
@@ -31,3 +31,11 @@ SnapText 支持单图、印刷简体中文和英文、粘贴截图、旋转、�
 可取消全部 Worker 任务，180 秒超时可重试。输出透明 PNG，背景色仅用于预览；纯色与完全透明图在推理前拒绝。发丝白边和复杂背景残留仍存在，未提供手工蒙版修复或批量处理。
 
 引擎 AGPL-3.0，见 `vendor/CUTOUT-AGPL-LICENSE.md`；净图相关源文件以同许可提供，第三方来源见 `vendor/CUTOUT-THIRD-PARTY.json`，原始引擎与 ISNet 模型链接保留于其中。其他工具许可不因此改变。已做真实分割、取消重试、透明 PNG 下载、输入失败和窄屏检查；生命周期与输入检查共六项新增测试，整个目录现有 15 项。详见 `artifacts/CUTOUT_CHECK.md`。
+
+## 听写 ClipScribe
+
+`npm run build:clipscribe` 构建 Worker。模型由 `python scripts/fetch-whisper.py` 取得，已有 manifest 时按已锁定的逐文件版本及 SHA-256 下载；八份模型资源约 43.6 MB，运行引擎另从固定版本 jsDelivr 加载。模型源为 ModelScope onnx-community/whisper-tiny，原始说明与文件版本位于 vendor/models/onnx-community/whisper-tiny，Whisper 上游许可保存为 vendor/WHISPER-LICENSE。Transformers.js 3.8.1 许可见 vendor/TRANSFORMERS-LICENSE。sharp 覆盖为 0.35.4 以修复 Node 依赖审计问题；它不参与浏览器语音推理。
+
+最多 20 MiB、120 秒音频，浏览器解码后在单线程 WASM Worker 转录。20 秒分块、3 秒重叠，音频不上传。逐段编辑文字与时间，点击定位回听、暂停，导出 SRT/TXT；纯静音前置拒绝。两分钟以上明确拒绝，模型仍可能漏字、繁体输出或产生无语音幻觉。括号包裹的环境音描述会提示核对，这不是通用人声检测。
+
+目前 19 项测试通过。中英、44.6 秒长音频、取消重试、静音、噪声幻觉、修订保护、实际导出与定位已有本地验证。内嵌浏览器原生播放器控件曾发生一次崩溃，根因尚未定位；独立暂停按钮复测正常。详细记录见 artifacts/CLIPSCRIBE_CHECK.md。
