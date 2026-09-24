@@ -19,6 +19,9 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm test
       - run: node --check snaptext.js
+      - run: node --check cutout.js
+      - run: npm run build:cutout
+      - run: git diff --exit-code -- vendor/cutout-worker.bundle.js vendor/cutout-worker.bundle.js.LEGAL.txt
       - run: node scripts/evaluate.cjs
       - uses: actions/upload-artifact@v4
         with:

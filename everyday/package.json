@@ -5,11 +5,17 @@
   "description": "Local-first consumer AI utilities for the personal portfolio",
   "scripts": {
     "test": "node --test tests/*.test.cjs",
-    "vendor": "node scripts/vendor.cjs"
+    "vendor": "node scripts/vendor.cjs",
+    "build:cutout": "node scripts/build-cutout.cjs"
   },
   "dependencies": {
+    "@imgly/background-removal": "1.7.0",
     "@tesseract.js-data/chi_sim": "1.0.0",
     "@tesseract.js-data/eng": "1.0.0",
+    "onnxruntime-web": "1.21.0",
     "tesseract.js": "7.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.10"
   }
 }
