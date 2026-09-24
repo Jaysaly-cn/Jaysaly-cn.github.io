@@ -2,3 +2,5 @@
 .playwright-cli/
 node_modules/
 notes/
+everyday/vendor/models/Xenova/opus-mt-en-zh/onnx/
+everyday/vendor/models/Xenova/opus-mt-en-zh/tokenizer.json

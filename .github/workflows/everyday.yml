@@ -21,6 +21,9 @@ jobs:
       - run: node --check snaptext.js
       - run: node --check cutout.js
       - run: node --check clipscribe.js
+      - run: node --check readalong.js
+      - run: npm run build:readalong
+      - run: git diff --exit-code -- vendor/readalong-worker.bundle.js vendor/readalong-worker.bundle.js.LEGAL.txt
       - run: npm run build:clipscribe
       - run: git diff --exit-code -- vendor/clipscribe-worker.bundle.js vendor/clipscribe-worker.bundle.js.LEGAL.txt
       - run: npm run build:cutout

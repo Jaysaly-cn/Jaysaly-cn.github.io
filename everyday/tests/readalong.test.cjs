@@ -1,0 +1,5 @@
+const test=require('node:test'),assert=require('node:assert/strict');
+test('reading preserves numbers and sentence order',async()=>{const {splitReading}=await import('../readalong-core.mjs');assert.deepEqual(splitReading('Meet at 6 p.m. on Friday.\nDo not be late.'),['Meet at 6 p.m. on Friday.','Do not be late.']);});
+test('long text is partitioned without dropping words',async()=>{const {splitReading}=await import('../readalong-core.mjs');const text=Array(170).fill('apple').join(' ');const parts=splitReading(text);assert.ok(parts.length>1);assert.ok(parts.every(p=>p.length<=450));assert.equal(parts.join(' '),text);});
+test('invalid reading input is rejected, never truncated',async()=>{const {splitReading}=await import('../readalong-core.mjs');for(const value of ['', '只有中文', 'x'.repeat(451), 'Hello. '.repeat(600)])assert.throws(()=>splitReading(value));});
+test('bilingual export preserves edits and incomplete markers',async()=>{const {bilingualText}=await import('../readalong-core.mjs');assert.equal(bilingualText([{source:'Hello.',translation:'你好！'},{source:'Bye.',translation:''}]),'1. Hello.\n你好！\n\n2. Bye.\n（未完成翻译）');});

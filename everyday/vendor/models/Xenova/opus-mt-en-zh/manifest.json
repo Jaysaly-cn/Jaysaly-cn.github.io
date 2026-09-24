@@ -1,0 +1,47 @@
+{
+  "source": "https://modelscope.cn/models/Xenova/opus-mt-en-zh",
+  "files": [
+    {
+      "path": "config.json",
+      "revision": "563922a09e0e294a0f5785bffdaa758732da3714",
+      "sha256": "4727d1229a04f95bf6f39abf949d8080615433d99d6ebd85f81c09edd247d5fa",
+      "bytes": 1503
+    },
+    {
+      "path": "onnx/decoder_model_merged_quantized.onnx",
+      "revision": "563922a09e0e294a0f5785bffdaa758732da3714",
+      "sha256": "023be4f841f4c47cd65fffcbaa81c0d99d7f7e0138f7ba0e03fa220a4e688aff",
+      "bytes": 60212804
+    },
+    {
+      "path": "onnx/encoder_model_quantized.onnx",
+      "revision": "563922a09e0e294a0f5785bffdaa758732da3714",
+      "sha256": "d3b7912bf6a9bd27e4c074c2df91d4ff3d5b4bc5f7f6c8d7cc9c805c98fbafee",
+      "bytes": 52899742
+    },
+    {
+      "path": "generation_config.json",
+      "revision": "563922a09e0e294a0f5785bffdaa758732da3714",
+      "sha256": "b743baabb7da4c1a2f19fe558bd6b4c0c7c3b0762fcb5ca7a48fe5a2c2219803",
+      "bytes": 293
+    },
+    {
+      "path": "README.md",
+      "revision": "563922a09e0e294a0f5785bffdaa758732da3714",
+      "sha256": "4aeb4d31c2b0ab8dd06aaa6c8705f8bdada6869ca67def9c2e1f5475ff007530",
+      "bytes": 571
+    },
+    {
+      "path": "tokenizer.json",
+      "revision": "563922a09e0e294a0f5785bffdaa758732da3714",
+      "sha256": "d0c7da27056e8f42adce9e76d8e792e5daa64e15f5acd2e7aabf0121877dd4c1",
+      "bytes": 6380952
+    },
+    {
+      "path": "tokenizer_config.json",
+      "revision": "563922a09e0e294a0f5785bffdaa758732da3714",
+      "sha256": "a914596e6bff113a8428d4793b586da87cd0b95697a0e72aba90cc1d95858481",
+      "bytes": 282
+    }
+  ]
+}
