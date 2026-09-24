@@ -1,5 +1,7 @@
 # SnapText 开发验收 · 2026-09-24
 
+> 以下为首轮历史记录。后续取消、困难样例、语言初始化与公网验证见 [RELEASE_CHECK.md](RELEASE_CHECK.md)，不要将本记录末尾的待办当作当前状态。
+
 本机 Chromium 内嵌浏览器，`http://127.0.0.1:8811/everyday/snaptext.html`。
 
 1. 页面绘制 1200×400 中英合成图片，经真实 WASM LSTM 识别，耗时约 0.9 秒（含本机资源准备），内部置信度 89。英文 `Weekend plan: bring water. Leave at 15:00.` 与编号 `A2026-0924` 正常；中文出现词间多余空格。没有用预设文字填结果。
