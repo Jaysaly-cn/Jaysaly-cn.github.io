@@ -94,6 +94,7 @@ button,a,summary{-webkit-tap-highlight-color:transparent}
 .platform-stages{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .platform-stages span{text-align:center;padding:9px 3px;background:#ffffffb3;border:1px solid #e3def2;border-radius:7px;font-size:11px;color:#76608e}
 .platform-visual figcaption{text-align:center;font-size:10px;line-height:1.8;color:#8a7b9a}
+.platform-summary{display:grid;gap:12px}.platform-summary>a{display:grid;gap:6px;padding:23px;border:1px solid #dcd5ed;border-radius:12px;background:#ffffffcf;color:#54417c}.platform-summary>a:hover{background:#fff;text-decoration:none}.platform-summary small{font-size:10px;color:#85739f}.platform-summary strong{font-size:26px}.platform-summary a>span{font-size:12px;overflow-wrap:anywhere}.platform-bridge{text-align:center;font-size:11px;color:#76608e}
 .supporting-projects{margin-top:24px}
 .supporting-projects .work-card{display:grid;grid-template-columns:1fr 1.06fr}
 .supporting-projects .work-cover{height:100%;min-height:268px;border-bottom:0;border-right:1px solid var(--line)}

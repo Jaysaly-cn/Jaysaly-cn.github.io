@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CoAgents｜数字同事协作 · 俞凯杰</title>
+  <meta name="description" content="CoAgents 数字同事协作案例：项目群聊、公开派工、非作者复核、版本修订与人工验收，基于 0.41.0 工程实现及本机复现记录。">
+  <link rel="canonical" href="https://jaysaly-cn.github.io/cases/coagents.html"><link rel="icon" href="../favicon.svg"><link rel="stylesheet" href="case-study.css">
+</head>
+<body class="case-page coagents-page">
+<a class="skip-link" href="#case-content">跳到正文</a>
+<header><div class="case-container"><a class="case-brand" href="../">俞凯杰<span>AI PRODUCT · BUILDER</span></a><nav aria-label="主导航"><a href="../#projects">精选作品</a><a href="helix.html">HeliX</a><a href="../#contact">联系</a></nav></div></header>
+<main id="case-content" class="case-container" tabindex="-1">
+  <section class="case-hero" aria-labelledby="page-title">
+    <p class="case-kicker">COAGENTS / 数字同事协作 · 0.41.0</p>
+    <h1 id="page-title">把多位数字同事的讨论，<br>推进到可核查、可修订的交付。</h1>
+    <p>负责人在项目群里提出目标，数字同事公开分工、制作文件、交给非作者复核，再由人决定是否接受。CoAgents 关心的不只是“谁说了什么”，还包括“谁正在做、当前是哪一版、依据在哪里”。</p>
+    <dl class="case-brief"><div><dt>工作内容</dt><dd>协作对象、派工与交付流程设计及实现</dd></div><div><dt>技术组成</dt><dd>Node.js 24 · SQLite · 原生 Web 前端</dd></div><div><dt>当前阶段</dt><dd>本机单用户应用，真实执行由 HeliX 接入</dd></div></dl>
+    <div class="case-actions"><a class="case-button" href="#workflow">看协作流程 ↓</a><a class="case-button secondary" href="../demos/coagents.html">体验早期交互原型与录屏 →</a></div>
+    <p class="case-caption">工程验证基线：2026-10-23。早期公开原型使用合成场景，展示的是此前产品设计；当前 0.41.0 应用和 HeliX 执行后台需独立运行。</p>
+  </section>
+  <nav class="case-toc" aria-label="本页目录"><span>本页内容</span><a href="#problem">协作问题</a><a href="#workflow">工作链</a><a href="#decisions">关键设计</a><a href="#implementation">工程实现</a><a href="#validation">复现与边界</a></nav>
+  <section id="problem" class="case-section">
+    <p class="section-label">01 / 协作问题</p><h2>多几个聊天窗口，还不能形成团队。</h2>
+    <p>多人参与的工作会遇到一连串具体问题：同事按哪个目标动手？中途要求改变，旧任务如何处理？交出的文件由谁检查？被退回的稿件是否还能找到？CoAgents 把这些问题放进项目、员工、群消息、任务和交付版本之间的关系中。</p>
+    <div class="case-grid"><article><h3>既能交流，也能推进工作</h3><p>项目成员和职责定义工作关系；群里的安排对应实际制作与复核任务，进展回到公开记录。等待、停止和需要人处理的问题有明确的状态。</p></article><article><h3>结果要对应当前要求</h3><p>文件、作者、内容版本与人类要求共同决定复核对象。后续修订保留旧稿与旧意见，让“已经检查”有可追踪的适用范围。</p></article></div>
+  </section>
+  <section id="workflow" class="case-section">
+    <p class="section-label">02 / 工作链</p><h2>从目标到交付，每一步都能找到接手人。</h2>
+    <ol class="decision-sequence"><li><span>01 / 组织</span><h3>提出目标并分工</h3><p>员工加入项目，群内公开安排制作、依赖和复核职责。</p></li><li><span>02 / 制作</span><h3>产生真实文件</h3><p>运行层返回正文、文件及执行记录，作者交稿与自查分别保留。</p></li><li><span>03 / 复核</span><h3>非作者读取当前原件</h3><p>检查绑定实际文件版本；改稿后重新核对，旧结论留存。</p></li><li><span>04 / 验收</span><h3>由人确认是否接受</h3><p>交审、修订和接受分别记录，模型完成不直接结束项目。</p></li></ol>
+    <div class="case-note"><p><strong>示意场景：</strong>一位同事写活动方案，另一位核对预算；负责人中途调整时间后，原作者修订，复核者读取新版再交审。这是用于解释对象关系的场景，不计作本轮真实模型验收。</p></div>
+  </section>
+  <section id="decisions" class="case-section">
+    <p class="section-label">03 / 关键设计</p><h2>让变更、等待和复核成为产品的一部分。</h2>
+    <div class="case-grid"><article><h3>员工可以跨项目使用，任务上下文按范围组织</h3><p>员工身份、项目任职与群会话分别管理。不同群与实例的执行链需要明确映射；会话分开不能替代设备文件系统或工具权限的隔离。</p></article><article><h3>自查与独立复核分开</h3><p>作者自查保留为制作依据；正式复核要求非作者核对实际原件。代价是增加协调与等待，但可以追问结论由谁、对哪个版本作出。</p></article><article><h3>新要求进入修订流程</h3><p>在途补充、原作者改稿、并行修订和依赖重排需要保留关联。旧稿与旧复核不会因新版本出现而被抹掉；失效的结论不能继续当作当前通过。</p></article><article><h3>人工验收保留最终决定</h3><p>执行成功、交付待审与人工接受是不同状态。轮次预算、暂停与恢复限制协作的运行范围，完成条件以当前交付与验收状态为准。</p></article></div>
+  </section>
+  <section id="implementation" class="case-section">
+    <p class="section-label">04 / 工程实现</p><h2>轻量应用负责协作，运行平台负责执行。</h2>
+    <div class="agent-map" aria-label="CoAgents 与 HeliX 的职责关系"><div class="agent-layer"><span>使用者</span><div><strong>项目 / 员工 / 群聊 / 交付</strong><p>原生前端提供中文协作工作台</p></div></div><div class="agent-layer"><span>CoAgents</span><div><strong>Node HTTP + SQLite</strong><p>保存消息、派工、轮次、文件版本、复核与验收关系</p></div></div><div class="agent-layer"><span>HeliX</span><div><strong>实例会话 + 设备执行 + 原件通道</strong><p>适配器关联执行回执，公开结果返回群聊</p></div></div></div>
+    <div class="case-grid"><article><h3>持久状态与恢复</h3><p>SQLite 保留员工、项目和工作记录。处理幂等与恢复时，既要避免重复派发，也要避免把旧轮次重新解释为一次新执行。</p></article><article><h3>可复现的本机入口</h3><p>当前应用无第三方运行依赖与前端构建步骤。恢复时补充 Node 版本检查、空数据目录与 Windows 启动入口；凭据读取保留严格文件权限校验。</p></article></div>
+    <p>本轮修复集中于 Windows Cookie 文件权限：保留 POSIX 校验，同时对 Windows 使用 NTFS ACL 检查，并测试宽泛读取授权会被拒绝。兼容改动有独立验证，原始交接材料保持可核对。</p>
+  </section>
+  <section id="validation" class="case-section">
+    <p class="section-label">05 / 复现与边界</p><h2>应用已复现，真实协作链路继续验收。</h2>
+    <div class="case-grid"><article><h3>402 / 402 项测试通过</h3><p>2026-10-23 新环境复现：全量测试无失败、跳过或取消，语法检查通过。Windows 身份相关测试 5 项通过，覆盖正常读取与宽泛授权拒绝。</p></article><article><h3>启动、API 与持久化已验证</h3><p>全新 SQLite 启动成功，首页与状态 API 返回 200；重启保留默认员工。该环境未配置 HeliX 会话，未产生新的真实模型项目。</p></article></div>
+    <div class="case-note"><p><strong>待完成的新环境验收：</strong>HeliX 正式登录、员工实例绑定、真实模型自动分工、原件下载、互审、修订及人工验收的完整链路。测试通过不直接说明多人生产部署、模型质量或业务收益已经验证。</p></div>
+    <p>目前适用于本机单用户原型验证。多人 SSO、组织级授权、执行层项目沙箱、工具授权闭环与完整云端同步仍需进一步建设；未把已有任务输入范围控制视为底层安全隔离。</p>
+    <details class="evidence-details"><summary>版本、来源与公开演示说明</summary><div><p>版本依据当前 <code>package.json</code> 的 0.41.0，以及本次 <code>coagents-reproduction.md</code>、<code>REPRODUCTION.md</code> 和核心协作模块；历史 README 中的旧版本及当时连接状态不用于代表当前复现。</p><p>完整源码和复现记录保存在私有仓库。原来的<a href="../demos/coagents.html">公开交互案例与录屏</a>继续展示早期能力市场、版本、授权与验收设计，合成预设场景不会调用当前后台或模型。可通过<a href="../#contact">联系入口</a>交流实现细节。</p></div></details>
+  </section>
+  <nav class="case-next" aria-label="继续阅读"><a href="helix.html"><span>数字员工运行平台</span><strong>HeliX ←</strong></a><a href="../demos/coagents.html"><span>早期产品设计</span><strong>交互原型与录屏 →</strong></a></nav>
+</main><footer class="case-container case-footer"><span>俞凯杰 · CoAgents 产品与工程案例</span><a href="../#contact">联系我 →</a></footer>
+</body></html>

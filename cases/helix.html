@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HeliX｜数字员工运行平台 · 俞凯杰</title>
+  <meta name="description" content="HeliX 数字员工运行平台案例：员工包发布、实例部署、设备执行、多模型执行器与可追溯交付，附本机复现结果和验证边界。">
+  <link rel="canonical" href="https://jaysaly-cn.github.io/cases/helix.html"><link rel="icon" href="../favicon.svg"><link rel="stylesheet" href="case-study.css">
+</head>
+<body class="case-page">
+<a class="skip-link" href="#case-content">跳到正文</a>
+<header><div class="case-container"><a class="case-brand" href="../">俞凯杰<span>AI PRODUCT · BUILDER</span></a><nav aria-label="主导航"><a href="../#projects">精选作品</a><a href="coagents.html">CoAgents</a><a href="../#contact">联系</a></nav></div></header>
+<main id="case-content" class="case-container" tabindex="-1">
+  <section class="case-hero" aria-labelledby="page-title">
+    <p class="case-kicker">HELIX / 数字员工运行平台</p>
+    <h1 id="page-title">从一份 Agent 能力，<br>到可部署、可执行、可追溯的数字员工。</h1>
+    <p>HeliX 把员工包发布、运行实例、设备连接与模型执行串成统一工作链。上层应用负责表达工作目标，平台负责把任务送到获准的执行环境，并带回状态与交付物。</p>
+    <dl class="case-brief"><div><dt>工作内容</dt><dd>产品架构、执行流程与工程实现</dd></div><div><dt>技术组成</dt><dd>TypeScript / Egg · Next.js · PostgreSQL</dd></div><div><dt>当前阶段</dt><dd>已有工程实现，完成分项复现验证</dd></div></dl>
+    <div class="case-actions"><a class="case-button" href="#architecture">看平台架构 ↓</a><a class="case-button secondary" href="coagents.html">看上层协作产品 →</a></div>
+    <p class="case-caption">验证基线：2026-10-23 源码恢复与本机复现报告。完整源码保存在私有仓库；本页提供公开案例说明。</p>
+  </section>
+  <nav class="case-toc" aria-label="本页目录"><span>本页内容</span><a href="#problem">产品问题</a><a href="#architecture">架构与分工</a><a href="#lifecycle">员工生命周期</a><a href="#decisions">产品取舍</a><a href="#validation">复现结果</a></nav>
+  <section id="problem" class="case-section">
+    <p class="section-label">01 / 产品问题</p><h2>能运行一次，与能反复交付，是两套要求。</h2>
+    <p>当 Agent 从个人脚本进入组织使用，使用者需要知道：部署的是哪个版本、在哪台设备执行、使用哪种执行器、凭据是否已配置，以及失败后能否找到原来的任务与产物。HeliX 围绕这些长期运行问题组织产品。</p>
+    <div class="case-grid"><article><h3>能力需要稳定的交付单元</h3><p>把员工能力整理为可上传、发布与冻结的版本。任务关联明确的实例和发布版本，让升级与历史执行能够分别追踪。</p></article><article><h3>执行需要明确的控制边界</h3><p>设备在线、租约、命令、回执和产物分别有状态。平台要处理断连、凭据变化与停止，不能只在界面上显示一个“正在思考”。</p></article></div>
+  </section>
+  <section id="architecture" class="case-section">
+    <p class="section-label">02 / 架构与分工</p><h2>协作应用在上，执行平台在下。</h2>
+    <div class="agent-map" aria-label="HeliX 架构概览">
+      <div class="agent-layer"><span>工作入口</span><div><strong>CoAgents / Web 控制台 / 飞书</strong><p>表达目标、查看进展、处理交付</p></div></div>
+      <div class="agent-layer"><span>平台控制</span><div><strong>Repository → Marketplace → Gateway</strong><p>员工包与 Release → 实例及执行 → 设备、租约、命令与产物</p></div></div>
+      <div class="agent-layer"><span>运行环境</span><div><strong>Agent Node / Device Client</strong><p>接收任务，适配 Codex、Claude Code、DeepSeek 执行器</p></div></div>
+      <div class="agent-layer"><span>回到产品</span><div><strong>公开事件、执行状态、交付原件</strong><p>供上层继续会话、检查结果与安排人工验收</p></div></div>
+    </div>
+    <p class="case-caption">按产品职责绘制的架构摘要；执行器支持与本轮真实模型验收分别记录。</p>
+    <div class="case-grid"><article><h3>六个服务职责</h3><p>Repository 管员工包和发布；Marketplace 管身份、实例与执行；Gateway 管设备与命令；App Gateway 管控制台实时通道；Feishu Gateway 管飞书；Migration 管共享数据库结构。</p></article><article><h3>CoAgents 如何接入</h3><p>CoAgents 保留项目、员工、群聊和交付规则，通过适配器提交或继续执行，再把可公开的事件与原件投影回工作群。平台能力可供不同上层应用复用。</p></article></div>
+  </section>
+  <section id="lifecycle" class="case-section">
+    <p class="section-label">03 / 员工生命周期</p><h2>把发布与激活做成可核对的过程。</h2>
+    <ol class="case-flow"><li><span>01</span><div><h3>上传与发布</h3><p>员工包成为明确的 Release，版本是后续部署和追溯的依据。</p></div></li><li><span>02</span><div><h3>部署与配置</h3><p>创建运行实例、配置凭据、选择执行器，并等待设备确认。</p></div></li><li><span>03</span><div><h3>测评与激活</h3><p>经过配置与测评检查再激活；模型可调用不直接等于员工可交付。</p></div></li><li><span>04</span><div><h3>执行与维护</h3><p>记录命令、事件和产物；凭据轮换、停止与退役也纳入生命周期。</p></div></li></ol>
+  </section>
+  <section id="decisions" class="case-section">
+    <p class="section-label">04 / 产品取舍</p><h2>复用执行能力，同时保留来源和状态。</h2>
+    <div class="case-grid"><article><h3>应用与执行分开</h3><p>CoAgents 专注协作过程，HeliX 专注实例、设备和执行。代价是需要稳定的适配契约、身份映射与错误恢复，而收益是避免每个业务应用重做设备运行层。</p></article><article><h3>发布、实例和命令分别记录</h3><p>能力版本、部署状态与一次执行各自有身份。这样才能解释“同一个员工为何在不同轮次产生不同结果”，也为回看历史、升级与退役留下依据。</p></article><article><h3>兼容问题保留在证据中</h3><p>复现时保留原有权限检查，单独记录 Windows 与 POSIX 的差异。测试失败、跳过和定向复核分别报告，避免为了跑通而削弱约束。</p></article><article><h3>源码交接可重新建立环境</h3><p>保留独立开发线、固定内部依赖和数据库迁移，补充运行脚本与来源核对。代码快照恢复与完整线上服务恢复分别验收。</p></article></div>
+  </section>
+  <section id="validation" class="case-section">
+    <p class="section-label">05 / 复现结果</p><h2>分别验证代码、数据库与运行入口。</h2>
+    <p>以下为 2026-10-23 新环境复现结果，来自该次执行报告。本页更新没有重新运行底层服务套件；历史联调记录也不替代新环境验收。</p>
+    <div class="evidence-table-wrap" role="region" aria-label="HeliX 复现结果表，可横向滚动" tabindex="0"><table class="evidence-table"><thead><tr><th scope="col">范围</th><th scope="col">已验证结果</th><th scope="col">仍需注意</th></tr></thead><tbody>
+      <tr><th scope="row">Web 与类型检查</th><td>五个 Egg 服务类型检查通过；Web 30 项测试、类型检查及生产构建通过</td><td>本机登录页可打开，正式登录链路待验收</td></tr>
+      <tr><th scope="row">数据库</th><td>63 份迁移在全新 PostgreSQL 中升级、回退、再升级；迁移与权限 14 项检查通过</td><td>不据此推断六服务已完成联调</td></tr>
+      <tr><th scope="row">执行器生命周期</th><td>4 项数据库集成检查通过，覆盖凭据、设备确认、轮换及退役</td><td>模型执行回执与设备响应使用夹具</td></tr>
+      <tr><th scope="row">Windows 服务测试</th><td>Gateway 255 项、App Gateway 11 项通过；其余套件逐项记录</td><td>仍有 3 项失败，另有跳过；涉及权限、watch runner 和进程退出语义</td></tr>
+    </tbody></table></div>
+    <div class="case-note"><p><strong>下一步验收：</strong>新环境的正式登录、完整六服务联调、设备配对、真实模型任务与续聊、飞书接入。设备候选已完成构建核对，但 Windows 产物尚不具备正式 POSIX 发行条件。</p></div>
+    <details class="evidence-details"><summary>材料来源与访问方式</summary><div><p>依据“阅读并复现 Helix 和 Coagents”任务，以及其 <code>REPRODUCTION.md</code>、<code>helix-services-reproduction.md</code>、Web 和数据库复现记录整理；架构按当前多执行器主线核对。旧三服务说明作为历史材料保留。</p><p>完整源码、日志摘要与交接文档保存在私有仓库。公开页面不提供生产凭据或可执行后台入口。可通过<a href="../#contact">联系入口</a>交流实现与验证过程。</p></div></details>
+  </section>
+  <nav class="case-next" aria-label="继续阅读"><a href="../#projects"><span>精选作品</span><strong>返回主页 ←</strong></a><a href="coagents.html"><span>上层协作应用</span><strong>CoAgents →</strong></a></nav>
+</main><footer class="case-container case-footer"><span>俞凯杰 · HeliX 产品与工程案例</span><a href="../#contact">联系我 →</a></footer>
+</body></html>

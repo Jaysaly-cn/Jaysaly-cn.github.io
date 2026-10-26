@@ -36,6 +36,11 @@ body.case-page { margin: 0; background: #f7f9fc; color: var(--case-ink); font: 1
 .case-toc { display: flex; flex-wrap: wrap; gap: 9px 22px; padding: 18px 0; border-top: 1px solid var(--case-line); margin-bottom: 8px; font-size: 13px; }
 .case-toc > span { color: var(--case-muted); margin-right: 8px; }
 .case-toc a { font-weight: 600; }
+.agent-map { display: grid; gap: 1px; border: 1px solid var(--case-line); border-radius: 14px; overflow: hidden; margin: 28px 0; background: var(--case-line); }
+.agent-layer { display: grid; grid-template-columns: 100px minmax(0,1fr); gap: 24px; padding: 22px 26px; background: #fff; }
+.agent-layer > span { font-size: 12px; color: var(--case-blue); font-weight: 650; }
+.agent-layer strong { display: block; overflow-wrap: anywhere; }
+.agent-layer p { font-size: 13px!important; color: var(--case-muted); margin: 5px 0 0; }
 .case-section { padding: 40px 0; border-top: 1px solid var(--case-line); scroll-margin-top: 0; }
 .case-section h2 { font-size: 27px; line-height: 1.5; letter-spacing: -.5px; margin: 0 0 20px; }
 .case-section h3 { font-size: 17px; line-height: 1.6; margin: 16px 0 9px; }
@@ -137,6 +142,7 @@ body.coagents-page { --case-blue: #6049c9; --case-soft: #f0edfc; }
   .coagents-layout { grid-template-columns: 1fr; }
 }
 @media(max-width:700px) {
+  .agent-layer { grid-template-columns: 1fr; gap: 8px; padding: 20px; }
   html { scroll-padding-top: 88px; }
   .case-container { width: calc(100% - 32px); }
   .case-page header .case-container { min-height: 72px; gap: 16px; }
