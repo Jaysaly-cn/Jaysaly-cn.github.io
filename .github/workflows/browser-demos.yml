@@ -1,7 +1,7 @@
 name: Browser demos
 on:
   push:
-    paths: ['demos/ai/**', 'ai/**', 'assets/ai-covers/**', '.github/workflows/browser-demos.yml']
+    paths: ['demos/agent-workspace*', 'demos/coagents*.html', 'demos/ai/**', 'ai/**', 'assets/ai-covers/**', '.github/workflows/browser-demos.yml']
   workflow_dispatch:
 jobs:
   verify:
@@ -13,3 +13,5 @@ jobs:
           node-version: '22'
       - run: node --check demos/ai/demo.js
       - run: node --test demos/ai/demo.test.cjs
+      - run: node --check demos/agent-workspace.js
+      - run: node --test demos/agent-workspace.test.mjs

@@ -15,8 +15,8 @@
     <h1 id="page-title">把多位数字同事的讨论，<br>推进到可核查、可修订的交付。</h1>
     <p>负责人在项目群里提出目标，数字同事公开分工、制作文件、交给非作者复核，再由人决定是否接受。CoAgents 关心的不只是“谁说了什么”，还包括“谁正在做、当前是哪一版、依据在哪里”。</p>
     <dl class="case-brief"><div><dt>工作内容</dt><dd>协作对象、派工与交付流程设计及实现</dd></div><div><dt>技术组成</dt><dd>Node.js 24 · SQLite · 原生 Web 前端</dd></div><div><dt>当前阶段</dt><dd>本机单用户应用，真实执行由 HeliX 接入</dd></div></dl>
-    <div class="case-actions"><a class="case-button" href="#workflow">看协作流程 ↓</a><a class="case-button secondary" href="../demos/coagents.html">体验早期交互原型与录屏 →</a></div>
-    <p class="case-caption">工程验证基线：2026-10-23。早期公开原型使用合成场景，展示的是此前产品设计；当前 0.41.0 应用和 HeliX 执行后台需独立运行。</p>
+    <div class="case-actions"><a class="case-button" href="../demos/agent-workspace.html?view=coagents">体验数字同事协作 →</a><a class="case-button secondary" href="../demos/agent-workspace.html?view=helix">准备 HeliX 实例 →</a></div>
+    <p class="case-caption">工程验证基线：2026-10-23。公开演示于 2026-11-02 按 0.41.0 协作流程更新，支持分工、修订、独立复核与人工验收；采用合成数据，不连接私有执行后台。</p>
   </section>
   <nav class="case-toc" aria-label="本页目录"><span>本页内容</span><a href="#problem">协作问题</a><a href="#workflow">工作链</a><a href="#decisions">关键设计</a><a href="#implementation">工程实现</a><a href="#validation">复现与边界</a></nav>
   <section id="problem" class="case-section">
@@ -44,8 +44,8 @@
     <div class="case-grid"><article><h3>402 / 402 项测试通过</h3><p>2026-10-23 新环境复现：全量测试无失败、跳过或取消，语法检查通过。Windows 身份相关测试 5 项通过，覆盖正常读取与宽泛授权拒绝。</p></article><article><h3>启动、API 与持久化已验证</h3><p>全新 SQLite 启动成功，首页与状态 API 返回 200；重启保留默认员工。该环境未配置 HeliX 会话，未产生新的真实模型项目。</p></article></div>
     <div class="case-note"><p><strong>待完成的新环境验收：</strong>HeliX 正式登录、员工实例绑定、真实模型自动分工、原件下载、互审、修订及人工验收的完整链路。测试通过不直接说明多人生产部署、模型质量或业务收益已经验证。</p></div>
     <p>目前适用于本机单用户原型验证。多人 SSO、组织级授权、执行层项目沙箱、工具授权闭环与完整云端同步仍需进一步建设；未把已有任务输入范围控制视为底层安全隔离。</p>
-    <details class="evidence-details"><summary>版本、来源与公开演示说明</summary><div><p>版本依据当前 <code>package.json</code> 的 0.41.0，以及本次 <code>coagents-reproduction.md</code>、<code>REPRODUCTION.md</code> 和核心协作模块；历史 README 中的旧版本及当时连接状态不用于代表当前复现。</p><p>完整源码和复现记录保存在私有仓库。原来的<a href="../demos/coagents.html">公开交互案例与录屏</a>继续展示早期能力市场、版本、授权与验收设计，合成预设场景不会调用当前后台或模型。可通过<a href="../#contact">联系入口</a>交流实现细节。</p></div></details>
+    <details class="evidence-details"><summary>版本、来源与公开演示说明</summary><div><p>版本依据当前 <code>package.json</code> 的 0.41.0，以及本次 <code>coagents-reproduction.md</code>、<code>REPRODUCTION.md</code> 和核心协作模块；历史 README 中的旧版本及当时连接状态不用于代表当前复现。</p><p>完整源码和复现记录保存在私有仓库。<a href="../demos/agent-workspace.html?view=coagents">当前公开工作台</a>演示 0.41.0 对应的协作工作链；<a href="../demos/coagents-legacy.html">历史原型与录屏</a>单独归档。公开演示均不调用私有后台或模型。可通过<a href="../#contact">联系入口</a>交流实现细节。</p></div></details>
   </section>
-  <nav class="case-next" aria-label="继续阅读"><a href="helix.html"><span>数字员工运行平台</span><strong>HeliX ←</strong></a><a href="../demos/coagents.html"><span>早期产品设计</span><strong>交互原型与录屏 →</strong></a></nav>
+  <nav class="case-next" aria-label="继续阅读"><a href="helix.html"><span>数字员工运行平台</span><strong>HeliX ←</strong></a><a href="../demos/agent-workspace.html?view=coagents"><span>当前协作流程</span><strong>交互工作台 →</strong></a></nav>
 </main><footer class="case-container case-footer"><span>俞凯杰 · CoAgents 产品与工程案例</span><a href="../#contact">联系我 →</a></footer>
 </body></html>

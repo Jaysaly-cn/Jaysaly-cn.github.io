@@ -13,7 +13,9 @@
 - `cases/helix.html`：HeliX 数字员工运行平台、六服务职责、发布与执行生命周期，以及 2026-10-23 分项复现结果。
 - `cases/coagents.html`：CoAgents 0.41.0 数字同事协作、项目群聊、非作者复核、修订与人工验收。完整 HeliX / CoAgents 源码保留在私有仓库，本公开仓库仅存案例摘要。
 - `cases/field-ai.html`：农业 AI 工具的业务流程、个人职责与公开样例。
-- `demos/coagents.html`：早期 CoAgents 对象关系、四项产品取舍、实际操作录屏、合成交互演示与状态测试；与新版工程案例相互链接。
+- `demos/agent-workspace.html`：2026-11-02 更新的 HeliX 多执行器与 CoAgents 0.41.0 流程演示，覆盖部署激活、分工、原件、非作者复核、变更及验收。合成数据和确定性草稿，不连接私有后台。
+- `demos/coagents.html`：旧入口自动转到当前工作台；早期原型与录屏保存在 `demos/coagents-legacy.html`。
+- `node --test demos/agent-workspace.test.mjs`：验证步骤门槛、复核版本失效、旧稿留存与人工验收。
 - `cases/research.html`：SABridge 四模态方法、公开实现与复现条件。
 
 案例区分工作经历、可核查的公开实现和合成演示。尚无完整测试口径的业务数字不作为成果展示；研究原型不宣称已复现实验或生产部署。
