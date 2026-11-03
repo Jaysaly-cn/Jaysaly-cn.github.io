@@ -35,6 +35,8 @@
 
 ## 本地预览
 
+2026-11-03：`cases/coagents.html#demo-video` 提供当前 0.41.0 应用的后台浏览器录屏，使用固定协议回放与内存数据，展示群聊交互、人工登记交付和验收；`cases/helix.html#demo-video` 提供当前公开有限流程演示录屏。两者均附 WebVTT 章节字幕与截图，未连接真实模型或设备。最新待处理入口截图来自 CoAgents 当前前端；HeliX 当前生产构建截图仅覆盖登录页，身份后端未接通。早期 `coagents-walkthrough.webm` 保留在历史原型页，未作为最新实机录屏使用。
+
 在此目录运行：
 
 ```powershell

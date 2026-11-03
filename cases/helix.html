@@ -15,10 +15,23 @@
     <h1 id="page-title">从一份 Agent 能力，<br>到可部署、可执行、可追溯的数字员工。</h1>
     <p>HeliX 把员工包发布、运行实例、设备连接与模型执行串成统一工作链。上层应用负责表达工作目标，平台负责把任务送到获准的执行环境，并带回状态与交付物。</p>
     <dl class="case-brief"><div><dt>工作内容</dt><dd>产品架构、执行流程与工程实现</dd></div><div><dt>技术组成</dt><dd>TypeScript / Egg · Next.js · PostgreSQL</dd></div><div><dt>当前阶段</dt><dd>已有工程实现，完成分项复现验证</dd></div></dl>
-    <div class="case-actions"><a class="case-button" href="../demos/agent-workspace.html?view=helix">体验运行平台流程 →</a><a class="case-button secondary" href="coagents.html">看上层协作产品 →</a></div>
+    <div class="case-actions"><a class="case-button" href="../demos/agent-workspace.html?view=helix">体验运行平台流程 →</a><a class="case-button secondary" href="#demo-video">观看流程录屏 →</a><a class="case-button secondary" href="coagents.html">看上层协作产品 →</a></div>
     <p class="case-caption">验证基线：2026-10-23 源码恢复与本机复现报告。完整源码保存在私有仓库；本页提供公开案例说明。</p>
   </section>
-  <nav class="case-toc" aria-label="本页目录"><span>本页内容</span><a href="#problem">产品问题</a><a href="#architecture">架构与分工</a><a href="#lifecycle">员工生命周期</a><a href="#decisions">产品取舍</a><a href="#validation">复现结果</a></nav>
+  <nav class="case-toc" aria-label="本页目录"><span>本页内容</span><a href="#demo-video">流程录屏</a><a href="#current-screen">当前界面</a><a href="#problem">产品问题</a><a href="#architecture">架构与分工</a><a href="#lifecycle">员工生命周期</a><a href="#decisions">产品取舍</a><a href="#validation">复现结果</a></nav>
+  <section id="demo-video" class="case-section">
+    <p class="section-label">PUBLIC WORKFLOW / 2026.11.03</p><h2>发布、配置、确认、激活，各自留下记录。</h2>
+    <p>这段约 51 秒录屏操作当前公开流程演示，展示 Release 发布、执行器选择、部署、配置状态、设备 ACK、规则测评、激活及上层引用。全部使用模拟数据；它是帮助理解工作链的有限交互演示。</p>
+    <figure><video class="case-video" controls playsinline preload="metadata" poster="../assets/helix-public-workflow.png" aria-label="HeliX 公开流程操作录屏，模拟数据，无真实模型或设备">
+      <source src="../assets/helix-public-workflow.webm" type="video/webm">
+      <track kind="captions" src="../assets/helix-public-workflow.vtt" srclang="zh-CN" label="中文章节导览" default>
+      当前浏览器不支持视频，请<a href="../assets/helix-public-workflow.webm">下载录屏</a>。
+    </video><figcaption>公开有限交互演示录屏，非完整私有平台或真实执行。录制于 2026-11-03，模拟状态不代表设备、配置凭据或模型已经接通。</figcaption></figure>
+  </section>
+  <section id="current-screen" class="case-section">
+    <p class="section-label">CURRENT WEB BUILD / 2026.11.03</p><h2>当前源码生产构建的真实登录页。</h2>
+    <figure><a href="../assets/helix-current-login.png"><img src="../assets/helix-current-login.png" width="1440" height="900" loading="lazy" alt="HeliX 当前生产构建的统一身份登录页，页面明确显示登录服务暂时无法连接"></a><figcaption>本机生产 Web 构建实拍，HTTP 200。当前身份后端未接通，因此未演示登录成功、设备连接或真实模型执行。源码核对提交 77774aa9d493，最新提交补充研究报告，未修改多执行器主线 Web 页面。</figcaption></figure>
+  </section>
   <section id="problem" class="case-section">
     <p class="section-label">01 / 产品问题</p><h2>能运行一次，与能反复交付，是两套要求。</h2>
     <p>当 Agent 从个人脚本进入组织使用，使用者需要知道：部署的是哪个版本、在哪台设备执行、使用哪种执行器、凭据是否已配置，以及失败后能否找到原来的任务与产物。HeliX 围绕这些长期运行问题组织产品。</p>

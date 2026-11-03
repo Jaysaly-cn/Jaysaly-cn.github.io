@@ -15,10 +15,26 @@
     <h1 id="page-title">把多位数字同事的讨论，<br>推进到可核查、可修订的交付。</h1>
     <p>负责人在项目群里提出目标，数字同事公开分工、制作文件、交给非作者复核，再由人决定是否接受。CoAgents 关心的不只是“谁说了什么”，还包括“谁正在做、当前是哪一版、依据在哪里”。</p>
     <dl class="case-brief"><div><dt>工作内容</dt><dd>协作对象、派工与交付流程设计及实现</dd></div><div><dt>技术组成</dt><dd>Node.js 24 · SQLite · 原生 Web 前端</dd></div><div><dt>当前阶段</dt><dd>本机单用户应用，真实执行由 HeliX 接入</dd></div></dl>
-    <div class="case-actions"><a class="case-button" href="../demos/agent-workspace.html?view=coagents">体验数字同事协作 →</a><a class="case-button secondary" href="../demos/agent-workspace.html?view=helix">准备 HeliX 实例 →</a></div>
-    <p class="case-caption">工程验证基线：2026-10-23。公开演示于 2026-11-02 按 0.41.0 协作流程更新，支持分工、修订、独立复核与人工验收；采用合成数据，不连接私有执行后台。</p>
+    <div class="case-actions"><a class="case-button" href="#demo-video">观看当前平台录屏 →</a><a class="case-button secondary" href="../demos/agent-workspace.html?view=coagents">体验公开协作流程 →</a></div>
+    <p class="case-caption">2026-11-03 更新：当前平台录屏、待处理入口截图与最新适配记录。公开流程演示支持分工、修订、独立复核与人工验收，采用合成数据；下方平台录屏的具体范围单独说明。</p>
   </section>
-  <nav class="case-toc" aria-label="本页目录"><span>本页内容</span><a href="#problem">协作问题</a><a href="#workflow">工作链</a><a href="#decisions">关键设计</a><a href="#implementation">工程实现</a><a href="#validation">复现与边界</a></nav>
+  <nav class="case-toc" aria-label="本页目录"><span>本页内容</span><a href="#demo-video">平台录屏</a><a href="#current-screens">当前界面</a><a href="#problem">协作问题</a><a href="#workflow">工作链</a><a href="#decisions">关键设计</a><a href="#implementation">工程实现</a><a href="#validation">复现与边界</a></nav>
+  <section id="demo-video" class="case-section">
+    <p class="section-label">PLATFORM WALKTHROUGH / 2026.11.03</p><h2>看当前平台，如何把一句目标推进到人工验收。</h2>
+    <p>录制自 CoAgents 0.41.0 当前应用，使用独立内存数据库与固定接口回放。展示员工、群聊澄清、单次操作确认、项目约定、人工登记交付与逐项验收。录制在独立无头浏览器中完成。</p>
+    <figure><video class="case-video" controls playsinline preload="metadata" poster="../assets/coagents-platform-0.41.png" aria-label="CoAgents 0.41.0 当前平台操作录屏，受控回放，附中文字幕">
+      <source src="../assets/coagents-platform-0.41.webm" type="video/webm">
+      <track kind="captions" src="../assets/coagents-platform-0.41.vtt" srclang="zh-CN" label="中文章节导览" default>
+      当前浏览器不支持视频，请<a href="../assets/coagents-platform-0.41.webm">下载录屏</a>。
+    </video><figcaption>持续标注“受控回放 · 非真实 AI 执行”。回复由夹具提供，包含同事接续与负责人显式 @ 补充要求。交付标记为人工登记，验收针对清单完整性，未演示真实模型、设备执行或正式非作者互审。</figcaption></figure>
+    <details class="video-transcript"><summary>查看文字导览与展示范围</summary><ol><li>查看同一批长期员工，进入已有项目群。</li><li>负责人提出目标，产品同事通过澄清卡询问活动范围。</li><li>负责人选择新品首发，显式邀请研发核对；操作确认仅对当前请求有效。</li><li>保留原群与成员，建立项目目标与约束。</li><li>为研发建立清单任务，登记明确标注来源的人工演示材料。</li><li>逐项填写核查依据，由人接受准备清单；实际测试与发布另行确认。</li></ol><p>当前应用完整后台与私有源码未公开托管。可操作的<a href="../demos/agent-workspace.html?view=coagents">公开流程演示</a>另行提供；<a href="../demos/coagents-legacy.html">早期原型与录屏</a>保留为历史材料。</p></details>
+  </section>
+  <section id="current-screens" class="case-section">
+    <p class="section-label">CURRENT BUILD / 0.41.0</p><h2>把需要人处理的事，收进统一待处理入口。</h2>
+    <p>最新适配补充统一待处理卡片，聚合待答复、待授权、交付待验收、答复送达失败与输入超限事项，并可回到对应群聊。派工前重新检查项目、员工和任务状态，减少状态改变后沿用旧安排的风险。该次工程验证记录为 409 项测试通过。</p>
+    <figure><a href="../assets/coagents-current-attention.png"><img src="../assets/coagents-current-attention.png" width="1280" height="720" loading="lazy" alt="CoAgents 当前真实前端的统一待处理入口，显示“需要答复：同事需要你补充信息”卡片"></a><figcaption>真实前端 + 独立内存虚构数据，图中展示一项待答复事项。截图来自最新适配验证，未连接真实模型或原生产工作区。</figcaption></figure>
+    <p class="case-caption">源码核对：2026-11-03，提交 ca7b4086e128；版本仍为 0.41.0。409 项为最新适配任务的测试记录；下方 402 项保留为 2026-10-23 新环境复现的历史基线。</p>
+  </section>
   <section id="problem" class="case-section">
     <p class="section-label">01 / 协作问题</p><h2>多几个聊天窗口，还不能形成团队。</h2>
     <p>多人参与的工作会遇到一连串具体问题：同事按哪个目标动手？中途要求改变，旧任务如何处理？交出的文件由谁检查？被退回的稿件是否还能找到？CoAgents 把这些问题放进项目、员工、群消息、任务和交付版本之间的关系中。</p>

@@ -1,0 +1,74 @@
+{
+  "date": "2026-11-03",
+  "desktopCaptured": false,
+  "realModel": false,
+  "realDevice": false,
+  "coagents": {
+    "version": "0.41.0",
+    "sourceCommit": "ca7b4086e128771d4b85f69c23fe874982ec12ad",
+    "mode": "Current private application UI, isolated in-memory database, fixed conversation protocol replay; human-registered delivery and human acceptance.",
+    "video": "coagents-platform-0.41.webm",
+    "durationSeconds": 84.72,
+    "viewport": [
+      1440,
+      900
+    ],
+    "checks": {
+      "interactionCount": 2,
+      "allInteractionsResolved": true,
+      "deliverySource": "human",
+      "workStatus": "accepted"
+    },
+    "sourceSha256": {
+      "package.json": "ff4d9feb259456379d93f33f5df6b690a29f3b608587ff368e3e80f7b97b7c22",
+      "public/app.js": "a4a918fe745fc1c3095490b06fd980bd7d6aa38434ad44f26fb86a3d4b1aed24",
+      "public/workspace.js": "418241e010e2dd040298a970802f31be292a627aa50ef861cf67e0c5519279ff",
+      "scripts/conversation-fixture.mjs": "972775d03a781ccff422da698bf5ebd70b66899f60783803f3ea23e945636252"
+    },
+    "frameVerification": {
+      "decoder": "ffmpeg-1013",
+      "seconds": [
+        18,
+        45,
+        75
+      ]
+    },
+    "pageErrors": [],
+    "bytes": 9425688,
+    "sha256": "3bc955a0883c776a403ff01fe1ee52a9ac3e125b78c06c4032d1911d08fab2df"
+  },
+  "helix": {
+    "sourceCommit": "77774aa9d493969f7df9857bb44c417eb266e174",
+    "mode": "Public finite workflow demo, synthetic employees and devices; current real production login-page screenshot provided separately.",
+    "video": "helix-public-workflow.webm",
+    "durationSeconds": 51.16,
+    "viewport": [
+      1440,
+      1000
+    ],
+    "checks": {
+      "activationBlockedBeforeDeployment": true,
+      "executor": "DeepSeek",
+      "credentialsAndAck": true,
+      "activated": true,
+      "upstreamBindingVisible": true
+    },
+    "sourceSha256": {
+      "agent-workspace.html": "b09b4c0cd435c342759ef87ce35f9ba401be220ed2725faa3a8121fc43bf9a86",
+      "agent-workspace.js": "f885d9b716aaa8f91003a9669939f751b6464b5e6aa8c82f65f45f97b8e2f50a",
+      "agent-workspace-core.mjs": "1921908cc889181973f0ebe54f82bcace587e18c11623337614db680dac9515a",
+      "agent-workspace.css": "de1e7f75ce4114ec942ee68e59a9efaa3d9baf7e5fddf596aca48a0265c6a3f9"
+    },
+    "frameVerification": {
+      "decoder": "ffmpeg-1013",
+      "seconds": [
+        5,
+        25,
+        43
+      ]
+    },
+    "pageErrors": [],
+    "bytes": 5897176,
+    "sha256": "f9fe437234d2dd89c52681f50e36c47c9ed0bddee78354cea0e91e293ff795ca"
+  }
+}
