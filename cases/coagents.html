@@ -4,20 +4,20 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>CoAgents｜数字同事协作 · 俞凯杰</title>
   <meta name="description" content="CoAgents 数字同事协作案例：项目群聊、公开派工、非作者复核、版本修订与人工验收，基于 0.41.0 工程实现及本机复现记录。">
-  <link rel="canonical" href="https://jaysaly-cn.github.io/cases/coagents.html"><link rel="icon" href="../favicon.svg"><link rel="stylesheet" href="case-study.css">
+  <link rel="canonical" href="https://jaysaly-cn.github.io/cases/coagents.html"><link rel="icon" href="../favicon.svg"><link rel="stylesheet" href="case-study.css"><link rel="stylesheet" href="product-case.css">
 </head>
-<body class="case-page coagents-page">
+<body class="case-page coagents-page product-case">
 <a class="skip-link" href="#case-content">跳到正文</a>
 <header><div class="case-container"><a class="case-brand" href="../">俞凯杰<span>AI PRODUCT · BUILDER</span></a><nav aria-label="主导航"><a href="../#projects">精选作品</a><a href="helix.html">HeliX</a><a href="../#contact">联系</a></nav></div></header>
 <main id="case-content" class="case-container" tabindex="-1">
-  <section class="case-hero" aria-labelledby="page-title">
+  <section class="case-hero" aria-labelledby="page-title"><div class="case-hero-copy">
     <p class="case-kicker">COAGENTS / 数字同事协作 · 0.41.0</p>
-    <h1 id="page-title">把多位数字同事的讨论，<br>推进到可核查、可修订的交付。</h1>
-    <p>负责人在项目群里提出目标，数字同事公开分工、制作文件、交给非作者复核，再由人决定是否接受。CoAgents 关心的不只是“谁说了什么”，还包括“谁正在做、当前是哪一版、依据在哪里”。</p>
-    <dl class="case-brief"><div><dt>工作内容</dt><dd>协作对象、派工与交付流程设计及实现</dd></div><div><dt>技术组成</dt><dd>Node.js 24 · SQLite · 原生 Web 前端</dd></div><div><dt>当前阶段</dt><dd>本机单用户应用，真实执行由 HeliX 接入</dd></div></dl>
-    <div class="case-actions"><a class="case-button" href="#demo-video">观看当前平台录屏 →</a><a class="case-button secondary" href="../demos/agent-workspace.html?view=coagents">体验公开协作流程 →</a></div>
-    <p class="case-caption">2026-11-03 更新：当前平台录屏、待处理入口截图与最新适配记录。公开流程演示支持分工、修订、独立复核与人工验收，采用合成数据；下方平台录屏的具体范围单独说明。</p>
-  </section>
+    <h1 id="page-title">让数字同事，<br>一起交付一份成果。</h1>
+    <p>围绕一个共同目标，公开分工、修订原件、独立复核，最终由负责人验收。让协作的每一步，都有对应的原件和依据。</p>
+
+    <div class="case-actions"><a class="case-button" href="../demos/agent-workspace.html?view=coagents">打开协作工作台</a><a class="case-button secondary" href="#demo-video">观看平台录屏</a></div>
+    <p class="case-caption">公开工作台界面更新于 2026-11-04；平台录屏记录 0.41.0 应用的受控回放。</p>
+  </div><figure class="product-preview"><div class="preview-bar"><span class="preview-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>CoAgents</strong><span>公开交互演示</span></div><a href="../demos/agent-workspace.html?view=coagents" aria-label="打开 CoAgents 交互工作台"><img src="../assets/coagents-workspace-ui.png" width="1440" height="1050" alt="CoAgents 新版公开流程界面：团队交付 / 文档工作台，采用合成数据"></a><figcaption><span>团队交付 / 文档工作台</span><a href="../demos/agent-workspace.html?view=coagents">进入工作台 ↗</a></figcaption></figure><dl class="case-brief"><div><dt>工作内容</dt><dd>协作对象、派工与交付流程设计及实现</dd></div><div><dt>技术组成</dt><dd>Node.js 24 · SQLite · 原生 Web 前端</dd></div><div><dt>当前阶段</dt><dd>本机单用户应用，真实执行由 HeliX 接入</dd></div></dl></section>
   <nav class="case-toc" aria-label="本页目录"><span>本页内容</span><a href="#demo-video">平台录屏</a><a href="#current-screens">当前界面</a><a href="#problem">协作问题</a><a href="#workflow">工作链</a><a href="#decisions">关键设计</a><a href="#implementation">工程实现</a><a href="#validation">复现与边界</a></nav>
   <section id="demo-video" class="case-section">
     <p class="section-label">PLATFORM WALKTHROUGH / 2026.11.03</p><h2>看当前平台，如何把一句目标推进到人工验收。</h2>

@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-03",
+  "date": "2026-11-04",
   "desktopCaptured": false,
   "realModel": false,
   "realDevice": false,
@@ -35,13 +35,14 @@
     },
     "pageErrors": [],
     "bytes": 9425688,
-    "sha256": "3bc955a0883c776a403ff01fe1ee52a9ac3e125b78c06c4032d1911d08fab2df"
+    "sha256": "3bc955a0883c776a403ff01fe1ee52a9ac3e125b78c06c4032d1911d08fab2df",
+    "recordedAt": "2026-11-03"
   },
   "helix": {
     "sourceCommit": "77774aa9d493969f7df9857bb44c417eb266e174",
     "mode": "Public finite workflow demo, synthetic employees and devices; current real production login-page screenshot provided separately.",
     "video": "helix-public-workflow.webm",
-    "durationSeconds": 51.16,
+    "durationSeconds": 35,
     "viewport": [
       1440,
       1000
@@ -54,21 +55,21 @@
       "upstreamBindingVisible": true
     },
     "sourceSha256": {
-      "agent-workspace.html": "b09b4c0cd435c342759ef87ce35f9ba401be220ed2725faa3a8121fc43bf9a86",
-      "agent-workspace.js": "f885d9b716aaa8f91003a9669939f751b6464b5e6aa8c82f65f45f97b8e2f50a",
-      "agent-workspace-core.mjs": "1921908cc889181973f0ebe54f82bcace587e18c11623337614db680dac9515a",
-      "agent-workspace.css": "de1e7f75ce4114ec942ee68e59a9efaa3d9baf7e5fddf596aca48a0265c6a3f9"
+      "agent-workspace.html": "39b07c16dfe78950c217f6da05522d9d5d6cb14bce59c2671a087d3f71f3a03b",
+      "agent-workspace.css": "9ccb172410da735bed40d147c5634c54dcfbe397b813e175db42bb17a638fda3",
+      "agent-workspace.js": "67f11896447e1c81bb57eb39aeff7062132d40f9b79b53d0d1e6ead3b046cd0f",
+      "agent-workspace-core.mjs": "1921908cc889181973f0ebe54f82bcace587e18c11623337614db680dac9515a"
     },
     "frameVerification": {
       "decoder": "ffmpeg-1013",
       "seconds": [
-        5,
-        25,
-        43
+        8,
+        28
       ]
     },
     "pageErrors": [],
-    "bytes": 5897176,
-    "sha256": "f9fe437234d2dd89c52681f50e36c47c9ed0bddee78354cea0e91e293ff795ca"
+    "bytes": 4455468,
+    "sha256": "15f87bf72098845d087193a0b0ffbcd76b88c696ed33e485af0843165da6c7bc",
+    "recordedAt": "2026-11-04"
   }
 }

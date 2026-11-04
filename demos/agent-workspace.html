@@ -1,10 +1,71 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HeliX × CoAgents · 当前工作流演示</title><link rel="icon" href="../favicon.svg"><link rel="stylesheet" href="agent-workspace.css"><script type="module" src="agent-workspace.js"></script></head><body>
-<header><a href="../">← 个人主页</a><strong>HeliX × CoAgents</strong><a href="../cases/coagents.html">工程案例</a></header>
-<div class="notice">公开交互演示 · 按 HeliX 多执行器主线与 CoAgents 0.41.0 工作流制作。使用虚构员工、设备和文件；不连接模型、真实设备或私有后台。操作在当前页面内有效，刷新清空。</div>
-<main><aside><p class="eyebrow">AGENT WORKSPACE</p><h1>从部署到团队交付</h1><nav aria-label="工作区"><a id="helix-tab" href="?view=helix">HeliX · 运行平台</a><a id="coagents-tab" href="?view=coagents">CoAgents · 数字同事</a></nav><p>先在 HeliX 激活一位员工，再进入 CoAgents 分工、交稿、复核与验收。两页共用本次演示状态。</p><button id="reset" class="secondary">重置演示</button><p id="message" role="status" aria-live="polite">请选择工作区开始。</p><details><summary>版本与展示范围</summary><p>源码基线为 2026-10-23 恢复记录，当前核对版本仍为 CoAgents 0.41.0。此公开工作台是针对当前流程重新制作的有限演示，不是私有应用的完整部署。</p><a href="coagents-legacy.html">早期原型与历史录屏</a></details></aside>
-<div class="content"><section id="helix"><div class="heading"><div><p class="eyebrow">HELIX / EXECUTION PLATFORM</p><h2>员工实例的运行准备</h2></div><span class="pill">多执行器主线</span></div><p>版本、实例配置、设备确认、测评与激活分别记录。步骤尚未满足时，后续动作会说明缺少的条件。</p>
-<div class="cards"><article><h3>员工包 / Release</h3><p>示例·需求分析员<br>包版本 1.0.0 · 固定演示内容</p><button data-action="publish">发布演示 Release</button><p id="release-state"></p></article><article><h3>部署实例</h3><label>执行器<select id="executor"><option>Codex</option><option>Claude Code</option><option>DeepSeek</option></select></label><button data-action="deploy">部署实例</button><p id="instance-state"></p></article><article><h3>配置与设备</h3><p>仅模拟配置状态，不接收密钥。</p><div class="actions"><button data-action="credentials">标记配置已备齐</button><button data-action="ack">模拟设备 ACK</button></div><p id="device-state"></p></article><article><h3>测评与激活</h3><div class="actions"><button data-action="evaluate">运行规则测评</button><button data-action="activate">激活实例</button><button data-action="retire" class="secondary">退役实例</button></div><p id="activation-state"></p></article></div><h3>执行链路</h3><p>CoAgents 的协作请求 → 已激活实例 → 所选执行器 → 公开回执与交付记录。本演示用确定性模板生成待检查草稿。</p></section>
-<section id="coagents" hidden><div class="heading"><div><p class="eyebrow">COAGENTS / DIGITAL TEAM</p><h2>项目群 · 新产品需求评审</h2></div><span class="pill">0.41.0 流程基线</span></div><p id="binding-state"></p><div class="team"><span>产品 · 作者</span><span>研发 · 作者</span><span>市场 · 非作者复核</span><span>你 · 最终验收人</span></div>
-<form id="requirements-form"><label>负责人目标 / 中途变更<textarea id="requirements" maxlength="800" required>为一款家用阅读灯整理需求，面向夜间阅读，预算不超过 200 元；列出待确认问题。</textarea></label><button>公开目标并分工</button></form><p class="hint">提交新要求会保留旧稿与旧复核；新稿须重新由非作者复核。</p><div class="actions"><button data-action="draft-product">产品提交需求草稿</button><button data-action="draft-engineering">研发提交核查清单</button></div><div id="files" class="cards"></div>
-<article class="acceptance"><h3>交付与人工验收</h3><p id="delivery-state"></p><label>实际核查依据<textarea id="acceptance" maxlength="800" placeholder="核对当前目标、两份原件和复核记录后，填写接受或退回依据"></textarea></label><div class="actions"><button data-action="accept">接受当前交付</button><button data-action="return" class="secondary">退回原作者修订</button><button id="export" class="secondary">下载本次记录 JSON</button></div></article></section>
-<section><h2>公开工作记录</h2><ol id="events" class="events"></ol></section></div></main></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HeliX · 数字员工运行台</title>
+  <meta name="description" content="体验 HeliX 员工部署与 CoAgents 团队交付：配置、激活、原件修订、独立复核及人工验收。">
+  <link rel="icon" href="../favicon.svg"><link rel="stylesheet" href="agent-workspace.css">
+  <script type="module" src="agent-workspace.js"></script>
+</head>
+<body data-view="helix">
+<a class="skip-link" href="#workspace">跳到工作台</a>
+<div class="app-shell">
+  <aside class="app-sidebar" aria-label="工作空间导航">
+    <a class="studio-brand" href="../"><span class="studio-symbol" aria-hidden="true">y.</span><span>俞凯杰的产品实验室<small>个人作品 / 可交互演示</small></span></a>
+    <div class="workspace-switch"><span class="workspace-icon" aria-hidden="true">W</span><div>演示工作区<small>浏览器会话</small></div><span class="session-dot" aria-hidden="true"></span></div>
+    <p class="nav-label">产品工作台</p>
+    <nav class="product-nav" aria-label="产品切换">
+      <a id="helix-tab" href="?view=helix"><span class="product-icon helix-icon" aria-hidden="true">H</span><span><strong>HeliX</strong><small>数字员工运行台</small></span><span class="nav-indicator" aria-hidden="true"></span></a>
+      <a id="coagents-tab" href="?view=coagents"><span class="product-icon coagents-icon" aria-hidden="true">co</span><span><strong>CoAgents</strong><small>数字同事工作室</small></span><span class="nav-indicator" aria-hidden="true"></span></a>
+    </nav>
+    <div class="sidebar-project"><span class="nav-label">本次演示</span><strong>阅读灯需求评审</strong><p>一位数字员工的运行准备，<br>到一个团队的交付与验收。</p><div class="sidebar-progress"><span id="sidebar-progress-label">尚未开始</span><span id="sidebar-progress-count">0 / 4</span></div><div class="progress-track"><span id="sidebar-progress-fill"></span></div></div>
+    <div class="sidebar-bottom">
+      <details class="scope-details"><summary>关于本次演示 <span aria-hidden="true">＋</span></summary><p>有限交互演示，按 HeliX 多执行器与 CoAgents 0.41.0 流程制作。采用虚构员工、设备和确定性文档模板；数据保留在当前页面，刷新清空。真实模型与私有后台独立部署。</p><a href="coagents-legacy.html">查看早期原型</a></details>
+      <button id="reset" class="sidebar-reset"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6a7 7 0 1 1-1 7M4 2v5h5"/></svg>重置演示</button>
+      <a class="back-link" href="../">返回个人主页 <span aria-hidden="true">↗</span></a>
+    </div>
+  </aside>
+  <div class="main-shell">
+    <header class="topbar"><div class="breadcrumb">产品实验室 <span>/</span> <strong id="topbar-product">HeliX</strong></div><div class="topbar-actions"><span class="demo-badge"><i></i>合成数据演示</span><a id="case-link" href="../cases/helix.html">产品案例 <span aria-hidden="true">↗</span></a></div></header>
+    <div class="workbench">
+      <main id="workspace" class="work-surface" tabindex="-1">
+        <section id="helix" aria-labelledby="helix-title">
+          <div class="page-heading"><div><p class="product-name">HeliX <span>数字员工运行台</span></p><h1 id="helix-title">让数字员工，准备就绪。</h1><p class="page-description">从发布一个能力版本，到激活一个可供团队调用的实例。</p></div><span class="version-label">多执行器</span></div>
+          <section class="instance-overview" aria-label="当前员工实例">
+            <div class="instance-identity"><div class="agent-emblem" aria-hidden="true"><svg viewBox="0 0 56 56"><path d="M16 13v30M40 13v30M16 23h24M16 33h24"/><circle cx="16" cy="13" r="3"/><circle cx="40" cy="43" r="3"/></svg></div><div><span class="subtle-label">当前数字员工</span><h2>需求分析员</h2><p>阅读灯需求评审 / 固定能力包 1.0.0</p></div><span id="overview-status" class="status-tag">等待准备</span></div>
+            <div class="instance-diagram" aria-label="运行准备状态"><div><span id="diagram-release" class="diagram-node">版本</span><small>Release</small></div><span class="diagram-connector" aria-hidden="true"></span><div><span id="diagram-instance" class="diagram-node">实例</span><small id="diagram-executor">待选择</small></div><span class="diagram-connector" aria-hidden="true"></span><div><span id="diagram-device" class="diagram-node">设备</span><small>模拟 ACK</small></div><span class="diagram-connector" aria-hidden="true"></span><div><span id="diagram-active" class="diagram-node">就绪</span><small>团队调用</small></div></div>
+            <dl class="instance-facts"><div><dt>发布版本</dt><dd id="fact-release">尚未发布</dd></div><div><dt>执行器</dt><dd id="fact-executor">尚未配置</dd></div><div><dt>设备确认</dt><dd id="fact-device">等待部署</dd></div></dl>
+          </section>
+          <nav class="lifecycle" aria-label="部署进度"><a href="#release-module" data-stage="release"><span>1</span>发布版本</a><a href="#deploy-module" data-stage="deploy"><span>2</span>部署实例</a><a href="#readiness-module" data-stage="checks"><span>3</span>运行检查</a><a href="#activation-module" data-stage="active"><span>4</span>激活使用</a></nav>
+          <div class="module-heading"><h2>发布与部署</h2><span>固定版本，明确运行环境</span></div>
+          <section class="deployment-panel" aria-label="员工发布与部署">
+            <div id="release-module" class="release-row"><span class="file-symbol" aria-hidden="true"><svg viewBox="0 0 24 28"><path d="M4 1h10l6 6v20H4zM14 1v7h6M8 14h8M8 19h6"/></svg></span><div class="row-copy"><h3>需求分析员能力包 <span class="inline-version">v1.0.0</span></h3><p>整理需求、识别约束、列出待确认问题。</p><span id="release-state" class="state-caption">尚未发布</span></div><button data-action="publish">发布版本</button></div>
+            <div id="deploy-module" class="deploy-row"><div><h3>选择执行器</h3><p>实例关联当前发布版本，运行检查单独记录。</p></div><label class="select-label"><span class="sr-only">执行器</span><select id="executor"><option>Codex</option><option>Claude Code</option><option>DeepSeek</option></select></label><button data-action="deploy" class="secondary">部署实例</button><p id="instance-state" class="row-footnote">发布后即可部署。</p></div>
+          </section>
+          <div class="module-heading"><h2>运行前检查</h2><span id="readiness-count">0 / 3 项已完成</span></div>
+          <section id="readiness-module" class="readiness-panel" aria-label="运行检查清单">
+            <div class="check-row"><span id="credentials-check" class="check-indicator" aria-hidden="true"></span><div class="row-copy"><h3>执行配置</h3><p>标记配置已备齐，演示无需输入密钥。</p></div><button data-action="credentials" class="quiet">标记配置就绪</button></div>
+            <div class="check-row"><span id="ack-check" class="check-indicator" aria-hidden="true"></span><div class="row-copy"><h3>设备确认</h3><p>模拟设备接收实例并返回 ACK。</p></div><button data-action="ack" class="quiet">模拟设备 ACK</button></div>
+            <div class="check-row"><span id="evaluation-check" class="check-indicator" aria-hidden="true"></span><div class="row-copy"><h3>就绪测评</h3><p>核对版本、配置与 ACK 的规则检查。</p></div><button data-action="evaluate" class="quiet">运行规则测评</button></div>
+            <p id="device-state" class="check-summary">部署实例后，逐项完成检查。</p>
+          </section>
+          <section id="activation-module" class="activation-panel"><div><span class="subtle-label">下一步</span><h3 id="next-step">发布员工版本</h3><p id="activation-state">版本发布后，选择执行器开始部署。</p></div><div class="activation-actions"><button data-action="activate">激活实例</button><a id="open-coagents" class="button-link" href="?view=coagents" hidden>进入 CoAgents <span aria-hidden="true">↗</span></a><button data-action="retire" class="text-button danger">退役实例</button></div></section>
+        </section>
+        <section id="coagents" aria-labelledby="coagents-title" hidden>
+          <div class="page-heading"><div><p class="product-name">CoAgents <span>数字同事工作室</span></p><h1 id="coagents-title">阅读灯需求评审</h1><p class="page-description">提出目标，让产品与研发交稿，由非作者复核，再交给你验收。</p></div><span id="project-status" class="status-tag">准备开始</span></div>
+          <section class="project-summary" aria-label="项目成员"><div class="project-members"><div><span class="person-avatar product-person">产</span><span><strong>产品</strong><small>需求作者</small></span></div><div><span class="person-avatar engineering-person">研</span><span><strong>研发</strong><small>清单作者</small></span></div><div><span class="person-avatar reviewer-person">市</span><span><strong>市场</strong><small>独立复核</small></span></div><div><span class="person-avatar owner-person">你</span><span><strong>负责人</strong><small>最终验收</small></span></div></div><div class="project-meta"><span>当前目标 <strong id="goal-version">未发布</strong></span><span>原件 <strong id="file-count">0 / 2</strong></span><span>独立复核 <strong id="review-count">0 / 2</strong></span></div></section>
+          <div id="binding-notice" class="binding-notice"><span class="binding-symbol" aria-hidden="true">↔</span><div><strong id="binding-title">先准备一位可用员工</strong><p id="binding-state">演示实例就绪后，即可发布项目目标与分工。</p></div><button id="prepare-instance" class="secondary">准备演示实例</button></div>
+          <details id="goal-panel" class="goal-panel" open><summary><span><span class="section-index">1</span><strong>目标与分工</strong><small id="goal-summary">给团队一个明确的开始</small></span><span class="disclosure-arrow" aria-hidden="true">⌄</span></summary><div class="goal-panel-content"><form id="requirements-form"><label for="requirements">这次一起完成什么？</label><textarea id="requirements" maxlength="800" required>为一款家用阅读灯整理需求，面向夜间阅读，预算不超过 200 元；列出待确认问题。</textarea><div class="form-footer"><p>发布新要求会保留旧稿，新原件需重新复核。</p><button id="publish-goal">发布目标并分工</button></div></form></div></details>
+          <section class="document-section" aria-labelledby="documents-title"><div class="module-heading"><h2 id="documents-title"><span class="section-index">2</span>原件与独立复核</h2><span id="document-caption">等待团队交稿</span></div><div class="draft-actions"><button data-action="draft-product" class="secondary"><span class="mini-avatar product-person" aria-hidden="true">产</span>产品提交需求草稿</button><button data-action="draft-engineering" class="secondary"><span class="mini-avatar engineering-person" aria-hidden="true">研</span>研发提交核查清单</button></div><div id="files" class="document-workbench"></div><div id="past-files"></div></section>
+          <section class="acceptance" aria-labelledby="acceptance-title"><div class="acceptance-heading"><h2 id="acceptance-title"><span class="section-index">3</span>交付与人工验收</h2><span id="delivery-badge" class="status-tag">等待原件</span></div><p id="delivery-state">团队交齐两份原件并完成独立复核后，由你决定是否接受。</p><div id="acceptance-checks" class="acceptance-checks"></div><label for="acceptance">核查依据或修改要求</label><textarea id="acceptance" maxlength="800" placeholder="说明你检查的内容、实际依据，以及接受或退回的原因。"></textarea><div class="acceptance-footer"><div class="actions"><button data-action="accept">接受当前交付</button><button data-action="return" class="secondary">退回原作者修订</button></div><button id="export" class="text-button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v11m-4-4 4 4 4-4M3 14v4h14v-4"/></svg>导出本次记录</button></div></section>
+        </section>
+        <p class="surface-footer">公开流程体验 · 合成数据与模板产出 · 刷新清空本次记录</p>
+      </main>
+      <aside class="activity-rail" aria-labelledby="activity-title"><div class="activity-heading"><div><span class="activity-symbol" aria-hidden="true">≋</span><h2 id="activity-title">工作记录</h2></div><span id="event-count" class="count-badge">0</span></div><p class="activity-description">每次操作，都有迹可循。</p><div id="empty-events" class="empty-events"><div class="empty-trail" aria-hidden="true"><span></span><span></span><span></span></div><strong>工作从这里开始</strong><p>发布、配置、交稿与验收<br>会按顺序留在记录中。</p></div><ol id="events" class="events" aria-label="本次操作记录"></ol><a id="rail-case-link" class="rail-link" href="../cases/helix.html">查看产品设计与工程案例 <span aria-hidden="true">↗</span></a></aside>
+    </div>
+  </div>
+</div>
+<div id="feedback" class="feedback" hidden><span id="feedback-icon" aria-hidden="true">✓</span><p id="message" role="status" aria-live="polite"></p><button id="dismiss-feedback" aria-label="关闭提示">×</button></div>
+<dialog id="reset-dialog" aria-labelledby="reset-title"><form method="dialog"><span class="dialog-symbol" aria-hidden="true">↺</span><h2 id="reset-title">重新开始这次演示？</h2><p>当前实例、原件、复核与工作记录将清空。可以先取消并导出本次记录。</p><div class="dialog-actions"><button value="cancel" class="secondary">保留当前工作</button><button id="confirm-reset" value="reset">重置演示</button></div></form></dialog>
+</body>
+</html>
